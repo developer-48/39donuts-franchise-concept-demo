@@ -1,3 +1,3 @@
-:HL["/39donuts-franchise-concept-demo/_next/static/chunks/3__rp38mkqiio.css","style"]
+:HL["/39donuts-franchise-concept-demo/_next/static/chunks/1f8mcw-d1gr5s.css","style"]
 :HC["/",""]
-0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}},"staleTime":300,"buildId":"EA90Spx_jAX8qJzdQqWZ1"}
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}},"staleTime":300,"buildId":"FKiqLOaF_MKSsQ0QqB_bw"}
