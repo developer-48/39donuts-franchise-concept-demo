@@ -1,0 +1,845 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#7a44ca" />
+    <link rel="icon" href="../favicon.ico" sizes="256x256" type="image/x-icon" />
+    <title>39 donuts — презентация редизайна</title>
+    <style>
+      @font-face {
+        font-family: 'Manrope';
+        src: url('./fonts/manrope-400.woff2') format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Manrope';
+        src: url('./fonts/manrope-600.woff2') format('woff2');
+        font-weight: 600;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Manrope';
+        src: url('./fonts/manrope-700.woff2') format('woff2');
+        font-weight: 700;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Unbounded';
+        src: url('./fonts/unbounded-500.woff2') format('woff2');
+        font-weight: 500;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: 'Unbounded';
+        src: url('./fonts/unbounded-600.woff2') format('woff2');
+        font-weight: 600;
+        font-display: swap;
+      }
+
+      :root {
+        color: #2f2538;
+        background: #f8f4ee;
+        font-family: 'Manrope', Arial, sans-serif;
+        font-synthesis: none;
+        --paper: #fff;
+        --ink: #2f2538;
+        --muted: #6d656f;
+        --purple: #7a44ca;
+        --purple-dark: #5e2fa7;
+        --purple-soft: #f2ebfc;
+        --orange: #fe7f16;
+        --orange-soft: #fff0e1;
+        --green: #7db234;
+        --line: rgba(47, 37, 56, 0.13);
+        --shadow: 0 30px 80px rgba(47, 37, 56, 0.13);
+      }
+
+      * { box-sizing: border-box; }
+      html { scroll-behavior: smooth; }
+      body { margin: 0; overflow-x: hidden; }
+      img { max-width: 100%; }
+      a { color: inherit; }
+
+      .shell {
+        width: min(1480px, calc(100% - 48px));
+        margin-inline: auto;
+      }
+
+      .topbar {
+        display: flex;
+        min-height: 86px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+      }
+
+      .topbar img {
+        display: block;
+        width: 154px;
+        height: auto;
+      }
+
+      .topbar nav {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .button {
+        display: inline-flex;
+        min-height: 48px;
+        align-items: center;
+        justify-content: center;
+        gap: 11px;
+        padding: 12px 18px;
+        border: 1px solid var(--purple);
+        border-radius: 14px;
+        color: #fff;
+        background: var(--purple);
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-decoration: none;
+        transition: transform 180ms ease, background-color 180ms ease;
+      }
+
+      .button:hover {
+        background: var(--purple-dark);
+        transform: translateY(-2px);
+      }
+
+      .button-secondary {
+        border-color: var(--line);
+        color: var(--ink);
+        background: rgba(255, 255, 255, 0.72);
+      }
+
+      .button-secondary:hover { background: #fff; }
+
+      .arrow {
+        width: 24px;
+        height: 16px;
+      }
+
+      .hero { padding: 10px 0 96px; }
+
+      .hero-card {
+        position: relative;
+        display: grid;
+        min-height: 720px;
+        grid-template-columns: minmax(0, 0.8fr) minmax(560px, 1.2fr);
+        align-items: center;
+        gap: clamp(42px, 6vw, 94px);
+        padding: clamp(42px, 6vw, 92px);
+        overflow: hidden;
+        border-radius: 34px;
+        color: #fff;
+        background:
+          radial-gradient(circle at 96% 4%, rgba(254, 127, 22, 0.98) 0 12%, transparent 12.2%),
+          linear-gradient(138deg, #5f2ba9 0%, #7a44ca 58%, #8e51d9 100%);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-card::before {
+        position: absolute;
+        right: 34%;
+        bottom: -240px;
+        width: 420px;
+        height: 420px;
+        border: 78px solid rgba(255, 255, 255, 0.075);
+        border-radius: 50%;
+        content: '';
+      }
+
+      .hero-copy,
+      .hero-visual { position: relative; z-index: 1; }
+
+      .hero-copy { min-width: 0; }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        margin: 0 0 24px;
+        color: #fff;
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      .eyebrow::before {
+        width: 30px;
+        height: 2px;
+        content: '';
+        background: var(--orange);
+      }
+
+      h1,
+      h2,
+      h3 {
+        margin: 0;
+        font-family: 'Unbounded', 'Manrope', sans-serif;
+        font-weight: 600;
+        letter-spacing: -0.055em;
+      }
+
+      h1 {
+        max-width: 680px;
+        font-size: clamp(3rem, 4.2vw, 4.8rem);
+        line-height: 0.96;
+      }
+
+      .hero-copy > p {
+        max-width: 590px;
+        margin: 28px 0 0;
+        color: rgba(255, 255, 255, 0.78);
+        font-size: clamp(1rem, 1.35vw, 1.2rem);
+        line-height: 1.65;
+      }
+
+      .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .hero-actions .button {
+        border-color: #fff;
+        color: var(--purple-dark);
+        background: #fff;
+      }
+
+      .hero-actions .button-secondary {
+        border-color: rgba(255, 255, 255, 0.42);
+        color: #fff;
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      .hero-visual {
+        min-width: 0;
+        padding: 10px 0 54px;
+      }
+
+      .browser {
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.5);
+        border-radius: 22px;
+        background: #fff;
+        box-shadow: 0 40px 90px rgba(34, 15, 55, 0.32);
+      }
+
+      .browser-bar {
+        display: flex;
+        height: 42px;
+        align-items: center;
+        gap: 7px;
+        padding-inline: 15px;
+        border-bottom: 1px solid #e7e2dc;
+        background: #f6f3ef;
+      }
+
+      .browser-bar i {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #d8d0c8;
+      }
+
+      .browser-bar i:first-child { background: var(--orange); }
+      .browser-bar i:nth-child(2) { background: var(--green); }
+      .browser-bar i:nth-child(3) { background: var(--purple); }
+
+      .browser-scroll {
+        height: 500px;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+        scrollbar-color: var(--purple) #eee8e1;
+        scrollbar-width: thin;
+      }
+
+      .browser-scroll img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .phone {
+        position: absolute;
+        right: -34px;
+        bottom: -32px;
+        width: 190px;
+        padding: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.68);
+        border-radius: 34px;
+        background: #21182e;
+        box-shadow: 0 28px 60px rgba(34, 15, 55, 0.38);
+        transform: rotate(3deg);
+      }
+
+      .phone::before {
+        position: absolute;
+        top: 14px;
+        left: 50%;
+        z-index: 2;
+        width: 62px;
+        height: 16px;
+        border-radius: 999px;
+        content: '';
+        background: #21182e;
+        transform: translateX(-50%);
+      }
+
+      .phone-screen {
+        height: 384px;
+        overflow: hidden;
+        border-radius: 26px;
+        background: #fff;
+      }
+
+      .phone-screen img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .hero-stats {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+      }
+
+      .hero-stats article {
+        padding: 19px 21px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.82);
+      }
+
+      .hero-stats strong {
+        display: block;
+        font-family: 'Unbounded', sans-serif;
+        font-size: 1.06rem;
+        letter-spacing: -0.04em;
+      }
+
+      .hero-stats span {
+        display: block;
+        margin-top: 5px;
+        color: var(--muted);
+        font-size: 0.82rem;
+        line-height: 1.4;
+      }
+
+      section { padding: 88px 0; }
+
+      .section-head {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(320px, 520px);
+        align-items: end;
+        gap: 36px;
+        margin-bottom: 34px;
+      }
+
+      .section-index {
+        display: block;
+        margin-bottom: 14px;
+        color: var(--orange);
+        font-size: 0.76rem;
+        font-weight: 700;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+      }
+
+      h2 {
+        max-width: 900px;
+        font-size: clamp(2.5rem, 5vw, 5rem);
+        line-height: 1;
+      }
+
+      .section-head p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 1rem;
+        line-height: 1.65;
+      }
+
+      .overview-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1.65fr) minmax(320px, 0.55fr);
+        align-items: start;
+        gap: 24px;
+      }
+
+      .preview-card {
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        background: var(--paper);
+        box-shadow: 0 20px 60px rgba(47, 37, 56, 0.08);
+      }
+
+      .preview-head {
+        display: flex;
+        min-height: 82px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 19px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .preview-head strong {
+        display: block;
+        font-family: 'Unbounded', sans-serif;
+        font-size: 1rem;
+        letter-spacing: -0.035em;
+      }
+
+      .preview-head span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .preview-tag {
+        flex: 0 0 auto;
+        padding: 7px 10px;
+        border-radius: 999px;
+        color: var(--purple);
+        background: var(--purple-soft);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .desktop-scroll {
+        height: min(72vh, 780px);
+        overflow-y: auto;
+        scrollbar-color: var(--orange) #eee8e1;
+        scrollbar-width: thin;
+      }
+
+      .desktop-scroll img,
+      .mobile-scroll img {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
+
+      .mobile-stage {
+        padding: 30px;
+        background: linear-gradient(155deg, #2f2538, #171219);
+      }
+
+      .mobile-device {
+        max-width: 380px;
+        margin-inline: auto;
+        padding: 9px;
+        border-radius: 36px;
+        background: #09070b;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.32);
+      }
+
+      .mobile-scroll {
+        height: min(74vh, 810px);
+        overflow-y: auto;
+        border-radius: 28px;
+        background: #fff;
+        scrollbar-color: var(--purple) #eee8e1;
+        scrollbar-width: thin;
+      }
+
+      .hint {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+
+      .hint::before {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        content: '';
+        background: var(--green);
+      }
+
+      .gallery {
+        background: #fff;
+      }
+
+      .gallery-grid {
+        display: grid;
+        grid-template-columns: repeat(12, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      figure {
+        margin: 0;
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        background: #fff;
+        box-shadow: 0 18px 52px rgba(47, 37, 56, 0.07);
+      }
+
+      .card-wide { grid-column: span 8; }
+      .card-narrow { grid-column: span 4; }
+      .card-half { grid-column: span 6; }
+      .card-full { grid-column: 1 / -1; }
+
+      figcaption {
+        display: flex;
+        min-height: 88px;
+        align-items: center;
+        justify-content: space-between;
+        gap: 18px;
+        padding: 20px 22px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      figcaption strong {
+        display: block;
+        font-family: 'Unbounded', sans-serif;
+        font-size: 1rem;
+        letter-spacing: -0.035em;
+      }
+
+      figcaption span {
+        display: block;
+        margin-top: 4px;
+        color: var(--muted);
+        font-size: 0.78rem;
+      }
+
+      .number {
+        flex: 0 0 auto;
+        color: var(--orange);
+        font-family: 'Unbounded', sans-serif;
+        font-size: 0.78rem;
+      }
+
+      .shot {
+        display: block;
+        overflow: hidden;
+        background: #f3efe9;
+      }
+
+      .shot img {
+        display: block;
+        width: 100%;
+        height: 520px;
+        object-fit: cover;
+        object-position: top;
+        transition: transform 300ms ease;
+      }
+
+      .card-narrow .shot {
+        padding: 22px;
+        background: #21182e;
+      }
+
+      .card-narrow .shot img {
+        height: 620px;
+        border-radius: 18px;
+        object-fit: contain;
+      }
+
+      figure:hover .shot img { transform: scale(1.012); }
+
+      .feature-section { padding-bottom: 110px; }
+
+      .feature-panel {
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 36px;
+        padding: clamp(30px, 5vw, 68px);
+        border-radius: 30px;
+        color: #fff;
+        background: var(--ink);
+      }
+
+      .feature-panel h2 { font-size: clamp(2.4rem, 4vw, 4.6rem); }
+
+      .feature-list {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .feature-list article {
+        min-height: 150px;
+        padding: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.055);
+      }
+
+      .feature-list span {
+        color: var(--orange);
+        font-family: 'Unbounded', sans-serif;
+        font-size: 0.74rem;
+      }
+
+      .feature-list strong {
+        display: block;
+        margin-top: 30px;
+        font-size: 1rem;
+        line-height: 1.45;
+      }
+
+      footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding: 30px 0 48px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      footer img { width: 120px; }
+
+      @media (max-width: 1100px) {
+        .hero-card {
+          grid-template-columns: 1fr;
+          padding-bottom: 78px;
+        }
+
+        .hero-copy { max-width: 760px; }
+        .hero-visual { width: min(820px, 100%); }
+        .overview-grid { grid-template-columns: 1fr; }
+        .mobile-stage { padding-inline: clamp(30px, 12vw, 120px); }
+        .card-wide,
+        .card-narrow,
+        .card-half { grid-column: span 6; }
+        .feature-panel { grid-template-columns: 1fr; }
+      }
+
+      @media (max-width: 760px) {
+        .shell { width: min(100% - 24px, 1480px); }
+        .topbar { min-height: 72px; }
+        .topbar img { width: 128px; }
+        .topbar .button-secondary { display: none; }
+        .topbar .button { min-height: 42px; padding: 10px 13px; font-size: 0.78rem; }
+        .hero { padding-bottom: 54px; }
+        .hero-card {
+          min-height: auto;
+          gap: 34px;
+          padding: 32px 20px 58px;
+          border-radius: 24px;
+        }
+        h1 { font-size: clamp(2.45rem, 10.8vw, 3.7rem); }
+        .hero-copy > p { margin-top: 21px; }
+        .hero-actions .button { width: 100%; }
+        .hero-visual { padding: 0 0 28px; }
+        .browser { border-radius: 14px; }
+        .browser-bar { height: 30px; }
+        .browser-scroll { height: 280px; }
+        .phone { right: -8px; bottom: -34px; width: 118px; padding: 5px; border-radius: 23px; }
+        .phone::before { top: 9px; width: 40px; height: 10px; }
+        .phone-screen { height: 235px; border-radius: 18px; }
+        .hero-stats { grid-template-columns: 1fr; }
+        section { padding: 58px 0; }
+        .section-head { display: block; margin-bottom: 24px; }
+        .section-head p { margin-top: 16px; }
+        h2 { font-size: clamp(2.35rem, 11vw, 4rem); }
+        .desktop-scroll { height: 62vh; }
+        .mobile-stage { padding: 18px; }
+        .mobile-scroll { height: 68vh; }
+        .gallery-grid { grid-template-columns: 1fr; }
+        .card-wide,
+        .card-narrow,
+        .card-half { grid-column: auto; }
+        .shot img { height: 340px; }
+        .card-narrow .shot img { height: 560px; }
+        .feature-list { grid-template-columns: 1fr; }
+        footer { align-items: flex-start; flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, *::before, *::after { transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="topbar shell">
+      <a href="../" aria-label="Открыть интерактивный сайт 39 donuts">
+        <img src="../assets/official/logo.svg" alt="39 donuts" />
+      </a>
+      <nav aria-label="Действия презентации">
+        <a class="button button-secondary" href="#screens">Посмотреть экраны</a>
+        <a class="button" href="../">
+          Открыть сайт
+          <svg class="arrow" viewBox="0 0 28 20" fill="none" aria-hidden="true">
+            <path d="M2 10h23M19 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
+        </a>
+      </nav>
+    </header>
+
+    <main>
+      <section class="hero shell">
+        <div class="hero-card">
+          <div class="hero-copy">
+            <p class="eyebrow">Презентация редизайна · 2026</p>
+            <h1>Маленькая точка. Большая подача.</h1>
+            <p>Финальная композиция франшизного лендинга: история бренда, показатели сети, три формата кофейни, отзывы, путь к партнёрству, FAQ и анкета.</p>
+            <div class="hero-actions">
+              <a class="button" href="../">Открыть интерактивный сайт</a>
+              <a class="button button-secondary" href="#overview">Посмотреть целиком</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Предпросмотр сайта на ноутбуке и телефоне">
+            <div class="browser">
+              <div class="browser-bar" aria-hidden="true"><i></i><i></i><i></i></div>
+              <div class="browser-scroll">
+                <img src="./assets/desktop-full.png" alt="Полная десктопная версия сайта 39 donuts" />
+              </div>
+            </div>
+            <div class="phone" aria-hidden="true">
+              <div class="phone-screen"><img src="./assets/mobile-full.png" alt="" /></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-stats" aria-label="Ключевые свойства макета">
+          <article><strong>Desktop</strong><span>Полная композиция для широкого экрана</span></article>
+          <article><strong>Mobile</strong><span>Отдельно проработанные сценарии 430 и 320 px</span></article>
+          <article><strong>Interactive</strong><span>Форматы, FAQ, меню и четырёхшаговая анкета</span></article>
+        </div>
+      </section>
+
+      <section class="shell" id="overview">
+        <div class="section-head">
+          <div>
+            <span class="section-index">01 · Полная страница</span>
+            <h2>Весь сайт в двух форматах</h2>
+          </div>
+          <p>Оба окна прокручиваются независимо. Так можно показать весь путь пользователя, не переходя между отдельными файлами и скриншотами.</p>
+        </div>
+
+        <div class="overview-grid">
+          <article class="preview-card">
+            <div class="preview-head">
+              <div><strong>Большой экран</strong><span>1440 px · полный лендинг</span></div>
+              <span class="hint">прокручивается</span>
+            </div>
+            <div class="desktop-scroll">
+              <img src="./assets/desktop-full.png" alt="Полная десктопная версия лендинга" loading="lazy" />
+            </div>
+          </article>
+
+          <article class="preview-card">
+            <div class="preview-head">
+              <div><strong>Мобильный экран</strong><span>430 px · полный лендинг</span></div>
+              <span class="preview-tag">Mobile</span>
+            </div>
+            <div class="mobile-stage">
+              <div class="mobile-device">
+                <div class="mobile-scroll">
+                  <img src="./assets/mobile-full.png" alt="Полная мобильная версия лендинга" loading="lazy" />
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="gallery" id="screens">
+        <div class="shell">
+          <div class="section-head">
+            <div>
+              <span class="section-index">02 · Ключевые экраны</span>
+              <h2>Главные сценарии крупным планом</h2>
+            </div>
+            <p>Карточки показывают основные визуальные и интерактивные решения без технических обозначений промежуточных версий.</p>
+          </div>
+
+          <div class="gallery-grid">
+            <figure class="card-full">
+              <figcaption><div><strong>История бренда</strong><span>Фотографии основателя и развитие команды</span></div><b class="number">01</b></figcaption>
+              <a class="shot" href="./assets/story-desktop.png"><img src="./assets/story-desktop.png" alt="Раздел истории бренда" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-narrow">
+              <figcaption><div><strong>Мобильное меню</strong><span>Разделы, подписи и понятные пиктограммы</span></div><b class="number">02</b></figcaption>
+              <a class="shot" href="./assets/menu-mobile.png"><img src="./assets/menu-mobile.png" alt="Мобильное меню сайта" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-wide">
+              <figcaption><div><strong>Три формата кофейни</strong><span>Переключатель и операционные показатели</span></div><b class="number">03</b></figcaption>
+              <a class="shot" href="./assets/formats-desktop.png"><img src="./assets/formats-desktop.png" alt="Сравнение трёх форматов кофейни" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-narrow">
+              <figcaption><div><strong>Форматы на телефоне</strong><span>Компактный выбор и сетка показателей</span></div><b class="number">04</b></figcaption>
+              <a class="shot" href="./assets/formats-mobile.png"><img src="./assets/formats-mobile.png" alt="Форматы кофейни на мобильном экране" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-wide">
+              <figcaption><div><strong>Пять шагов</strong><span>Путь от заявки до открытия кофейни</span></div><b class="number">05</b></figcaption>
+              <a class="shot" href="./assets/steps-desktop.png"><img src="./assets/steps-desktop.png" alt="Пять шагов к партнёрству" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-wide">
+              <figcaption><div><strong>Команда на связи</strong><span>Контакты и переписка внутри телефона</span></div><b class="number">06</b></figcaption>
+              <a class="shot" href="./assets/contact-desktop.png"><img src="./assets/contact-desktop.png" alt="Контактный блок сайта" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-narrow">
+              <figcaption><div><strong>Анкета партнёра</strong><span>Первый шаг на мобильном экране</span></div><b class="number">07</b></figcaption>
+              <a class="shot" href="./assets/application-mobile.png"><img src="./assets/application-mobile.png" alt="Первый шаг анкеты партнёра" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-narrow">
+              <figcaption><div><strong>Проверка заявки</strong><span>Структурированное резюме ответов</span></div><b class="number">08</b></figcaption>
+              <a class="shot" href="./assets/application-summary-mobile.png"><img src="./assets/application-summary-mobile.png" alt="Итоговый шаг анкеты партнёра" loading="lazy" /></a>
+            </figure>
+
+            <figure class="card-wide">
+              <figcaption><div><strong>Интерактивная версия</strong><span>Откройте сайт и проверьте все состояния самостоятельно</span></div><b class="number">09</b></figcaption>
+              <a class="shot" href="../"><img src="./assets/desktop-full.png" alt="Переход к интерактивной версии сайта" loading="lazy" /></a>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section class="feature-section shell">
+        <div class="feature-panel">
+          <div>
+            <span class="section-index">03 · Итог</span>
+            <h2>Единая история от первого экрана до заявки</h2>
+          </div>
+          <div class="feature-list">
+            <article><span>01</span><strong>Фирменная типографика, цвета и реальные материалы бренда</strong></article>
+            <article><span>02</span><strong>Стабильные карточки форматов без скачков при переключении</strong></article>
+            <article><span>03</span><strong>Полноценная мобильная навигация и адаптация контента</strong></article>
+            <article><span>04</span><strong>Пошаговая анкета с локальной проверкой введённых данных</strong></article>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="shell">
+      <img src="../assets/official/logo.svg" alt="39 donuts" />
+      <span>Презентационный концепт редизайна · сентябрь 2026</span>
+      <a href="./39donuts-showcase.png" download>Скачать макет PNG ↓</a>
+      <a href="../">Открыть интерактивный сайт ↑</a>
+    </footer>
+  </body>
+</html>
