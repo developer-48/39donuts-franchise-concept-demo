@@ -18,13 +18,6 @@
   transform: translateX(-2px);
 }
 
-.application-wizard-current .wizard-step-scroll {
-  position: relative;
-  display: flex;
-  min-height: 0;
-  flex: 1;
-}
-
 @media (min-width: 961px) {
   .application-wizard-current {
     display: flex;
@@ -45,6 +38,8 @@
   .application-wizard-current .wizard-progress {
     min-height: 0;
     overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.7) rgba(255, 255, 255, 0.14);
   }
 
   .application-wizard-current .wizard-form {
@@ -56,6 +51,35 @@
     min-height: 0;
     overflow-y: auto;
     overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple) rgba(122, 68, 202, 0.1);
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar,
+  .application-wizard-current .wizard-progress::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(122, 68, 202, 0.1);
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar-thumb {
+    border: 2px solid #fffaf3;
+    border-radius: 999px;
+    background: var(--purple);
+  }
+
+  .application-wizard-current .wizard-progress::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .application-wizard-current .wizard-progress::-webkit-scrollbar-thumb {
+    border: 2px solid var(--purple);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.7);
   }
 
   .application-wizard-current .wizard-actions {
