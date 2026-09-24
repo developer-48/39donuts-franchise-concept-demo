@@ -1,18 +1,13 @@
 import { useCallback, useEffect, useRef, useState, type MouseEvent } from 'react'
 import { assets } from '../../data/siteContent'
 import {
-  ArrowIcon,
   Bars3SolidIcon,
   ChevronRightIcon,
-  CloseIcon,
   CtaArrowIcon,
-  MenuIcon,
   PackIcon,
   XMarkSolidIcon,
   type PackIconName,
 } from '../../components/Icons'
-
-import type { Variant } from '../../types/Variant'
 
 const navItems: Array<{ href: string; label: string; description: string; icon: PackIconName }> = [
   { href: '#story', label: 'История', description: 'Как всё началось', icon: 'book' },
@@ -23,11 +18,10 @@ const navItems: Array<{ href: string; label: string; description: string; icon: 
 ]
 
 type HeaderProps = {
-  variant: Variant
   onOpenApplication: () => void
 }
 
-export function Header({ variant, onOpenApplication }: HeaderProps) {
+export function Header({ onOpenApplication }: HeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false)
   const headerRef = useRef<HTMLElement>(null)
   const menuRef = useRef<HTMLDivElement>(null)
@@ -165,51 +159,37 @@ export function Header({ variant, onOpenApplication }: HeaderProps) {
               aria-label={menuOpen ? 'Закрыть меню' : 'Открыть меню'}
               onClick={menuOpen ? closeMenu : openMenu}
             >
-              {variant === 'g' ? (menuOpen ? <XMarkSolidIcon /> : <Bars3SolidIcon />) : (menuOpen ? <CloseIcon /> : <MenuIcon />)}
+              {menuOpen ? <XMarkSolidIcon /> : <Bars3SolidIcon />}
             </button>
           </div>
         </div>
       </header>
 
-      <div className={`mobile-menu-shell mobile-menu-shell-${variant} ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
+      <div className={`mobile-menu-shell mobile-menu-shell-current ${menuOpen ? 'is-open' : ''}`} aria-hidden={!menuOpen}>
         <button className="mobile-menu-backdrop" type="button" tabIndex={-1} aria-label="Закрыть меню" onClick={() => closeMenu()} />
         <div
           ref={menuRef}
-          className={`mobile-menu mobile-menu-${variant}`}
+          className="mobile-menu mobile-menu-current"
           id="mobile-navigation"
           role="dialog"
           aria-modal="true"
           aria-labelledby="mobile-navigation-title"
         >
           <div className="mobile-menu-topline">
-            {variant === 'g' ? (
-              <div className="mobile-menu-brand">
-                <img src={assets.logo} alt="" width="124" height="23" />
-                <span id="mobile-navigation-title">Разделы сайта</span>
-              </div>
-            ) : (
-              <span id="mobile-navigation-title">Навигация</span>
-            )}
+            <div className="mobile-menu-brand">
+              <img src={assets.logo} alt="" width="124" height="23" />
+              <span id="mobile-navigation-title">Разделы сайта</span>
+            </div>
             <button type="button" onClick={() => closeMenu()} aria-label="Закрыть меню">
-              {variant === 'g' ? <XMarkSolidIcon /> : <CloseIcon />}
+              <XMarkSolidIcon />
             </button>
           </div>
           <nav aria-label="Мобильная навигация">
-            {navItems.map((item, index) => (
+            {navItems.map((item) => (
               <a href={item.href} key={item.href} onClick={(event) => navigateFromMenu(event, item.href)}>
-                {variant === 'g' ? (
-                  <>
-                    <span className="mobile-menu-icon"><PackIcon name={item.icon} /></span>
-                    <span className="mobile-menu-link-copy"><strong>{item.label}</strong><small>{item.description}</small></span>
-                    <ChevronRightIcon />
-                  </>
-                ) : (
-                  <>
-                    <span>0{index + 1}</span>
-                    {item.label}
-                    <ArrowIcon />
-                  </>
-                )}
+                <span className="mobile-menu-icon"><PackIcon name={item.icon} /></span>
+                <span className="mobile-menu-link-copy"><strong>{item.label}</strong><small>{item.description}</small></span>
+                <ChevronRightIcon />
               </a>
             ))}
           </nav>
@@ -226,10 +206,9 @@ export function Header({ variant, onOpenApplication }: HeaderProps) {
               })
             }}
           >
-            <span>{variant === 'e' ? 'Открыть демо-анкету' : 'Стать партнёром'}</span>
+            <span>Стать партнёром</span>
             <CtaArrowIcon className="cta-arrow-icon" />
           </button>
-          {variant === 'e' && <p>Независимый концепт, не официальный сайт компании.</p>}
         </div>
       </div>
     </>

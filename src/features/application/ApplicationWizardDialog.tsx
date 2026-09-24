@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import { BrandText } from '../../components/BrandText'
-import { ArrowIcon, CheckIcon, CloseIcon, SolidArrowLeftIcon, SolidArrowRightIcon, XMarkSolidIcon } from '../../components/Icons'
-import type { Variant } from '../../types/Variant'
+import { CheckIcon, SolidArrowLeftIcon, SolidArrowRightIcon, XMarkSolidIcon } from '../../components/Icons'
 
 type ApplicationWizardDialogProps = {
   open: boolean
   onClose: () => void
-  variant: Exclude<Variant, 'e'>
 }
 
 type WizardData = {
@@ -21,7 +19,6 @@ type WizardData = {
   reason: string
   about: string
   contact: string
-  consent: boolean
 }
 
 type FieldErrors = Partial<Record<keyof WizardData, string>>
@@ -38,7 +35,6 @@ const initialData: WizardData = {
   reason: '',
   about: '',
   contact: '',
-  consent: false,
 }
 
 const steps = [
@@ -62,7 +58,7 @@ const investmentOptions = [
   'Имею дополнительный ресурс в запасе',
 ]
 
-export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationWizardDialogProps) {
+export function ApplicationWizardDialog({ open, onClose }: ApplicationWizardDialogProps) {
   const [step, setStep] = useState(0)
   const [furthestStep, setFurthestStep] = useState(0)
   const [data, setData] = useState<WizardData>(initialData)
@@ -221,7 +217,6 @@ export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationW
     }
     if (stepIndex === 3) {
       if (data.contact.trim().length < 4) nextErrors.contact = 'Укажите удобный контакт.'
-      if (variant !== 'g' && !data.consent) nextErrors.consent = 'Подтвердите демо-проверку формы.'
     }
     return nextErrors
   }
@@ -304,10 +299,10 @@ export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationW
     .filter((group) => group.items.length > 0)
 
   return (
-    <div className={`dialog-layer application-wizard-layer application-wizard-layer-${variant}${closing ? ' is-closing' : ''}`} data-dialog-state={closing ? 'closing' : 'open'}>
+    <div className={`dialog-layer application-wizard-layer application-wizard-layer-current${closing ? ' is-closing' : ''}`} data-dialog-state={closing ? 'closing' : 'open'}>
       <button className="dialog-backdrop" type="button" aria-label="Закрыть анкету" onClick={requestClose} />
       <div
-        className={`application-dialog application-wizard application-wizard-${variant}`}
+        className="application-dialog application-wizard application-wizard-current"
         ref={dialogRef}
         role="dialog"
         aria-modal="true"
@@ -319,49 +314,30 @@ export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationW
       >
         <div className="wizard-topbar">
           <div>
-            <span className="dialog-kicker">{variant === 'g' ? 'Заявка на партнёрство' : 'Демо · данные не отправляются'}</span>
+            <span className="dialog-kicker">Заявка на партнёрство</span>
             <h2 id="application-wizard-title">
-              {variant === 'g' ? <>Анкета партнёра <BrandText>39 donuts</BrandText></> : 'Анкета будущего партнёра'}
+              Анкета партнёра <BrandText>39 donuts</BrandText>
             </h2>
             <p id="application-wizard-description">
-              {variant === 'g' ? (
-                'Четыре коротких шага: расскажите о себе, проекте и планах запуска.'
-              ) : (
-                <>Четыре коротких шага с локальной проверкой. Информация не сохраняется и не передаётся <BrandText>39 donuts</BrandText>.</>
-              )}
+              Четыре коротких шага: расскажите о себе, проекте и планах запуска.
             </p>
           </div>
           <button ref={closeButtonRef} className="dialog-close" type="button" onClick={requestClose} aria-label="Закрыть анкету">
-            {variant === 'g' ? <XMarkSolidIcon /> : <CloseIcon />}
+            <XMarkSolidIcon />
           </button>
         </div>
 
         {submitted ? (
           <div className="demo-success wizard-success" role="status" aria-live="polite">
             <span><CheckIcon /></span>
-            <h3>{variant === 'g' ? 'Анкета готова' : 'Локальная проверка пройдена'}</h3>
-            <p>{variant === 'g' ? 'Ответы собраны. Можно вернуться к анкете, изменить любой раздел и отправить её снова.' : 'Это демонстрация интерфейса: ответы не отправлены, не сохранены и будут удалены после закрытия окна.'}</p>
-            {variant === 'g' ? (
-              <div className="wizard-success-actions">
-                <button className="button" type="button" onClick={() => { setStep(3); setSubmitted(false) }}>
-                  Вернуться к ответам
-                </button>
-                <button
-                  className="wizard-back"
-                  type="button"
-                  onClick={() => {
-                    setData(initialData)
-                    setStep(0)
-                    setFurthestStep(0)
-                    setSubmitted(false)
-                  }}
-                >
-                  Заполнить заново
-                </button>
-              </div>
-            ) : (
+            <h3>Анкета готова</h3>
+            <p>Ответы собраны. Можно вернуться к анкете, изменить любой раздел и отправить её снова.</p>
+            <div className="wizard-success-actions">
+              <button className="button" type="button" onClick={() => { setStep(3); setSubmitted(false) }}>
+                Вернуться к ответам
+              </button>
               <button
-                className="button"
+                className="wizard-back"
                 type="button"
                 onClick={() => {
                   setData(initialData)
@@ -370,9 +346,9 @@ export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationW
                   setSubmitted(false)
                 }}
               >
-                Заполнить заново <ArrowIcon className="wizard-action-icon" />
+                Заполнить заново
               </button>
-            )}
+            </div>
           </div>
         ) : (
           <div className="wizard-layout">
@@ -484,47 +460,25 @@ export function ApplicationWizardDialog({ open, onClose, variant }: ApplicationW
                         ))}
                       </div>
                     </div>
-                    {variant === 'g' ? (
-                      <p className="wizard-privacy-note">
-                        Нажимая «Отправить заявку», вы соглашаетесь с{' '}
-                        <a href="https://39donuts.ru/privacy-policy/" target="_blank" rel="noreferrer">политикой обработки персональных данных</a>.
-                      </p>
-                    ) : (
-                      <>
-                        <label className={`consent-field ${errors.consent ? 'has-error' : ''}`}>
-                          <input
-                            type="checkbox"
-                            name="consent"
-                            checked={data.consent}
-                            required
-                            aria-invalid={Boolean(errors.consent)}
-                            aria-describedby={errors.consent ? 'wizard-error-consent' : undefined}
-                            onChange={(event) => {
-                              const checked = event.currentTarget.checked
-                              setData((current) => ({ ...current, consent: checked }))
-                              setErrors((current) => ({ ...current, consent: undefined }))
-                            }}
-                          />
-                          <span>Я понимаю, что это демо: данные не отправляются и будут удалены при закрытии страницы. <b aria-hidden="true">*</b></span>
-                        </label>
-                        {errors.consent && <span className="field-error" id="wizard-error-consent">{errors.consent}</span>}
-                      </>
-                    )}
+                    <p className="wizard-privacy-note">
+                      Нажимая «Отправить заявку», вы соглашаетесь с{' '}
+                      <a href="https://39donuts.ru/privacy-policy/" target="_blank" rel="noreferrer">политикой обработки персональных данных</a>.
+                    </p>
                   </>
                 )}
               </div>
 
               <div className="wizard-actions">
-                <p>{variant === 'g' ? 'К предыдущим шагам можно вернуться без потери ответов.' : 'Введённые значения остаются только в памяти открытого окна.'}</p>
+                <p>К предыдущим шагам можно вернуться без потери ответов.</p>
                 <div>
                   {step > 0 && (
                     <button className="wizard-back" type="button" onClick={() => goToStep(step - 1)}>
-                      {variant === 'g' ? <SolidArrowLeftIcon className="wizard-action-icon" /> : <ArrowIcon className="wizard-action-icon wizard-action-icon-back" />}
+                      <SolidArrowLeftIcon className="wizard-action-icon" />
                       <span>Назад</span>
                     </button>
                   )}
                   <button className="button" type="submit">
-                    {step === steps.length - 1 ? (variant === 'g' ? 'Отправить заявку' : 'Проверить анкету') : 'Продолжить'} {variant === 'g' ? <SolidArrowRightIcon className="wizard-action-icon" /> : <ArrowIcon className="wizard-action-icon" />}
+                    {step === steps.length - 1 ? 'Отправить заявку' : 'Продолжить'} <SolidArrowRightIcon className="wizard-action-icon" />
                   </button>
                 </div>
               </div>

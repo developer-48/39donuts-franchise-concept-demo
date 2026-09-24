@@ -1,8 +1,7 @@
 import { advantages, assets, network } from '../data/siteContent'
 import { BrandText } from '../components/BrandText'
-import type { SectionProps } from './types'
 
-export function NetworkSection({ variant }: Pick<SectionProps, 'variant'>) {
+export function NetworkSection() {
   return (
     <section className="section network-section reveal" id="network" aria-labelledby="network-title">
       <div className="section-shell">
@@ -19,24 +18,23 @@ export function NetworkSection({ variant }: Pick<SectionProps, 'variant'>) {
         <div className="network-proof">
           <div className="country-list">
             {network.map((item) => (
-              <article className={variant === 'g' ? 'motion-trigger' : undefined} key={item.country}>
-                <strong><span className={variant === 'g' ? 'network-count-value' : undefined}>{item.count}</span></strong>
+              <article className="motion-trigger" key={item.country}>
+                <strong><span className="network-count-value">{item.count}</span></strong>
                 <span>{item.count === '1' ? 'точка' : 'точек'}</span>
                 <p>{item.country}</p>
               </article>
             ))}
-            {variant === 'e' && <p className="source-disclosure">19+ в первом экране и 20 + 1 в разбивке — две формулировки текущего источника.</p>}
           </div>
           <div className="shop-mosaic">
-            <figure className={variant === 'g' ? 'motion-item' : undefined}>
+            <figure className="motion-item">
               <img src={assets.shopCounter} alt="Витрина с пончиками в кофейне" />
               <figcaption>Россия · витрина</figcaption>
             </figure>
-            <figure className={variant === 'g' ? 'motion-item' : undefined}>
+            <figure className="motion-item">
               <img src={assets.shopInterior} alt="Интерьер кофейни с открытой витриной" />
               <figcaption>Россия · интерьер</figcaption>
             </figure>
-            <figure className={variant === 'g' ? 'motion-item' : undefined}>
+            <figure className="motion-item">
               <img src={assets.shopCase} alt="Кофейня с витриной и фирменной вывеской" />
               <figcaption>Казахстан · формат сети</figcaption>
             </figure>
@@ -50,12 +48,12 @@ export function NetworkSection({ variant }: Pick<SectionProps, 'variant'>) {
                 <h3>Почему пончики?</h3>
                 <p>Знакомый эмоциональный продукт превращается в компактную и масштабируемую бизнес-модель.</p>
               </div>
-              <img className={variant === 'g' ? 'motion-item' : undefined} src={assets.donut} alt="Фирменный пончик 39 donuts" />
+              <img className="motion-item" src={assets.donut} alt="Фирменный пончик 39 donuts" />
               <span className="advantages-feature-note">Вкус, который легко узнать</span>
             </article>
             <div className="advantages-cards">
               {advantages.map((item) => (
-                <article className={variant === 'g' ? 'motion-item' : undefined} key={item.title}>
+                <article className="motion-item" key={item.title}>
                   <span className="advantage-number">{item.number}</span>
                   <div>
                     <h4>{item.title}</h4>

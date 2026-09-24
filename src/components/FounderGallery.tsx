@@ -22,8 +22,8 @@ const photos = [
 
 export function FounderGallery() {
   return (
-    <figure className="founder-gallery-next founder-gallery-next-f">
-      <div className="founder-gallery-next-photos" aria-label="Три фотографии из истории бренда">
+    <figure className="founder-gallery-story founder-gallery-story-layout">
+      <div className="founder-gallery-story-photos" aria-label="Три фотографии из истории бренда">
         {photos.map((photo, index) => (
           <a
             className="founder-story-link"

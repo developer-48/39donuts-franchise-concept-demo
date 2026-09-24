@@ -1,16 +1,11 @@
 import { heroMetrics, assets } from '../data/siteContent'
 import { BrandText } from '../components/BrandText'
-import { ArrowIcon, PackIcon, SolidArrowRightIcon } from '../components/Icons'
+import { PackIcon, SolidArrowRightIcon } from '../components/Icons'
 import type { SectionProps } from './types'
 
-export function HeroSection({ variant, onOpenApplication }: SectionProps) {
+export function HeroSection({ onOpenApplication }: SectionProps) {
   return (
     <section className="hero-section" id="top" aria-labelledby="hero-title">
-      {variant === 'e' && (
-        <div className="concept-notice">
-          <span aria-hidden="true" /> Независимый концепт редизайна — не официальный сайт
-        </div>
-      )}
       <div className="hero-canvas section-shell">
         <div className="hero-copy">
           <span className="eyebrow">Франшиза кофеен с пончиками</span>
@@ -34,7 +29,7 @@ export function HeroSection({ variant, onOpenApplication }: SectionProps) {
             </button>
             <a className="text-link" href="#revenue">
               Смотреть показатели
-              {variant === 'g' ? <SolidArrowRightIcon /> : <ArrowIcon />}
+              <SolidArrowRightIcon />
             </a>
           </div>
         </div>

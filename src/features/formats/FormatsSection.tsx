@@ -1,13 +1,11 @@
 import { useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
 import { formats } from '../../data/siteContent'
 import { BrandText } from '../../components/BrandText'
-import type { Variant } from '../../types/Variant'
 
-export function FormatsSection({ variant }: { variant: Variant }) {
+export function FormatsSection() {
   const [activeFormat, setActiveFormat] = useState(0)
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
   const format = formats[activeFormat]
-  const isNextIteration = variant !== 'e'
 
   const moveTab = (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
     let next = index
@@ -25,25 +23,20 @@ export function FormatsSection({ variant }: { variant: Variant }) {
   return (
     <section className="section formats-section reveal" id="formats" aria-labelledby="formats-title">
       <div className="section-shell">
-        <div className={`section-heading split-heading${isNextIteration ? ' section-heading-solo' : ''}`}>
+        <div className="section-heading split-heading section-heading-solo">
           <div>
             <span className="eyebrow">Выберите модель</span>
             <h2 id="formats-title">Три формата кофейни</h2>
           </div>
-          {!isNextIteration && (
-            <p>
-              Сравните площадь, инвестиции и операционные показатели. Значения перенесены с текущего сайта без объединения в одно обещание.
-            </p>
-          )}
         </div>
 
         <div
           className="format-tabs"
           role="tablist"
           aria-label="Форматы кофеен"
-          style={variant === 'g' ? { '--active-format': activeFormat } as CSSProperties : undefined}
+          style={{ '--active-format': activeFormat } as CSSProperties}
         >
-          {variant === 'g' && <span className="format-moving-selection" aria-hidden="true" />}
+          <span className="format-moving-selection" aria-hidden="true" />
           {formats.map((item, index) => (
             <button
               key={item.id}
@@ -71,14 +64,14 @@ export function FormatsSection({ variant }: { variant: Variant }) {
         </div>
 
         <div
-          className={`format-panel${isNextIteration ? ' format-panel-next' : ''}`}
+          className="format-panel format-panel-details"
           id="format-panel"
           role="tabpanel"
           aria-labelledby={`format-tab-${format.id}`}
           tabIndex={0}
         >
           <div className="format-visual">
-            {variant === 'g' ? formats.map((item, index) => (
+            {formats.map((item, index) => (
               <img
                 className={activeFormat === index ? 'is-active' : undefined}
                 src={item.image}
@@ -86,10 +79,10 @@ export function FormatsSection({ variant }: { variant: Variant }) {
                 aria-hidden={activeFormat !== index}
                 key={item.id}
               />
-            )) : <img src={format.image} alt={`${format.name}${format.note ? `, ${format.note}` : ''}`} />}
+            ))}
             {format.id === 'island' && <span className="asset-note">Визуализация формата с текущего сайта</span>}
           </div>
-          <div className="format-copy" key={variant === 'g' ? `copy-${format.id}` : 'copy'}>
+          <div className="format-copy" key={`copy-${format.id}`}>
             <div className={`format-title-row format-title-row-${format.id}`}>
               <div>
                 <span>Выбранный формат</span>
@@ -99,26 +92,15 @@ export function FormatsSection({ variant }: { variant: Variant }) {
               </div>
               {format.note && <p>{format.note}</p>}
             </div>
-            {isNextIteration ? (
-              <dl className="format-facts format-facts-next">
-                {format.facts.map((fact, index) => (
-                  <div className={`format-fact format-fact-${index + 1}`} key={fact.label}>
-                    <span className="format-fact-index" aria-hidden="true">0{index + 1}</span>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : (
-              <dl className="format-facts">
-                {format.facts.map((fact) => (
-                  <div key={fact.label}>
-                    <dt>{fact.label}</dt>
-                    <dd>{fact.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            )}
+            <dl className="format-facts format-facts-grid">
+              {format.facts.map((fact, index) => (
+                <div className={`format-fact format-fact-${index + 1}`} key={fact.label}>
+                  <span className="format-fact-index" aria-hidden="true">0{index + 1}</span>
+                  <dt>{fact.label}</dt>
+                  <dd>{fact.value}</dd>
+                </div>
+              ))}
+            </dl>
           </div>
         </div>
       </div>

@@ -1,19 +1,17 @@
 import type { CSSProperties } from 'react'
 import { revenue } from '../data/siteContent'
-import type { SectionProps } from './types'
 
-export function RevenueSection({ variant }: Pick<SectionProps, 'variant'>) {
+export function RevenueSection() {
   const maximum = Math.max(...revenue.map((point) => point.numeric))
 
   return (
     <section className="section revenue-section reveal" id="revenue" aria-labelledby="revenue-title">
       <div className="section-shell revenue-shell">
-        <div className={`section-heading split-heading${variant === 'e' ? '' : ' section-heading-solo'}`}>
+        <div className="section-heading split-heading section-heading-solo">
           <div>
             <span className="eyebrow">Динамика сети</span>
             <h2 id="revenue-title">Выручка по годам</h2>
           </div>
-          {variant === 'e' && <p>Все три значения показаны одновременно — без карусели, скрытых подписей и итоговой цифры вместо динамики.</p>}
         </div>
         <div className="revenue-chart" role="img" aria-label="Выручка сети: 8,5 млн рублей в 2023, 96 млн в 2024 и 202,715 млн в 2025 году">
           {revenue.map((point, index) => (

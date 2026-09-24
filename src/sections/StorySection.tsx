@@ -1,9 +1,8 @@
 import { assets, story } from '../data/siteContent'
 import { BrandText } from '../components/BrandText'
 import { FounderGallery } from '../components/FounderGallery'
-import type { SectionProps } from './types'
 
-export function StorySection({ variant }: Pick<SectionProps, 'variant'>) {
+export function StorySection() {
   return (
     <section className="section story-section reveal" id="story" aria-labelledby="story-title">
       <div className="section-shell">
@@ -18,53 +17,17 @@ export function StorySection({ variant }: Pick<SectionProps, 'variant'>) {
             </p>
             <div className="origin-equation" aria-label="От 39 квадратных метров к бесконечному росту">
               <strong><BrandText>39 м²</BrandText></strong>
-              {variant === 'g' ? (
-                <svg className="origin-equation-arrow" viewBox="0 0 68 40" fill="none" aria-hidden="true">
-                  <path d="M3 20H61M43 3L61 20L43 37" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              ) : <span>→</span>}
+              <svg className="origin-equation-arrow" viewBox="0 0 68 40" fill="none" aria-hidden="true">
+                <path d="M3 20H61M43 3L61 20L43 37" stroke="currentColor" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
               <strong>∞</strong>
             </div>
           </div>
-          {variant === 'e' ? (
-            <figure className="founder-gallery">
-              <a
-                className="founder-gallery-photo founder-gallery-photo-main"
-                href="https://www.instagram.com/tokkaev/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Открыть фотографию Ибрагима Токкаева в Instagram"
-              >
-                <img src={assets.ibrahim} alt="Ибрагим Токкаев — основатель сети" />
-              </a>
-              <a
-                className="founder-gallery-photo"
-                href="https://www.instagram.com/tokkaev/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Открыть вторую фотографию Ибрагима Токкаева в Instagram"
-              >
-                <img src={assets.founderDetail} alt="Ибрагим Токкаев на встрече" />
-              </a>
-              <a
-                className="founder-gallery-photo"
-                href="https://www.instagram.com/tokkaev/"
-                target="_blank"
-                rel="noreferrer"
-                aria-label="Открыть третью фотографию из истории 39 donuts в Instagram"
-              >
-                <img src={assets.founderDetailTwo} alt="Рабочая встреча команды 39 donuts" />
-              </a>
-              <figcaption>
-                <span>Ибрагим Токкаев</span>
-                <small>основатель, первая кофейня — 2023</small>
-              </figcaption>
-            </figure>
-          ) : <FounderGallery />}
+          <FounderGallery />
         </div>
 
         <div className="story-grid">
-          <article className={`story-card story-mission${variant === 'g' ? ' motion-item' : ''}`}>
+          <article className="story-card story-mission motion-item">
             <span className="story-number">02</span>
             <h3>Смысл бренда</h3>
             <p>
@@ -75,7 +38,7 @@ export function StorySection({ variant }: Pick<SectionProps, 'variant'>) {
               <img src={assets.kioskNight} alt="" />
             </div>
           </article>
-          <article className={`story-card story-recipe${variant === 'g' ? ' motion-item' : ''}`}>
+          <article className="story-card story-recipe motion-item">
             <span className="story-number">03</span>
             <div>
               <h3>Секрет — во вкусе</h3>
@@ -83,7 +46,7 @@ export function StorySection({ variant }: Pick<SectionProps, 'variant'>) {
             </div>
             <img src={assets.donut} alt="Фирменный пончик с шоколадной глазурью" />
           </article>
-          <article className={`story-card story-growth${variant === 'g' ? ' motion-item' : ''}`}>
+          <article className="story-card story-growth motion-item">
             <span className="story-number">04</span>
             <img src={assets.founders} alt="Ибрагим Токкаев и Джамбулат Исмаилов" />
             <div>
@@ -93,22 +56,13 @@ export function StorySection({ variant }: Pick<SectionProps, 'variant'>) {
               </p>
             </div>
           </article>
-          <article className={`story-card story-counter${variant === 'g' ? ' motion-item' : ''}`}>
+          <article className="story-card story-counter motion-item">
             <span className="story-number">05</span>
-            {variant === 'e' ? (
-              <>
-                <strong>{story.donutsSold}</strong>
-                <p>{story.donutsSoldLabel}</p>
-              </>
-            ) : (
-              <>
-                <div className="story-counter-copy">
-                  <strong>{story.donutsSold}</strong>
-                  <p>{story.donutsSoldLabel}</p>
-                </div>
-                <img className="story-counter-ribbon" src={assets.donutRibbon} alt="" />
-              </>
-            )}
+            <div className="story-counter-copy">
+              <strong>{story.donutsSold}</strong>
+              <p>{story.donutsSoldLabel}</p>
+            </div>
+            <img className="story-counter-ribbon" src={assets.donutRibbon} alt="" />
           </article>
         </div>
       </div>

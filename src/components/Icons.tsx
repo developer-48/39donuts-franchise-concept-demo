@@ -2,7 +2,7 @@ type IconProps = {
   className?: string
 }
 
-export type PackIconName = 'book' | 'cake' | 'clock' | 'coffee' | 'document' | 'location' | 'message' | 'people' | 'shop'
+export type PackIconName = 'book' | 'document' | 'location' | 'message' | 'shop'
 
 type PackIconProps = IconProps & {
   name: PackIconName
@@ -12,34 +12,10 @@ export function PackIcon({ className, name }: PackIconProps) {
   return <img className={className} src={`${import.meta.env.BASE_URL}assets/icons/${name}.svg`} alt="" aria-hidden="true" />
 }
 
-export function ArrowIcon({ className }: IconProps) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 12h13M13 6l6 6-6 6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
 export function CtaArrowIcon({ className }: IconProps) {
   return (
     <svg className={className} viewBox="0 0 28 20" fill="none" aria-hidden="true">
       <path d="M2 10h23M19 4l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  )
-}
-
-export function MenuIcon({ className }: IconProps) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-    </svg>
-  )
-}
-
-export function CloseIcon({ className }: IconProps) {
-  return (
-    <svg className={className} viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="m6 6 12 12M18 6 6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   )
 }

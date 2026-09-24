@@ -2,9 +2,8 @@ import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
 import { faqGroups } from '../../data/siteContent'
 import { BrandText } from '../../components/BrandText'
 import { PlusIcon } from '../../components/Icons'
-import type { Variant } from '../../types/Variant'
 
-export function FaqSection({ variant }: { variant: Variant }) {
+export function FaqSection() {
   const [activeGroup, setActiveGroup] = useState(0)
   const [openItem, setOpenItem] = useState<string | null>('finance-0')
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([])
@@ -28,12 +27,11 @@ export function FaqSection({ variant }: { variant: Variant }) {
   }
 
   return (
-    <section className={`section faq-section faq-section-${variant} reveal`} id="faq" aria-labelledby="faq-title">
+    <section className="section faq-section faq-section-current reveal" id="faq" aria-labelledby="faq-title">
       <div className="section-shell faq-layout">
         <div className="faq-intro">
           <span className="eyebrow">Коротко и по делу</span>
           <h2 id="faq-title">Всё, что важно узнать до старта</h2>
-          {variant === 'e' && <p>Ответы и условия перенесены с текущего публичного сайта. Финальные условия фиксируются договором.</p>}
           <div className="faq-category-tabs" role="tablist" aria-label="Категории вопросов">
             {faqGroups.map((item, index) => (
               <button

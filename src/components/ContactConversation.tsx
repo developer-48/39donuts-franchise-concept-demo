@@ -2,7 +2,7 @@ import { BrandText } from './BrandText'
 
 export function ContactConversation() {
   return (
-    <figure className="contact-phone-next" aria-label="Пример переписки с командой 39 donuts внутри смартфона">
+    <figure className="contact-phone-preview" aria-label="Пример переписки с командой 39 donuts внутри смартфона">
       <span className="contact-phone-side-button contact-phone-side-button-top" aria-hidden="true" />
       <span className="contact-phone-side-button contact-phone-side-button-bottom" aria-hidden="true" />
       <div className="contact-phone-screen">
