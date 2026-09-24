@@ -18,6 +18,45 @@
   transform: translateX(-2px);
 }
 
+@media (min-width: 961px) {
+  .application-wizard-current {
+    display: flex;
+    max-height: calc(100dvh - 48px);
+    flex-direction: column;
+  }
+
+  .application-wizard-current .wizard-topbar {
+    flex: 0 0 auto;
+  }
+
+  .application-wizard-current .wizard-layout {
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .application-wizard-current .wizard-progress {
+    min-height: 0;
+    overflow-y: auto;
+  }
+
+  .application-wizard-current .wizard-form {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .application-wizard-current .wizard-step-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+
+  .application-wizard-current .wizard-actions {
+    position: relative;
+    flex: 0 0 auto;
+  }
+}
+
 @media (max-width: 960px) {
   .mobile-menu-shell-current {
     transition: visibility 0s linear 280ms;
