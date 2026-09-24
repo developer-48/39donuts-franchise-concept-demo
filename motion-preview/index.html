@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#fffaf5" />
+    <title>39 donuts — предпросмотр анимаций</title>
+    <link rel="icon" href="../favicon.ico" />
+    <link rel="stylesheet" href="./preview.css" />
+    <script src="./preview.js" defer></script>
+  </head>
+  <body>
+    <header class="preview-header">
+      <a class="preview-logo" href="../" aria-label="Открыть основной сайт 39 donuts">
+        <img src="../assets/official/logo.svg" alt="39 donuts" />
+      </a>
+      <span class="preview-header-label">Сравнение двух анимаций</span>
+      <a class="preview-site-link" href="../">Основной сайт <span aria-hidden="true">↗</span></a>
+    </header>
+
+    <main>
+      <div class="preview-intro preview-shell">
+        <span class="eyebrow">Предпросмотр · вариант G</span>
+        <h1>Две анимации <span>для сравнения</span></h1>
+        <p>Переключайте варианты «До» и «После». Оба эффекта уже добавлены на основной сайт; здесь их удобно сравнить с прежним поведением.</p>
+      </div>
+
+      <section class="preview-section preview-shell" id="number" aria-labelledby="number-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">Идея 02 · История бренда</span>
+            <h2 id="number-title">940 597 пончиков</h2>
+          </div>
+          <div class="preview-controls" role="group" aria-label="Режим анимации числа">
+            <button class="mode-button" type="button" data-counter-mode="current" aria-pressed="false">До</button>
+            <button class="mode-button is-selected" type="button" data-counter-mode="proposal" aria-pressed="true">После</button>
+            <button class="replay-button" type="button" id="counter-replay" aria-label="Повторить анимацию числа"><span aria-hidden="true">↺</span> Повторить</button>
+          </div>
+        </div>
+
+        <article class="counter-card mode-proposal" id="counter-card" aria-label="940 597 пончиков продано в 2025 году">
+          <span class="counter-index">05</span>
+          <img class="counter-art" src="../assets/official/blocks__whoare__whoare_img_18.png" alt="" />
+          <div class="counter-shade" aria-hidden="true"></div>
+          <div class="counter-copy">
+            <strong>940 597</strong>
+            <p>пончиков продано в 2025 году</p>
+          </div>
+        </article>
+        <p class="preview-note">Фирменная композиция раскрывается справа налево; число появляется следом целиком, без искусственного отсчёта.</p>
+      </section>
+
+      <section class="preview-section preview-section-formats preview-shell" id="formats" aria-labelledby="formats-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">Идея 03 · Переключение</span>
+            <h2 id="formats-title">Три формата кофейни</h2>
+          </div>
+          <div class="preview-controls" role="group" aria-label="Режим анимации форматов">
+            <button class="mode-button" type="button" data-formats-mode="current" aria-pressed="false">До</button>
+            <button class="mode-button is-selected" type="button" data-formats-mode="proposal" aria-pressed="true">После</button>
+          </div>
+        </div>
+
+        <div class="formats-demo mode-proposal" id="formats-demo">
+          <div class="format-tabs" role="tablist" aria-label="Форматы кофеен">
+            <span class="format-moving-selection" aria-hidden="true"></span>
+            <button id="preview-tab-0" type="button" role="tab" class="is-active" aria-selected="true" aria-controls="preview-format-panel" tabindex="0" data-format="0">
+              <span>01</span><span class="format-tab-label"><strong>Кофейня + цех</strong></span>
+            </button>
+            <button id="preview-tab-1" type="button" role="tab" aria-selected="false" aria-controls="preview-format-panel" tabindex="-1" data-format="1">
+              <span>02</span><span class="format-tab-label"><strong>Кофейня</strong><small>цех отдельно</small></span>
+            </button>
+            <button id="preview-tab-2" type="button" role="tab" aria-selected="false" aria-controls="preview-format-panel" tabindex="-1" data-format="2">
+              <span>03</span><span class="format-tab-label"><strong>Павильон-островок</strong><small>цех отдельно</small></span>
+            </button>
+          </div>
+
+          <div class="format-panel" id="preview-format-panel" role="tabpanel" aria-labelledby="preview-tab-0" tabindex="0">
+            <div class="format-visual" aria-hidden="true">
+              <img class="is-active" src="../assets/official/blocks__formats__formats_img_1.png" alt="" />
+              <img src="../assets/official/blocks__formats__formats_img_3.png" alt="" />
+              <img src="../assets/official/blocks__formats__formats_img_2.png" alt="" />
+            </div>
+            <div class="format-copy">
+              <div class="format-title-row" id="format-title-row">
+                <div><span>Выбранный формат</span><h3 id="format-name">Кофейня + цех</h3></div>
+                <p id="format-note" hidden></p>
+              </div>
+              <dl class="format-facts" id="format-facts">
+                <div class="format-fact format-fact-1"><span class="format-fact-index">01</span><dt>Минимальная площадь</dt><dd>80 м²</dd></div>
+                <div class="format-fact format-fact-2"><span class="format-fact-index">02</span><dt>Инвестиции</dt><dd>от 7 000 000 ₽</dd></div>
+                <div class="format-fact format-fact-3"><span class="format-fact-index">03</span><dt>Рентабельность</dt><dd>25–30%</dd></div>
+                <div class="format-fact format-fact-4"><span class="format-fact-index">04</span><dt>Средняя выручка</dt><dd>≈ 2 400 000 ₽</dd></div>
+                <div class="format-fact format-fact-5"><span class="format-fact-index">05</span><dt>Средняя чистая прибыль</dt><dd>600 000 ₽</dd></div>
+                <div class="format-fact format-fact-6"><span class="format-fact-index">06</span><dt>Средняя окупаемость</dt><dd>12–16 месяцев</dd></div>
+              </dl>
+            </div>
+          </div>
+        </div>
+        <p class="preview-note">Нажмите на другой формат. Фиолетовая плашка перемещается между вкладками, а фотографии плавно сменяют друг друга. Сетка показателей остаётся на месте.</p>
+      </section>
+    </main>
+
+    <footer class="preview-footer preview-shell">
+      <span>Предпросмотр анимаций · вариант G</span>
+      <a href="../">Вернуться на сайт ↗</a>
+    </footer>
+  </body>
+</html>
