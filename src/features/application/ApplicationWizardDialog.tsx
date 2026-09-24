@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState, type ChangeEvent, type FormEvent, type ReactNode } from 'react'
 import { BrandText } from '../../components/BrandText'
 import { CheckIcon, SolidArrowLeftIcon, SolidArrowRightIcon, XMarkSolidIcon } from '../../components/Icons'
+import { WizardDonutScrollbar } from './WizardDonutScrollbar'
 
 type ApplicationWizardDialogProps = {
   open: boolean
@@ -66,6 +67,7 @@ export function ApplicationWizardDialog({ open, onClose }: ApplicationWizardDial
   const [submitted, setSubmitted] = useState(false)
   const [closing, setClosing] = useState(false)
   const dialogRef = useRef<HTMLDivElement>(null)
+  const stepBodyRef = useRef<HTMLDivElement>(null)
   const closeButtonRef = useRef<HTMLButtonElement>(null)
   const stepHeadingRef = useRef<HTMLHeadingElement>(null)
   const returnFocusRef = useRef<HTMLElement | null>(null)
@@ -394,78 +396,81 @@ export function ApplicationWizardDialog({ open, onClose }: ApplicationWizardDial
                 <p>{currentStep.copy}</p>
               </div>
 
-              <div className="wizard-step-body" key={step}>
-                {step === 0 && (
-                  <>
-                    <div className="form-grid two-columns">
-                      <WizardField label="ФИО" name="fullName" value={data.fullName} placeholder="Иванов Иван Иванович" required error={errors.fullName} onChange={updateField} />
-                      <WizardField label="Возраст" name="age" value={data.age} placeholder="30" inputMode="numeric" error={errors.age} onChange={updateField} />
-                    </div>
-                    <WizardField label="Опыт работы" name="experience" value={data.experience} placeholder="Например, 3 года в общепите" onChange={updateField} />
-                    <WizardRadioGroup label="Какую роль планируете занять?" name="role" value={data.role} options={roleOptions} error={errors.role} onChange={updateRadio} />
-                  </>
-                )}
+              <div className="wizard-step-scroll" key={step}>
+                <div className="wizard-step-body" id="wizard-step-body" ref={stepBodyRef}>
+                  {step === 0 && (
+                    <>
+                      <div className="form-grid two-columns">
+                        <WizardField label="ФИО" name="fullName" value={data.fullName} placeholder="Иванов Иван Иванович" required error={errors.fullName} onChange={updateField} />
+                        <WizardField label="Возраст" name="age" value={data.age} placeholder="30" inputMode="numeric" error={errors.age} onChange={updateField} />
+                      </div>
+                      <WizardField label="Опыт работы" name="experience" value={data.experience} placeholder="Например, 3 года в общепите" onChange={updateField} />
+                      <WizardRadioGroup label="Какую роль планируете занять?" name="role" value={data.role} options={roleOptions} error={errors.role} onChange={updateRadio} />
+                    </>
+                  )}
 
-                {step === 1 && (
-                  <>
-                    <div className="form-grid two-columns form-group-grid">
-                      <WizardRadioGroup label="Какой формат хотите открыть?" name="format" value={data.format} options={formatOptions} error={errors.format} onChange={updateRadio} />
-                      <WizardRadioGroup label="Как планируете инвестировать?" name="investment" value={data.investment} options={investmentOptions} error={errors.investment} onChange={updateRadio} />
-                    </div>
-                    <WizardField label="Регион / город / место" name="region" value={data.region} placeholder="Город, район или торговый центр" required error={errors.region} onChange={updateField} />
-                  </>
-                )}
+                  {step === 1 && (
+                    <>
+                      <div className="form-grid two-columns form-group-grid">
+                        <WizardRadioGroup label="Какой формат хотите открыть?" name="format" value={data.format} options={formatOptions} error={errors.format} onChange={updateRadio} />
+                        <WizardRadioGroup label="Как планируете инвестировать?" name="investment" value={data.investment} options={investmentOptions} error={errors.investment} onChange={updateRadio} />
+                      </div>
+                      <WizardField label="Регион / город / место" name="region" value={data.region} placeholder="Город, район или торговый центр" required error={errors.region} onChange={updateField} />
+                    </>
+                  )}
 
-                {step === 2 && (
-                  <>
-                    <div className="form-grid two-columns">
-                      <WizardTextArea label="Маркетинговая стратегия" name="marketing" value={data.marketing} placeholder="Как планируете привлекать гостей?" onChange={updateField} />
-                      <WizardTextArea label={<>Почему <BrandText>39 donuts</BrandText></>} name="reason" value={data.reason} placeholder="Что привлекло вас в бренде?" onChange={updateField} />
-                    </div>
-                    <WizardTextArea label="О себе" name="about" value={data.about} placeholder="Коротко расскажите о себе" onChange={updateField} />
-                  </>
-                )}
+                  {step === 2 && (
+                    <>
+                      <div className="form-grid two-columns">
+                        <WizardTextArea label="Маркетинговая стратегия" name="marketing" value={data.marketing} placeholder="Как планируете привлекать гостей?" onChange={updateField} />
+                        <WizardTextArea label={<>Почему <BrandText>39 donuts</BrandText></>} name="reason" value={data.reason} placeholder="Что привлекло вас в бренде?" onChange={updateField} />
+                      </div>
+                      <WizardTextArea label="О себе" name="about" value={data.about} placeholder="Коротко расскажите о себе" onChange={updateField} />
+                    </>
+                  )}
 
-                {step === 3 && (
-                  <>
-                    <WizardField label="Контакт" name="contact" value={data.contact} placeholder="Телефон / Telegram / Email" required error={errors.contact} onChange={updateField} />
-                    <div className="wizard-review" aria-label="Все ответы анкеты">
-                      <div className="wizard-review-heading">
-                        <div>
-                          <span>Ваши ответы</span>
-                          <p>Проверьте заполненные данные перед отправкой. Каждый раздел можно открыть и изменить.</p>
+                  {step === 3 && (
+                    <>
+                      <WizardField label="Контакт" name="contact" value={data.contact} placeholder="Телефон / Telegram / Email" required error={errors.contact} onChange={updateField} />
+                      <div className="wizard-review" aria-label="Все ответы анкеты">
+                        <div className="wizard-review-heading">
+                          <div>
+                            <span>Ваши ответы</span>
+                            <p>Проверьте заполненные данные перед отправкой. Каждый раздел можно открыть и изменить.</p>
+                          </div>
+                        </div>
+                        <div className="wizard-review-groups">
+                          {reviewGroups.map((group) => (
+                            <section className="wizard-review-group" key={group.title} aria-labelledby={`wizard-review-${group.step}`}>
+                              <header>
+                                <div>
+                                  <span>{String(group.step + 1).padStart(2, '0')}</span>
+                                  <h4 id={`wizard-review-${group.step}`}>{group.title}</h4>
+                                </div>
+                                {group.step !== step && (
+                                  <button type="button" onClick={() => goToStep(group.step)}>Изменить</button>
+                                )}
+                              </header>
+                              <dl>
+                                {group.items.map((item) => (
+                                  <div className={item.wide || group.items.length === 1 ? 'is-wide' : undefined} key={item.label}>
+                                    <dt>{item.label}</dt>
+                                    <dd>{item.value.trim()}</dd>
+                                  </div>
+                                ))}
+                              </dl>
+                            </section>
+                          ))}
                         </div>
                       </div>
-                      <div className="wizard-review-groups">
-                        {reviewGroups.map((group) => (
-                          <section className="wizard-review-group" key={group.title} aria-labelledby={`wizard-review-${group.step}`}>
-                            <header>
-                              <div>
-                                <span>{String(group.step + 1).padStart(2, '0')}</span>
-                                <h4 id={`wizard-review-${group.step}`}>{group.title}</h4>
-                              </div>
-                              {group.step !== step && (
-                                <button type="button" onClick={() => goToStep(group.step)}>Изменить</button>
-                              )}
-                            </header>
-                            <dl>
-                              {group.items.map((item) => (
-                                <div className={item.wide || group.items.length === 1 ? 'is-wide' : undefined} key={item.label}>
-                                  <dt>{item.label}</dt>
-                                  <dd>{item.value.trim()}</dd>
-                                </div>
-                              ))}
-                            </dl>
-                          </section>
-                        ))}
-                      </div>
-                    </div>
-                    <p className="wizard-privacy-note">
-                      Нажимая «Отправить заявку», вы соглашаетесь с{' '}
-                      <a href="https://39donuts.ru/privacy-policy/" target="_blank" rel="noreferrer">политикой обработки персональных данных</a>.
-                    </p>
-                  </>
-                )}
+                      <p className="wizard-privacy-note">
+                        Нажимая «Отправить заявку», вы соглашаетесь с{' '}
+                        <a href="https://39donuts.ru/privacy-policy/" target="_blank" rel="noreferrer">политикой обработки персональных данных</a>.
+                      </p>
+                    </>
+                  )}
+                </div>
+                <WizardDonutScrollbar scrollRef={stepBodyRef} />
               </div>
 
               <div className="wizard-actions">

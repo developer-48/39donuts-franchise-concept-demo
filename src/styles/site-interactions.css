@@ -18,6 +18,13 @@
   transform: translateX(-2px);
 }
 
+.application-wizard-current .wizard-step-scroll {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+}
+
 @media (min-width: 961px) {
   .application-wizard-current {
     display: flex;
