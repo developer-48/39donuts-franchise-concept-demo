@@ -16,6 +16,32 @@ const formats = [
   },
 ]
 
+const motionDemos = [...document.querySelectorAll('.motion-demo')]
+
+function replayMotion(demo) {
+  demo.classList.remove('is-playing')
+  void demo.offsetWidth
+  requestAnimationFrame(() => demo.classList.add('is-playing'))
+}
+
+document.querySelectorAll('[data-replay-target]').forEach((button) => {
+  button.addEventListener('click', () => replayMotion(document.getElementById(button.dataset.replayTarget)))
+})
+
+if ('IntersectionObserver' in window) {
+  const motionObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        replayMotion(entry.target)
+        motionObserver.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.25 })
+  motionDemos.forEach((demo) => motionObserver.observe(demo))
+} else {
+  motionDemos.forEach(replayMotion)
+}
+
 const counterCard = document.getElementById('counter-card')
 const counterModeButtons = [...document.querySelectorAll('[data-counter-mode]')]
 const formatsDemo = document.getElementById('formats-demo')

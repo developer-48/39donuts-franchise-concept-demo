@@ -14,21 +14,102 @@
       <a class="preview-logo" href="../" aria-label="Открыть основной сайт 39 donuts">
         <img src="../assets/official/logo.svg" alt="39 donuts" />
       </a>
-      <span class="preview-header-label">Сравнение двух анимаций</span>
+      <span class="preview-header-label">Все шесть анимаций</span>
       <a class="preview-site-link" href="../">Основной сайт <span aria-hidden="true">↗</span></a>
     </header>
 
     <main>
       <div class="preview-intro preview-shell">
         <span class="eyebrow">Предпросмотр · вариант G</span>
-        <h1>Две анимации <span>для сравнения</span></h1>
-        <p>Переключайте варианты «До» и «После». Оба эффекта уже добавлены на основной сайт; здесь их удобно сравнить с прежним поведением.</p>
+        <h1>Шесть анимаций <span>сайта</span></h1>
+        <p>Выберите эффект ниже. Для повторного просмотра нажмите «Повторить»; в блоке форматов переключайте вкладки. В двух последних блоках можно также сравнить поведение «До» и «После».</p>
       </div>
+
+      <nav class="preview-index preview-shell" aria-label="Выбор анимации">
+        <a href="#arrow"><span>01</span> Зелёная стрелка</a>
+        <a href="#steps"><span>02</span> Линия шагов</a>
+        <a href="#network"><span>03</span> Числа сети</a>
+        <a href="#donut"><span>04</span> Большой пончик</a>
+        <a href="#number"><span>05</span> 940 597 пончиков</a>
+        <a href="#formats"><span>06</span> Форматы кофеен</a>
+      </nav>
+
+      <section class="preview-section preview-shell" id="arrow" aria-labelledby="arrow-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">01 · История бренда</span>
+            <h2 id="arrow-title">Зелёная стрелка</h2>
+          </div>
+          <button class="replay-button" type="button" data-replay-target="arrow-demo">↺ Повторить</button>
+        </div>
+        <div class="arrow-demo motion-demo" id="arrow-demo" aria-label="39 квадратных метров — стрелка — бесконечность">
+          <strong>39 м²</strong>
+          <svg viewBox="0 0 68 40" fill="none" aria-hidden="true"><path d="M3 20H61M43 3L61 20L43 37" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" /></svg>
+          <strong>∞</strong>
+        </div>
+        <p class="preview-note">Стрелка один раз прорисовывается слева направо, затем появляется знак бесконечности.</p>
+      </section>
+
+      <section class="preview-section preview-shell" id="steps" aria-labelledby="steps-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">02 · Путь к открытию</span>
+            <h2 id="steps-title">Линия шагов</h2>
+          </div>
+          <button class="replay-button" type="button" data-replay-target="steps-demo">↺ Повторить</button>
+        </div>
+        <ol class="steps-demo motion-demo" id="steps-demo">
+          <li><span>01</span><p>Оставьте заявку на сайте</p></li>
+          <li><span>02</span><p>Познакомьтесь с командой</p></li>
+          <li><span>03</span><p>Подпишите договор</p></li>
+          <li><span>04</span><p>Оплатите паушальный взнос</p></li>
+          <li><span>05</span><p>Откройте кофейню</p></li>
+        </ol>
+        <p class="preview-note">Соединительная линия проходит через пять шагов; каждый номер мягко подсвечивается по очереди.</p>
+      </section>
+
+      <section class="preview-section preview-shell" id="network" aria-labelledby="network-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">03 · География роста</span>
+            <h2 id="network-title">Числа сети</h2>
+          </div>
+          <button class="replay-button" type="button" data-replay-target="network-demo">↺ Повторить</button>
+        </div>
+        <div class="network-demo motion-demo" id="network-demo">
+          <div class="network-counts">
+            <article><strong><span>20</span></strong><small>точек</small><p>Россия</p></article>
+            <article><strong><span>1</span></strong><small>точка</small><p>Казахстан</p></article>
+          </div>
+          <div class="network-photos" aria-label="Фотографии кофеен">
+            <img src="../assets/official/blocks__shops__shops_img_1.png" alt="Витрина кофейни" />
+            <img src="../assets/official/blocks__shops__shops_img_3.png" alt="Интерьер кофейни" />
+            <img src="../assets/official/blocks__shops__shops_img_6.png" alt="Кофейня с фирменной вывеской" />
+          </div>
+        </div>
+        <p class="preview-note">Числа 20 и 1 раскрываются снизу; фотографии появляются одна за другой.</p>
+      </section>
+
+      <section class="preview-section preview-shell" id="donut" aria-labelledby="donut-title">
+        <div class="preview-section-heading">
+          <div>
+            <span class="eyebrow">04 · Продукт как бизнес</span>
+            <h2 id="donut-title">Большой пончик</h2>
+          </div>
+          <button class="replay-button" type="button" data-replay-target="donut-demo">↺ Повторить</button>
+        </div>
+        <div class="donut-demo motion-demo" id="donut-demo">
+          <div class="donut-demo-copy"><span class="eyebrow">Продукт как бизнес</span><h3>Почему пончики?</h3><p>Знакомый эмоциональный продукт превращается в компактную и масштабируемую бизнес-модель.</p></div>
+          <img src="../assets/official/blocks__whoare__whoare_img_7.1.png" alt="Фирменный пончик 39 donuts" />
+          <span class="donut-demo-note">Вкус, который легко узнать</span>
+        </div>
+        <p class="preview-note">Пончик чуть поднимается и проявляется. Текст и карточка остаются на месте.</p>
+      </section>
 
       <section class="preview-section preview-shell" id="number" aria-labelledby="number-title">
         <div class="preview-section-heading">
           <div>
-            <span class="eyebrow">Идея 02 · История бренда</span>
+            <span class="eyebrow">05 · История бренда</span>
             <h2 id="number-title">940 597 пончиков</h2>
           </div>
           <div class="preview-controls" role="group" aria-label="Режим анимации числа">
@@ -53,7 +134,7 @@
       <section class="preview-section preview-section-formats preview-shell" id="formats" aria-labelledby="formats-title">
         <div class="preview-section-heading">
           <div>
-            <span class="eyebrow">Идея 03 · Переключение</span>
+            <span class="eyebrow">06 · Переключение форматов</span>
             <h2 id="formats-title">Три формата кофейни</h2>
           </div>
           <div class="preview-controls" role="group" aria-label="Режим анимации форматов">
