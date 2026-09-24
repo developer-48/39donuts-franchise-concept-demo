@@ -237,16 +237,16 @@ h1, h2, h3, p, dl, dd { margin: 0; }
 
 .counter-card.mode-current.is-playing { animation: current-card-in 620ms var(--ease) both; }
 @keyframes current-card-in { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
-.counter-card.mode-proposal.is-playing .counter-art { animation: counter-art-in 820ms var(--ease) both; }
-.counter-card.mode-proposal.is-playing .counter-copy strong { animation: counter-number-in 560ms 180ms var(--ease) both; }
-.counter-card.mode-proposal.is-playing .counter-copy p { animation: counter-caption-in 400ms 440ms ease both; }
+.counter-card.mode-proposal.is-playing .counter-art { animation: counter-art-in 1000ms var(--ease) both; }
+.counter-card.mode-proposal.is-playing .counter-copy strong { animation: counter-number-in 720ms 220ms var(--ease) both; }
+.counter-card.mode-proposal.is-playing .counter-copy p { animation: counter-caption-in 400ms 480ms ease both; }
 @keyframes counter-art-in {
-  from { clip-path: inset(0 0 0 100%); transform: translateX(32px) scale(1.025); }
-  to { clip-path: inset(0 0 0 0); transform: none; }
+  from { opacity: 0; transform: translateX(28px) scale(1.015); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes counter-number-in {
-  from { opacity: 0; clip-path: inset(100% 0 0 0); transform: translateY(18px); }
-  to { opacity: 1; clip-path: inset(0 0 0 0); transform: none; }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: none; }
 }
 @keyframes counter-caption-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
 
