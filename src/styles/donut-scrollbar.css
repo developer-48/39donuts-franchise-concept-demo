@@ -1,0 +1,75 @@
+@media (min-width: 901px) and (pointer: fine) and (forced-colors: none) {
+  html.has-donut-scrollbar {
+    scrollbar-width: none;
+  }
+
+  html.has-donut-scrollbar::-webkit-scrollbar,
+  html.has-donut-scrollbar body::-webkit-scrollbar {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+}
+
+.donut-scrollbar {
+  position: fixed;
+  z-index: 150;
+  inset: 0 0 0 auto;
+  display: none;
+  width: 24px;
+  height: 100vh;
+  height: 100dvh;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.donut-scrollbar.is-visible {
+  display: block;
+}
+
+.donut-scrollbar::before {
+  position: absolute;
+  inset: 0 0 0 auto;
+  width: 16px;
+  border-left: 1px solid rgba(109, 62, 179, 0.18);
+  background: rgba(247, 243, 252, 0.86);
+  content: '';
+}
+
+.donut-scrollbar-thumb {
+  position: absolute;
+  inset: 0 0 auto;
+  display: flex;
+  height: 72px;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.donut-scrollbar-thumb img {
+  width: 38px;
+  max-width: none;
+  height: 84px;
+  flex: none;
+  pointer-events: none;
+  user-select: none;
+  filter: drop-shadow(0 1px 1px rgba(58, 26, 71, 0.2));
+  transform: translateX(4px);
+}
+
+.donut-scrollbar:focus-visible {
+  outline: none;
+}
+
+.donut-scrollbar:focus-visible .donut-scrollbar-thumb {
+  outline: 2px solid var(--purple);
+  outline-offset: -2px;
+  border-radius: 14px;
+}
+
+@media (max-width: 900px), (pointer: coarse), (forced-colors: active) {
+  .donut-scrollbar {
+    display: none !important;
+  }
+}
