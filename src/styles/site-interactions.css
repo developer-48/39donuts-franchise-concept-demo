@@ -21,6 +21,7 @@
 @media (min-width: 961px) {
   .application-wizard-current {
     display: flex;
+    height: min(860px, calc(100dvh - 48px));
     max-height: calc(100dvh - 48px);
     flex-direction: column;
   }
@@ -85,6 +86,11 @@
   .application-wizard-current .wizard-actions {
     position: relative;
     flex: 0 0 auto;
+  }
+
+  .application-wizard-current .wizard-success {
+    min-height: 0;
+    overflow-y: auto;
   }
 }
 
