@@ -1,0 +1,8 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { assets } from '../data/siteContent.js'
+---
+<BaseLayout title="Страница не найдена — 39 donuts" description="Такой страницы нет. Вернитесь на главную страницу 39 donuts." interactive={false} noindex>
+  <main class="not-found"><a href="/" aria-label="39 donuts — на главную"><img src={assets.logo} width="258" height="48" alt="39 donuts" /></a><p class="error-code">404</p><h1>Страница не найдена</h1><p>Возможно, адрес изменился. Всё о франшизе — на главной странице.</p><a class="button" href="/">На главную</a></main>
+</BaseLayout>
+<style>.not-found{min-height:100svh;max-width:800px;margin:auto;padding:60px 24px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:24px}.not-found h1{font-size:clamp(32px,5vw,56px);line-height:1.15}.error-code{color:#7a44ca;font-family:Unbounded,sans-serif;font-size:clamp(72px,15vw,128px)}</style>

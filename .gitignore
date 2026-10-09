@@ -1,5 +1,7 @@
 node_modules/
 dist/
+dist-preview/
+releases/
 .astro/
 .env
 .env.*

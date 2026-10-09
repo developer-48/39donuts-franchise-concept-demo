@@ -1,4 +1,5 @@
 ---
+import SiteImage from '../../components/SiteImage.astro'
 import { formats } from '../../data/siteContent.js'
 import BrandText from '../../components/BrandText.astro'
 ---
@@ -19,7 +20,7 @@ import BrandText from '../../components/BrandText.astro'
     </div>
     <div class="format-panel format-panel-details" id="format-panel" role="tabpanel" aria-labelledby={`format-tab-${formats[0].id}`} tabindex="0">
       <div class="format-visual">
-        {formats.map((item, index) => <img class={index === 0 ? 'is-active' : undefined} src={item.image}
+        {formats.map((item, index) => <SiteImage class={index === 0 ? 'is-active' : undefined} src={item.image}
           alt={index === 0 ? `${item.name}${item.note ? `, ${item.note}` : ''}` : ''} aria-hidden={index !== 0}
           data-format-image={index} data-format-alt={`${item.name}${item.note ? `, ${item.note}` : ''}`} />)}
         <span class="asset-note" data-format-asset-note hidden>Визуализация формата с текущего сайта</span>

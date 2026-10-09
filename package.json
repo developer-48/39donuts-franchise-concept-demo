@@ -7,13 +7,17 @@
     "node": "^22.13.0 || >=24.0.0"
   },
   "scripts": {
-    "dev": "astro dev --host 127.0.0.1",
-    "build": "astro build",
-    "preview": "astro preview --host 127.0.0.1",
+    "dev": "node scripts/astro-command.mjs dev preview --host 127.0.0.1",
+    "build": "node scripts/astro-command.mjs build production",
+    "build:preview": "node scripts/astro-command.mjs build preview",
+    "preview": "node scripts/astro-command.mjs preview preview --host 127.0.0.1",
+    "preview:production": "node scripts/astro-command.mjs preview production --host 127.0.0.1",
     "lint": "eslint .",
     "test": "node --test tests/*.test.js",
-    "check": "npm run lint && npm run test && npm run build && npm run verify:static",
-    "verify:static": "node scripts/verify-static-build.mjs"
+    "check": "npm run lint && npm run test && npm run build && npm run verify:static && npm run verify:seo",
+    "verify:static": "node scripts/verify-static-build.mjs",
+    "verify:seo": "node scripts/verify-seo-build.mjs dist production",
+    "release": "npm run check && node scripts/package-release.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "5.2.6",

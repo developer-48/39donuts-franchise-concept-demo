@@ -1,4 +1,5 @@
 ---
+import SiteImage from '../components/SiteImage.astro'
 import { assets, story } from '../data/siteContent.js'
 import BrandText from '../components/BrandText.astro'
 import FounderGallery from '../components/FounderGallery.astro'
@@ -29,8 +30,8 @@ import FounderGallery from '../components/FounderGallery.astro'
         <h3>Смысл бренда</h3>
         <p><BrandText text={story.mission} /></p>
         <div class="story-photo-pair" aria-hidden="true">
-          <img src={assets.crowd} alt="" />
-          <img src={assets.kioskNight} alt="" />
+          <SiteImage src={assets.crowd} alt="" />
+          <SiteImage src={assets.kioskNight} alt="" />
         </div>
       </article>
       <article class="story-card story-recipe motion-item">
@@ -39,11 +40,11 @@ import FounderGallery from '../components/FounderGallery.astro'
           <h3>Секрет — во вкусе</h3>
           <p>{story.recipe}</p>
         </div>
-        <img src={assets.donut} alt="Фирменный пончик с шоколадной глазурью" />
+        <SiteImage src={assets.donut} alt="Фирменный пончик с шоколадной глазурью" />
       </article>
       <article class="story-card story-growth motion-item">
         <span class="story-number">04</span>
-        <img src={assets.founders} alt="Ибрагим Токкаев и Джамбулат Исмаилов" />
+        <SiteImage src={assets.founders} alt="Ибрагим Токкаев и Джамбулат Исмаилов" />
         <div>
           <h3>Усиление команды</h3>
           <p><BrandText text={story.partnership} /></p>
@@ -55,7 +56,7 @@ import FounderGallery from '../components/FounderGallery.astro'
           <strong>{story.donutsSold}</strong>
           <p>{story.donutsSoldLabel}</p>
         </div>
-        <img class="story-counter-ribbon" src={assets.donutRibbon} alt="" />
+        <SiteImage class="story-counter-ribbon" src={assets.donutRibbon} alt="" />
       </article>
     </div>
   </div>

@@ -323,5 +323,5 @@ export const contact = {
   instagram: 'https://www.instagram.com/39donuts/',
   telegram: 'https://t.me/grz39donuts',
   whatsapp: 'https://wa.me/79298933939',
-  privacy: 'https://39donuts.ru/privacy-policy/',
+  privacy: `${import.meta.env.BASE_URL}privacy-policy/`,
 }

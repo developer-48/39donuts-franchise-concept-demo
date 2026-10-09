@@ -1,7 +1,10 @@
 import { defineConfig } from 'astro/config'
+import { resolveSiteUrl } from './src/lib/seo.js'
 
 export default defineConfig({
-  site: process.env.SITE_URL ?? 'https://39donuts.ru',
+  site: resolveSiteUrl(process.env.SITE_URL),
   output: 'static',
+  outDir: process.env.PUBLIC_SITE_MODE === 'preview' ? './dist-preview' : './dist',
+  trailingSlash: 'always',
   vite: { build: { cssMinify: true } },
 })

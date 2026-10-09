@@ -1,0 +1,19 @@
+# Include INSIDE the existing HTTPS server for 39donuts.ru.
+# Keep the host's root, certificates and existing /api PHP/backend configuration.
+index index.html;
+error_page 404 /404.html;
+location = /404.html { internal; }
+location = /index.html { return 301 /$is_args$args; }
+location ~ ^/(e|f|g)(/index\.html)?/?$ { return 301 /$is_args$args; }
+location = /privacy-policy { return 301 /privacy-policy/$is_args$args; }
+location = /privacy-policy/index.html { return 301 /privacy-policy/$is_args$args; }
+
+location / { try_files $uri $uri/ =404; }
+location /_astro/ {
+  try_files $uri =404;
+  add_header Cache-Control "public, max-age=31536000, immutable";
+}
+# Add to the existing HTTP server for both domain variants:
+# return 301 https://39donuts.ru$request_uri;
+# Add to the existing HTTPS server for www.39donuts.ru:
+# return 301 https://39donuts.ru$request_uri;

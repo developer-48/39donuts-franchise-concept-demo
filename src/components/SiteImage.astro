@@ -1,0 +1,11 @@
+---
+import imageMetadata from '../data/imageMetadata.json'
+
+const { src, width, height, loading = 'lazy', decoding = 'async', ...attributes } = Astro.props
+// BASE_URL may include a hosting subdirectory; metadata describes public assets.
+const assetPath = typeof src === 'string' && !/^(?:[a-z]+:)?\/\//i.test(src)
+  ? src.match(/(?:^|\/)assets\/[^?#]+/)?.[0].replace(/^\//, '')
+  : undefined
+const dimensions = assetPath ? imageMetadata[assetPath] : undefined
+---
+<img {...attributes} src={src} width={width ?? dimensions?.width} height={height ?? dimensions?.height} loading={loading} decoding={decoding} data-intrinsic-size={Boolean(dimensions)} />

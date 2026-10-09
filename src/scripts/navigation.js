@@ -1,3 +1,5 @@
+import { legacyAnchors } from '../data/seoContent.js'
+
 export function initNavigation() {
   const header = document.querySelector('.site-header')
   const menu = document.querySelector('#mobile-navigation')
@@ -85,7 +87,7 @@ export function initNavigation() {
     })
   }
 
-  const scrollToSection = (href) => {
+  const scrollToSection = (href, updateHistory = true) => {
     const target = document.querySelector(href)
     if (!target) return
     const headerHeight = header?.getBoundingClientRect().height ?? 0
@@ -95,7 +97,7 @@ export function initNavigation() {
       targetOffset += offsetNode.offsetTop
       offsetNode = offsetNode.offsetParent
     }
-    window.history.pushState(null, '', href)
+    if (updateHistory) window.history.pushState(null, '', href)
     window.scrollTo({
       top: Math.max(0, targetOffset - headerHeight - 12),
       behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
@@ -126,5 +128,13 @@ export function initNavigation() {
   })
 
   updateMenu()
+  const restoreLegacyAnchor = () => {
+    const target = legacyAnchors[window.location.hash.slice(1)]
+    if (!target) return
+    window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}#${target}`)
+    requestAnimationFrame(() => requestAnimationFrame(() => scrollToSection(`#${target}`, false)))
+  }
+  restoreLegacyAnchor()
+  window.addEventListener('hashchange', restoreLegacyAnchor)
   return { isOpen: () => menuOpen, close: closeMenu }
 }

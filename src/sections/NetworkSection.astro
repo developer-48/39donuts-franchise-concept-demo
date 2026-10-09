@@ -1,4 +1,5 @@
 ---
+import SiteImage from '../components/SiteImage.astro'
 import { advantages, assets, network } from '../data/siteContent.js'
 import BrandText from '../components/BrandText.astro'
 ---
@@ -24,15 +25,15 @@ import BrandText from '../components/BrandText.astro'
       </div>
       <div class="shop-mosaic">
         <figure class="motion-item">
-          <img src={assets.shopCounter} alt="Витрина с пончиками в кофейне" />
+          <SiteImage src={assets.shopCounter} alt="Витрина с пончиками в кофейне" />
           <figcaption>Россия · витрина</figcaption>
         </figure>
         <figure class="motion-item">
-          <img src={assets.shopInterior} alt="Интерьер кофейни с открытой витриной" />
+          <SiteImage src={assets.shopInterior} alt="Интерьер кофейни с открытой витриной" />
           <figcaption>Россия · интерьер</figcaption>
         </figure>
         <figure class="motion-item">
-          <img src={assets.shopCase} alt="Кофейня с витриной и фирменной вывеской" />
+          <SiteImage src={assets.shopCase} alt="Кофейня с витриной и фирменной вывеской" />
           <figcaption>Казахстан · формат сети</figcaption>
         </figure>
       </div>
@@ -45,7 +46,7 @@ import BrandText from '../components/BrandText.astro'
           <h3>Почему пончики?</h3>
           <p>Знакомый эмоциональный продукт превращается в компактную и масштабируемую бизнес-модель.</p>
         </div>
-        <img class="motion-item" src={assets.donut} alt="Фирменный пончик 39 donuts" />
+        <SiteImage class="motion-item" src={assets.donut} alt="Фирменный пончик 39 donuts" />
         <span class="advantages-feature-note">Вкус, который легко узнать</span>
       </article>
       <div class="advantages-cards">

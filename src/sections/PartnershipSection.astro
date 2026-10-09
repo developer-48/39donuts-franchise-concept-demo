@@ -1,4 +1,5 @@
 ---
+import SiteImage from '../components/SiteImage.astro'
 import { assets, steps } from '../data/siteContent.js'
 import Icon from '../components/Icon.astro'
 ---
@@ -24,7 +25,7 @@ import Icon from '../components/Icon.astro'
           <Icon name="SolidArrowRight" />
         </button>
       </div>
-      <img src={assets.application} alt="Иллюстративная композиция: телефон, стакан и пончик 39 donuts" />
+      <SiteImage src={assets.application} alt="Иллюстративная композиция: телефон, стакан и пончик 39 donuts" />
     </div>
   </div>
 </section>

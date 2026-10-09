@@ -2,3 +2,6 @@
 [hidden] { display: none !important; }
 
 .menu-button > span { display: contents; }
+:where(img[data-intrinsic-size]) {
+  height: auto;
+}

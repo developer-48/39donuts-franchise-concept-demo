@@ -1,4 +1,5 @@
 ---
+import SiteImage from '../components/SiteImage.astro'
 import { reviews } from '../data/siteContent.js'
 import BrandText from '../components/BrandText.astro'
 ---
@@ -14,7 +15,7 @@ import BrandText from '../components/BrandText.astro'
       {reviews.map((review, index) => (
         <article class="review-card motion-item">
           <div class="review-photo">
-            <img src={review.image} alt={`${review.name}, партнёр из города ${review.city}`} />
+            <SiteImage src={review.image} alt={`${review.name}, партнёр из города ${review.city}`} />
             <span>0{index + 1}</span>
           </div>
           <blockquote>

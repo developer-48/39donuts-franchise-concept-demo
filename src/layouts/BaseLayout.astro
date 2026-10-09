@@ -1,8 +1,14 @@
 ---
 import '../styles/index.css'
 import DonutScrollbar from '../features/navigation/DonutScrollbar.astro'
-const { title = '39 donuts — франшиза кофеен с пончиками' } = Astro.props
+import { seoContent } from '../data/seoContent.js'
+import { contact, faqGroups } from '../data/siteContent.js'
+import { pageUrl, buildStructuredData, serializeJsonLd } from '../lib/seo.js'
+const { title = seoContent.title, description = seoContent.description, interactive = true, noindex = false } = Astro.props
 const production = import.meta.env.PUBLIC_SITE_MODE === 'production'
+const indexable = production && !noindex
+const canonical = pageUrl(Astro.site.href, Astro.url.pathname)
+const structuredData = noindex ? null : buildStructuredData(Astro.site.href, { path: Astro.url.pathname, title, description, contact, faqGroups })
 ---
 <!doctype html>
 <html lang="ru">
@@ -10,18 +16,36 @@ const production = import.meta.env.PUBLIC_SITE_MODE === 'production'
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fffaf3" />
-    {!production && <meta name="robots" content="noindex, nofollow" />}
-    {production && Astro.site && <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />}
+    <meta name="robots" content={indexable ? 'index, follow, max-image-preview:large' : 'noindex, nofollow'} />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico?favicon.f364ab3d.ico`} sizes="256x256" type="image/x-icon" />
-    <meta name="description" content="Концепт редизайна сайта франшизы 39 donuts: история бренда, показатели сети, форматы кофеен, отзывы, FAQ и анкета партнёра." />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="ru_RU" />
+    <meta property="og:site_name" content={seoContent.siteName} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    {!noindex && <meta property="og:url" content={canonical} />}
+    <meta property="og:image" content={pageUrl(Astro.site.href, seoContent.image)} />
+    <meta property="og:image:secure_url" content={pageUrl(Astro.site.href, seoContent.image)} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={seoContent.imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={pageUrl(Astro.site.href, seoContent.image)} />
+    <meta name="twitter:image:alt" content={seoContent.imageAlt} />
     <title>{title}</title>
+    {structuredData && <script type="application/ld+json" is:inline set:html={serializeJsonLd(structuredData)} />}
     <noscript><style>.reveal,.motion-item,.motion-trigger,.network-count-value{opacity:1!important;transform:none!important}</style></noscript>
   </head>
   <body>
     <div id="root"><slot /></div>
-    <DonutScrollbar />
-    <script>
+    {interactive && <DonutScrollbar />}
+    {interactive && <script>
       import '../scripts/site.js'
-    </script>
+    </script>}
   </body>
 </html>
