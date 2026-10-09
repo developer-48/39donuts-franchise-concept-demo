@@ -1,0 +1,15 @@
+@import '@fontsource/manrope/400.css';
+@import '@fontsource/manrope/500.css';
+@import '@fontsource/manrope/600.css';
+@import '@fontsource/manrope/700.css';
+@import '@fontsource/nunito/cyrillic-900.css';
+@import '@fontsource/nunito/latin-900.css';
+@import '@fontsource/unbounded/500.css';
+@import '@fontsource/unbounded/600.css';
+/* Approved cascade: keep this order while checking the port against the reference. */
+@import './global.css';
+@import './site-foundation.css';
+@import './site-refinements.css';
+@import './site-interactions.css';
+@import './donut-scrollbar.css';
+@import './astro-runtime.css';

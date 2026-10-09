@@ -1,0 +1,4 @@
+/* Hidden server-rendered panels must stay out of the layout in every CSS layer. */
+[hidden] { display: none !important; }
+
+.menu-button > span { display: contents; }

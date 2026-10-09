@@ -1,0 +1,34 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import Header from '../features/navigation/Header.astro'
+import FormatsSection from '../features/formats/FormatsSection.astro'
+import FaqSection from '../features/faq/FaqSection.astro'
+import ApplicationWizardDialog from '../features/application/ApplicationWizardDialog.astro'
+import HeroSection from '../sections/HeroSection.astro'
+import RevenueSection from '../sections/RevenueSection.astro'
+import StorySection from '../sections/StorySection.astro'
+import NetworkSection from '../sections/NetworkSection.astro'
+import ReviewsSection from '../sections/ReviewsSection.astro'
+import PartnershipSection from '../sections/PartnershipSection.astro'
+import ContactSection from '../sections/ContactSection.astro'
+import SiteFooter from '../sections/SiteFooter.astro'
+---
+<BaseLayout>
+  <div class="site">
+    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+    <Header />
+    <main id="main-content">
+      <HeroSection />
+      <RevenueSection />
+      <StorySection />
+      <NetworkSection />
+      <FormatsSection />
+      <ReviewsSection />
+      <PartnershipSection />
+      <FaqSection />
+      <ContactSection />
+    </main>
+    <SiteFooter />
+    <ApplicationWizardDialog />
+  </div>
+</BaseLayout>

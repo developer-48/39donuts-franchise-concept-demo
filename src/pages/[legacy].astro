@@ -1,0 +1,14 @@
+---
+export function getStaticPaths() {
+  return ['e', 'f', 'g'].map((legacy) => ({ params: { legacy } }))
+}
+const base = import.meta.env.BASE_URL
+---
+<!doctype html>
+<html lang="ru"><head>
+  <meta charset="utf-8" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta http-equiv="refresh" content={`0;url=${base}`} />
+  <title>39 donuts</title>
+  <script is:inline define:vars={{ base }}>window.location.replace(`${base}${window.location.search}${window.location.hash}`)</script>
+</head><body><a href={base}>Перейти на главную</a></body></html>

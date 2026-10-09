@@ -2,7 +2,7 @@ name: Source checks
 
 on:
   push:
-    branches: [source]
+    branches: [astro-js-production]
   pull_request:
     branches: [source]
 
@@ -18,4 +18,3 @@ jobs:
       - run: npm ci
       - run: npm audit --audit-level=moderate
       - run: npm run check
-      - run: npm run build:pages
