@@ -1,0 +1,63 @@
+---
+import BrandText from '../ui/brand/BrandText.astro'
+import Icon from '../ui/icon/Icon.astro'
+import { applicationSteps } from './content.js'
+import AboutStep from './steps/AboutStep.astro'
+import ProjectStep from './steps/ProjectStep.astro'
+import PlanStep from './steps/PlanStep.astro'
+import ContactStep from './steps/ContactStep.astro'
+import WizardProgress from './progress/WizardProgress.astro'
+import WizardSuccess from './success/WizardSuccess.astro'
+import WizardActions from './actions/WizardActions.astro'
+---
+
+<div
+  class="dialog-layer application-wizard-layer application-wizard-layer-current"
+  data-dialog-state="open"
+  hidden
+>
+  <button
+    class="dialog-backdrop"
+    type="button"
+    aria-label="Закрыть анкету"
+    data-close-application
+  ></button>
+  <div
+    class="application-dialog application-wizard application-wizard-current"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="application-wizard-title"
+    aria-describedby="application-wizard-description"
+  >
+    <div class="wizard-topbar">
+      <div>
+        <span class="dialog-kicker">Заявка на партнёрство</span>
+        <h2 id="application-wizard-title">
+          Анкета партнёра <BrandText text="39 donuts" />
+        </h2>
+        <p id="application-wizard-description">
+          Четыре коротких шага: расскажите о себе, проекте и планах запуска.
+        </p>
+      </div>
+      <button class="dialog-close" type="button" aria-label="Закрыть анкету" data-close-application>
+        <Icon name="XMarkSolid" />
+      </button>
+    </div>
+    <WizardSuccess />
+    <div class="wizard-layout">
+      <WizardProgress />
+      <form class="wizard-form" novalidate>
+        <div class="wizard-step-heading">
+          <span data-step-number>01 / 04</span>
+          <h3 tabindex="-1">О вас</h3>
+          <p>{applicationSteps[0].copy}</p>
+        </div>
+        <AboutStep />
+        <ProjectStep />
+        <PlanStep />
+        <ContactStep />
+        <WizardActions />
+      </form>
+    </div>
+  </div>
+</div>

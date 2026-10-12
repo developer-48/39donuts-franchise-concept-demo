@@ -1,0 +1,19 @@
+---
+import WizardTextArea from '../fields/WizardTextArea.astro'
+---
+
+<div class="wizard-step-body" data-step-body="2" hidden>
+  <div class="form-grid two-columns">
+    <WizardTextArea
+      label="Маркетинговая стратегия"
+      name="marketing"
+      placeholder="Как планируете привлекать гостей?"
+    />
+    <WizardTextArea
+      label="Почему 39 donuts"
+      name="reason"
+      placeholder="Что привлекло вас в бренде?"
+    />
+  </div>
+  <WizardTextArea label="О себе" name="about" placeholder="Коротко расскажите о себе" />
+</div>

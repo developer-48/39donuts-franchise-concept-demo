@@ -1,0 +1,18 @@
+---
+import Button from '../../ui/button/Button.astro'
+import Icon from '../../ui/icon/Icon.astro'
+---
+
+<div class="wizard-actions">
+  <p>К предыдущим шагам можно вернуться без потери ответов.</p>
+  <div>
+    <button class="wizard-back" type="button" data-wizard-back hidden>
+      <Icon name="SolidArrowLeft" class="wizard-action-icon" />
+      <span>Назад</span>
+    </button>
+    <Button type="submit">
+      <span data-submit-label>Продолжить</span>{' '}
+      <Icon name="SolidArrowRight" class="wizard-action-icon" />
+    </Button>
+  </div>
+</div>

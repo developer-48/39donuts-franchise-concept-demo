@@ -1,0 +1,78 @@
+---
+import { faqGroups } from './content.js'
+import BrandText from '../../ui/brand/BrandText.astro'
+import Icon from '../../ui/icon/Icon.astro'
+---
+
+<section
+  class="section faq-section faq-section-current reveal"
+  id="faq"
+  aria-labelledby="faq-title"
+>
+  <div class="section-shell faq-layout">
+    <div class="faq-intro">
+      <span class="eyebrow">Коротко и по делу</span>
+      <h2 id="faq-title">Всё, что важно узнать до старта</h2>
+      <div class="faq-category-tabs" role="tablist" aria-label="Категории вопросов">
+        {faqGroups.map((group, index) => (
+          <button
+            id={`faq-tab-${group.id}`}
+            type="button"
+            role="tab"
+            aria-selected={index === 0}
+            aria-controls={`faq-panel-${group.id}`}
+            tabindex={index === 0 ? 0 : -1}
+            class={index === 0 ? 'is-active' : ''}
+            data-faq-group={index}
+          >
+            {group.label}
+          </button>
+        ))}
+      </div>
+    </div>
+    {faqGroups.map((group, groupIndex) => (
+      <div
+        class="faq-list"
+        id={`faq-panel-${group.id}`}
+        role="tabpanel"
+        aria-labelledby={`faq-tab-${group.id}`}
+        data-faq-panel={groupIndex}
+        hidden={groupIndex !== 0}
+      >
+        {group.items.map((item, index) => {
+          const itemId = `${group.id}-${index}`
+          return (
+            <article class={`faq-item ${index === 0 ? 'is-open' : ''}`}>
+              <h3>
+                <button
+                  type="button"
+                  aria-expanded={index === 0}
+                  aria-controls={`faq-answer-${itemId}`}
+                  id={`faq-question-${itemId}`}
+                >
+                  <span>{item.question}</span>
+                  <span class="faq-plus">
+                    <Icon name="Plus" />
+                  </span>
+                </button>
+              </h3>
+              <div
+                class="faq-answer-grid"
+                id={`faq-answer-${itemId}`}
+                role="region"
+                aria-labelledby={`faq-question-${itemId}`}
+                aria-hidden={index !== 0}
+              >
+                <div>
+                  <p>
+                    <BrandText text={item.answer} />
+                  </p>
+                </div>
+              </div>
+            </article>
+          )
+        })}
+      </div>
+    ))}
+  </div>
+</section>

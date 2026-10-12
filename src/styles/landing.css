@@ -1,0 +1,25 @@
+/* Landing styles, in component order. Standalone pages load only global.css. */
+@import './global.css';
+
+@import '../components/layout/header/header.css';
+@import '../components/sections/hero/hero.css';
+@import '../components/sections/revenue/revenue.css';
+@import '../components/sections/story/story.css';
+@import '../components/sections/story/gallery/gallery.css';
+@import '../components/sections/network/network.css';
+@import '../components/sections/network/advantages/advantages.css';
+@import '../components/sections/formats/formats.css';
+@import '../components/sections/reviews/reviews.css';
+@import '../components/sections/partnership/partnership.css';
+@import '../components/sections/faq/faq.css';
+@import '../components/sections/contacts/contacts.css';
+@import '../components/sections/contacts/conversation/conversation.css';
+@import '../components/layout/footer/footer.css';
+@import '../components/application/application.css';
+@import '../components/application/progress/progress.css';
+@import '../components/application/review/review.css';
+@import '../components/application/success/success.css';
+@import '../components/application/actions/actions.css';
+@import '../components/application/fields/fields.css';
+@import '../components/layout/scrollbar/scrollbar.css';
+@import './motion.css';

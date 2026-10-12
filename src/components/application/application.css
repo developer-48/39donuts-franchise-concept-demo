@@ -1,0 +1,459 @@
+/* Dialog shell, header and step layout. Content widgets own their own styles. */
+
+.dialog-layer {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.dialog-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: color-mix(in srgb, var(--black) 44%, transparent);
+  cursor: pointer;
+  transition: opacity 220ms ease;
+}
+
+.application-dialog {
+  position: relative;
+  z-index: 2;
+  max-height: calc(100svh - 48px);
+  overscroll-behavior: contain;
+  border-radius: 26px;
+  box-shadow: 0 28px 80px color-mix(in srgb, var(--black) 24%, transparent);
+}
+
+.application-wizard {
+  width: min(100%, 1180px);
+  overflow: hidden;
+  color: var(--ink);
+  background: var(--white);
+}
+
+.wizard-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 24px 28px;
+  border-bottom: 1px solid var(--border-line);
+  background: var(--white);
+}
+
+.dialog-kicker {
+  color: var(--orange-deep);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.wizard-topbar h2 {
+  margin-top: 6px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 2.4vw, 2.35rem);
+  font-weight: 500;
+  letter-spacing: -0.045em;
+  line-height: 1.08;
+}
+
+.wizard-topbar p {
+  max-width: 700px;
+  margin-top: 8px;
+  color: var(--ink-muted);
+  font-size: 0.79rem;
+  line-height: 1.5;
+}
+
+.dialog-close {
+  display: grid;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 auto;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--white);
+  cursor: pointer;
+}
+
+.dialog-close svg {
+  width: 24px;
+  height: 24px;
+}
+
+.application-wizard .dialog-close {
+  transition:
+    color 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.application-wizard .dialog-close svg {
+  transition: transform 220ms ease;
+}
+
+.application-wizard .dialog-close:hover {
+  border-color: var(--purple);
+  color: var(--white);
+  background: var(--purple);
+  transform: scale(1.04);
+}
+
+.application-wizard .dialog-close:hover svg {
+  transform: rotate(90deg);
+}
+
+/* The form heading remains outside each step's scrollable body. */
+.wizard-layout {
+  display: grid;
+  min-height: 620px;
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+.wizard-form {
+  display: flex;
+  min-width: 0;
+  min-height: 620px;
+  flex-direction: column;
+  background: var(--warm-white);
+}
+
+.wizard-step-heading {
+  padding: 26px 34px 18px;
+  border-bottom: 1px solid var(--border-line);
+}
+
+.wizard-step-heading > span {
+  color: var(--orange);
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+}
+
+.wizard-step-heading h3 {
+  margin-top: 7px;
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 2.8vw, 2.8rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1.05;
+}
+
+.wizard-step-heading h3:focus {
+  outline: 0;
+}
+
+.wizard-step-heading p {
+  margin-top: 7px;
+  color: var(--ink-muted);
+  font-size: 0.78rem;
+}
+
+.wizard-step-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px 34px;
+  animation: wizard-step-in 220ms ease both;
+}
+
+/* Opening and closing affect opacity only. */
+.application-wizard-layer .dialog-backdrop {
+  opacity: 0;
+  animation: wizard-backdrop-in 180ms ease-out both;
+}
+
+.application-wizard-layer .application-wizard {
+  opacity: 0;
+  animation: wizard-dialog-in 180ms ease-out both;
+}
+
+.application-wizard-layer.is-closing {
+  pointer-events: none;
+}
+
+.application-wizard-layer.is-closing .dialog-backdrop {
+  opacity: 1;
+  animation: wizard-backdrop-out 150ms ease-in both;
+}
+
+.application-wizard-layer.is-closing .application-wizard {
+  opacity: 1;
+  animation: wizard-dialog-out 150ms ease-in both;
+}
+
+/* Desktop keeps the outer dialog height stable between steps. */
+@media (min-width: 961px) {
+  .application-wizard-current {
+    display: flex;
+    height: min(860px, calc(100dvh - 48px));
+    max-height: calc(100dvh - 48px);
+    flex-direction: column;
+  }
+
+  .application-wizard-current .wizard-topbar {
+    flex: 0 0 auto;
+  }
+
+  .application-wizard-current .wizard-layout {
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  .application-wizard-current .wizard-form {
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .application-wizard-current .wizard-step-body {
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--purple) color-mix(in srgb, var(--purple) 10%, transparent);
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--purple) 10%, transparent);
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar-thumb {
+    border: 2px solid var(--warm-white);
+    border-radius: 999px;
+    background: var(--purple);
+  }
+}
+/* Tablet retains the side-by-side layout with a narrower navigation column. */
+@media (max-width: 900px) {
+  .wizard-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+  }
+}
+/* Mobile uses a viewport-sized card with its own content scroll. */
+@media (max-width: 740px) {
+  .application-wizard-layer-current {
+    align-items: center;
+    padding: 8px;
+  }
+
+  .application-wizard-layer-current .dialog-backdrop {
+    background: rgba(31, 23, 38, 0.58);
+    backdrop-filter: blur(12px);
+  }
+
+  .application-wizard-layer-current .application-wizard {
+    animation-name: wizard-mobile-card-in;
+  }
+
+  .application-wizard-layer-current.is-closing .application-wizard {
+    animation-name: wizard-mobile-card-out;
+  }
+
+  .application-wizard-current {
+    display: flex;
+    width: 100%;
+    height: calc(100dvh - 16px);
+    max-height: calc(100dvh - 16px);
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid color-mix(in srgb, var(--white) 76%, transparent);
+    border-radius: 28px;
+    background: #faf7f2;
+    box-shadow: 0 28px 90px rgba(31, 23, 38, 0.28);
+  }
+
+  .application-wizard-current .wizard-topbar {
+    position: relative;
+    z-index: 5;
+    top: auto;
+    flex: 0 0 auto;
+    align-items: center;
+    padding: 18px 18px 13px;
+    border: 0;
+  }
+
+  .application-wizard-current .dialog-kicker {
+    font-size: 0.64rem;
+    letter-spacing: 0.08em;
+  }
+
+  .application-wizard-current .wizard-topbar h2 {
+    margin-top: 5px;
+    font-size: 1.18rem;
+    line-height: 1.04;
+  }
+
+  .wizard-topbar p {
+    display: none;
+  }
+
+  .application-wizard-current .dialog-close {
+    width: 42px;
+    height: 42px;
+    border: 0;
+    border-radius: 14px;
+    color: var(--purple);
+    background: var(--purple-soft);
+  }
+
+  .application-wizard-current .dialog-close svg {
+    width: 21px;
+    height: 21px;
+  }
+
+  .application-wizard-current .wizard-layout {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  .application-wizard-current .wizard-form {
+    min-height: 0;
+    flex: 1;
+    overflow: hidden;
+    background: #faf7f2;
+  }
+
+  .application-wizard-current .wizard-step-heading {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template-columns: 54px minmax(0, 1fr);
+    align-items: center;
+    gap: 2px 12px;
+    padding: 17px 18px 12px;
+    border: 0;
+  }
+
+  .application-wizard-current .wizard-step-heading > span {
+    display: grid;
+    width: 54px;
+    height: 54px;
+    grid-row: 1 / 3;
+    place-items: center;
+    border: 1px solid color-mix(in srgb, var(--orange) 28%, transparent);
+    border-radius: 16px;
+    color: var(--orange-deep);
+    background: var(--orange-soft);
+    font-size: 0.62rem;
+  }
+
+  .application-wizard-current .wizard-step-heading h3 {
+    margin-top: 0;
+    font-size: 1.42rem;
+    line-height: 1.02;
+  }
+
+  .application-wizard-current .wizard-step-heading p {
+    margin-top: 3px;
+    font-size: 0.72rem;
+    line-height: 1.35;
+  }
+
+  .application-wizard-current .wizard-step-body {
+    min-height: 0;
+    flex: 1;
+    gap: 14px;
+    padding: 10px 16px 22px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .application-wizard-current .wizard-step-body::-webkit-scrollbar {
+    display: none;
+  }
+}
+/* Accessibility: retain visible content without fades or movement. */
+@media (prefers-reduced-motion: reduce) {
+  .application-wizard-layer .dialog-backdrop,
+  .application-wizard-layer .application-wizard {
+    opacity: 1;
+  }
+
+  .wizard-step-body,
+  .application-wizard-layer .dialog-backdrop,
+  .application-wizard-layer .application-wizard,
+  .application-wizard .dialog-close,
+  .application-wizard .dialog-close svg {
+    animation: none;
+    transition: none;
+  }
+}
+
+@keyframes wizard-backdrop-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wizard-backdrop-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes wizard-dialog-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wizard-dialog-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes wizard-mobile-card-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes wizard-mobile-card-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes wizard-step-in {
+  from {
+    opacity: 0;
+    transform: translateX(10px);
+  }
+}

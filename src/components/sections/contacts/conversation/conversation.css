@@ -1,0 +1,262 @@
+/* Conversation: base, states and responsive rules. */
+
+.contact-phone-preview {
+  position: relative;
+  width: min(100%, 346px);
+  height: 686px;
+  padding: 9px;
+  align-self: center;
+  justify-self: end;
+  border: 2px solid color-mix(in srgb, var(--white) 48%, transparent);
+  border-radius: 58px;
+  background: linear-gradient(150deg, #40364b 0%, #1c1720 42%, #342a3b 100%);
+  box-shadow:
+    0 34px 78px rgba(25, 11, 35, 0.34),
+    inset 0 0 0 1px color-mix(in srgb, var(--white) 16%, transparent);
+}
+
+.contact-phone-preview::after {
+  position: absolute;
+  right: 33%;
+  bottom: 7px;
+  left: 33%;
+  height: 4px;
+  border-radius: 999px;
+  content: '';
+  background: color-mix(in srgb, var(--white) 76%, transparent);
+}
+
+.contact-phone-side-button {
+  position: absolute;
+  left: -5px;
+  width: 4px;
+  border-radius: 4px 0 0 4px;
+  content: '';
+  background: #241d29;
+}
+
+.contact-phone-side-button-top {
+  top: 118px;
+  height: 64px;
+}
+
+.contact-phone-side-button-bottom {
+  top: 198px;
+  height: 92px;
+}
+
+.contact-phone-screen {
+  position: relative;
+  display: grid;
+  height: 100%;
+  grid-template-rows: 45px auto minmax(0, 1fr) 64px;
+  overflow: hidden;
+  border-radius: 49px;
+  color: var(--ink);
+  background: #f8f5ef;
+}
+
+.contact-phone-island {
+  position: absolute;
+  z-index: 4;
+  top: 12px;
+  left: 50%;
+  width: 104px;
+  height: 27px;
+  border-radius: 999px;
+  background: #171219;
+  transform: translateX(-50%);
+}
+
+.contact-phone-island::after {
+  position: absolute;
+  top: 9px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  content: '';
+  background: #302b40;
+  box-shadow: inset 0 0 0 2px #171219;
+}
+
+.contact-phone-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 20px 8px;
+  font-size: 0.65rem;
+  font-weight: 800;
+}
+
+.contact-conversation-heading {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr) 10px;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 17px;
+  border-bottom: 1px solid var(--border-line);
+  background: color-mix(in srgb, var(--white) 74%, transparent);
+}
+
+.contact-conversation-avatar {
+  display: grid;
+  width: 42px;
+  height: 42px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--orange);
+  font-family: var(--font-heading);
+  font-size: 0.75rem;
+}
+
+.contact-conversation-heading > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 1px;
+}
+
+.contact-conversation-heading strong {
+  font-size: 0.86rem;
+}
+
+.contact-conversation-heading small {
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+}
+
+.contact-conversation-online {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #63ae45;
+  box-shadow: 0 0 0 3px rgba(99, 174, 69, 0.18);
+}
+
+.contact-conversation-messages {
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 11px;
+  padding: 24px 15px 18px;
+  background:
+    radial-gradient(circle at 12px 12px, rgba(124, 66, 211, 0.055) 1.5px, transparent 1.7px) 0 0 /
+      24px 24px,
+    #f8f5ef;
+}
+
+.chat-message {
+  max-width: 88%;
+  padding: 12px 14px;
+  font-size: 0.8rem;
+  line-height: 1.42;
+}
+
+.chat-message > span {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.66rem;
+}
+
+.chat-message-brand {
+  align-self: flex-start;
+  border: 1px solid color-mix(in srgb, var(--orange) 26%, transparent);
+  border-radius: 16px 16px 16px 5px;
+  color: var(--ink);
+  background: var(--white);
+  box-shadow: 0 8px 24px color-mix(in srgb, var(--dark-text) 8%, transparent);
+}
+
+.chat-message-user {
+  align-self: flex-end;
+  border-radius: 16px 16px 5px 16px;
+  color: var(--white);
+  background: var(--purple);
+}
+
+.contact-phone-input {
+  display: flex;
+  min-height: 46px;
+  align-self: center;
+  align-items: center;
+  justify-content: space-between;
+  margin: 8px 12px 10px;
+  padding: 7px 7px 7px 15px;
+  border: 1px solid var(--border-line);
+  border-radius: 999px;
+  background: var(--white);
+}
+
+.contact-phone-input span {
+  color: var(--ink-muted);
+  font-size: 0.74rem;
+}
+
+.contact-phone-input strong {
+  display: grid;
+  width: 34px;
+  height: 34px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--white);
+  background: var(--purple);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 900px) {
+  .contact-phone-preview {
+    justify-self: center;
+  }
+}
+
+@media (max-width: 740px) {
+  .contact-phone-preview {
+    width: min(100%, 330px);
+    height: 654px;
+    border-radius: 55px;
+  }
+
+  .contact-phone-screen {
+    border-radius: 46px;
+  }
+}
+
+@media (max-width: 380px) {
+  .contact-phone-preview {
+    width: min(100%, 300px);
+    height: 596px;
+    padding: 8px;
+    border-radius: 51px;
+  }
+
+  .contact-phone-screen {
+    grid-template-rows: 43px auto minmax(0, 1fr) 60px;
+    border-radius: 43px;
+  }
+
+  .contact-phone-island {
+    width: 94px;
+    height: 25px;
+  }
+
+  .contact-conversation-heading {
+    grid-template-columns: 38px minmax(0, 1fr) 9px;
+    padding: 11px 13px;
+  }
+
+  .contact-conversation-avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .contact-conversation-messages {
+    padding: 13px 11px;
+  }
+
+  .chat-message {
+    font-size: 0.72rem;
+  }
+}

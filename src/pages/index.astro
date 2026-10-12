@@ -1,21 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro'
-import Header from '../features/navigation/Header.astro'
-import FormatsSection from '../features/formats/FormatsSection.astro'
-import FaqSection from '../features/faq/FaqSection.astro'
-import ApplicationWizardDialog from '../features/application/ApplicationWizardDialog.astro'
-import HeroSection from '../sections/HeroSection.astro'
-import RevenueSection from '../sections/RevenueSection.astro'
-import StorySection from '../sections/StorySection.astro'
-import NetworkSection from '../sections/NetworkSection.astro'
-import ReviewsSection from '../sections/ReviewsSection.astro'
-import PartnershipSection from '../sections/PartnershipSection.astro'
-import ContactSection from '../sections/ContactSection.astro'
-import SiteFooter from '../sections/SiteFooter.astro'
+import Header from '../components/layout/header/Header.astro'
+import FormatsSection from '../components/sections/formats/FormatsSection.astro'
+import FaqSection from '../components/sections/faq/FaqSection.astro'
+import ApplicationWizardDialog from '../components/application/ApplicationWizardDialog.astro'
+import HeroSection from '../components/sections/hero/HeroSection.astro'
+import RevenueSection from '../components/sections/revenue/RevenueSection.astro'
+import StorySection from '../components/sections/story/StorySection.astro'
+import NetworkSection from '../components/sections/network/NetworkSection.astro'
+import ReviewsSection from '../components/sections/reviews/ReviewsSection.astro'
+import PartnershipSection from '../components/sections/partnership/PartnershipSection.astro'
+import ContactSection from '../components/sections/contacts/ContactSection.astro'
+import SiteFooter from '../components/layout/footer/SiteFooter.astro'
+// Shared layout CSS is loaded first; section rules follow it in the cascade.
+import '../styles/landing.css'
 ---
+
 <BaseLayout>
   <div class="site">
-    <a class="skip-link" href="#main-content">Перейти к содержанию</a>
+    <a class="skip-link" href="#main-content">
+      Перейти к содержанию
+    </a>
     <Header />
     <main id="main-content">
       <HeroSection />

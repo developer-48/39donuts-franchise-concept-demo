@@ -1,0 +1,185 @@
+/* Answer summary cards, edit links and the privacy note shown before completion. */
+
+.wizard-review {
+  padding: 18px;
+  border: 1px solid var(--border-line);
+  border-radius: 18px;
+  background: var(--white);
+}
+
+.wizard-review-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+}
+
+.wizard-review-heading span {
+  color: var(--orange-deep);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.wizard-review-heading p {
+  max-width: 560px;
+  margin-top: 5px;
+  color: var(--ink-muted);
+  font-size: 0.72rem;
+  line-height: 1.45;
+}
+
+.wizard-review-groups {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.wizard-review-group {
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 11%, transparent);
+  border-radius: 14px;
+  background: var(--warm-white);
+}
+
+.wizard-review-group:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
+.wizard-review-group header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid color-mix(in srgb, var(--dark-text) 10%, transparent);
+}
+
+.wizard-review-group header > div {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 8px;
+}
+
+.wizard-review-group header span {
+  color: var(--orange-deep);
+  font-family: var(--font-heading);
+  font-size: 0.61rem;
+}
+
+.wizard-review-group h4 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+
+.wizard-review-group header button {
+  padding: 5px 8px;
+  border: 1px solid color-mix(in srgb, var(--purple) 22%, transparent);
+  border-radius: 8px;
+  color: var(--purple);
+  background: var(--white);
+  cursor: pointer;
+  font-size: 0.63rem;
+  font-weight: 800;
+}
+
+.wizard-review-group header button:hover,
+.wizard-review-group header button:focus-visible {
+  border-color: var(--purple);
+  background: var(--purple-soft);
+}
+
+.wizard-review-group dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 11px 14px;
+  margin-top: 12px;
+}
+
+.wizard-review-group dl > div {
+  min-width: 0;
+}
+
+.wizard-review-group dl > div.is-wide {
+  grid-column: 1 / -1;
+}
+
+.wizard-review-group dt {
+  color: var(--ink-muted);
+  font-size: 0.68rem;
+}
+
+.wizard-review-group dd {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.wizard-privacy-note {
+  margin: -2px 2px 0;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.55;
+}
+
+.wizard-privacy-note a {
+  color: var(--purple);
+  font-weight: 700;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+@media (max-width: 740px) {
+  .application-wizard-current .wizard-review {
+    padding: 0;
+    border: 0;
+    border-radius: 18px;
+    background: transparent;
+  }
+
+  .application-wizard-current .wizard-review-groups {
+    grid-template-columns: 1fr;
+    gap: 9px;
+    margin-top: 11px;
+  }
+
+  .application-wizard-current .wizard-review-group {
+    grid-column: auto;
+    padding: 14px;
+    border-radius: 17px;
+    background: var(--white);
+  }
+
+  .application-wizard-current .wizard-review-heading {
+    padding-inline: 2px;
+  }
+
+  .application-wizard-current .wizard-review-heading p {
+    max-width: 34rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .wizard-review dl {
+    grid-template-columns: 1fr;
+    gap: 9px;
+  }
+}
+
+@media (max-width: 360px) {
+  .application-wizard-current .wizard-review-group dl {
+    grid-template-columns: 1fr;
+  }
+
+  .application-wizard-current .wizard-review-group dl > div.is-wide {
+    grid-column: auto;
+  }
+}

@@ -1,0 +1,52 @@
+/* Shared palette and typography. Change the brand colours here. */
+:root {
+  --font-body: 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-heading: 'Unbounded', sans-serif;
+  --font-brand: 'Nunito', 'Manrope', sans-serif;
+
+  --orange: #fe7f16;
+  --orange-deep: #c04700;
+  --orange-hover: #a93e00;
+  --orange-soft: #fff0e1;
+  --purple: #7a44ca;
+  --purple-hover: #6334ad;
+  --purple-soft: #f2ebfc;
+  --green: #7db234;
+  --white: #ffffff;
+  --black: #171717;
+  --dark-text: #2f2538;
+  --muted-text: #655d69;
+  --warm-white: #fffaf3;
+
+  --graphite: var(--black);
+  --muted: #68635e;
+  --cream: var(--warm-white);
+  --line: color-mix(in srgb, var(--black) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--black) 32%, transparent);
+  --container: 1380px;
+  --radius: 22px;
+  --radius-lg: 34px;
+  --section-space: clamp(88px, 10vw, 152px);
+}
+
+@media (max-width: 960px) {
+  :root {
+    --section-space: 96px;
+  }
+}
+
+@media (max-width: 740px) {
+  :root {
+    --section-space: 78px;
+    --radius-lg: 24px;
+  }
+}
+
+/* Main landing theme. Standalone legal/404 pages retain the root theme. */
+.site {
+  --ink: var(--dark-text);
+  --ink-muted: var(--muted-text);
+  --border-line: color-mix(in srgb, var(--dark-text) 20%, transparent);
+  --graphite: var(--ink);
+  --cream: var(--white);
+}

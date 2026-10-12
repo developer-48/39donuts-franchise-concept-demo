@@ -1,0 +1,30 @@
+---
+import SiteImage from '../../../ui/image/SiteImage.astro'
+import { advantages } from './content.js'
+import { assets } from '../../../../config/assets.js'
+---
+
+<div class="advantages-showcase">
+  <article class="advantages-feature">
+    <div class="advantages-feature-copy">
+      <span class="eyebrow">Продукт как бизнес</span>
+      <h3>Почему пончики?</h3>
+      <p>
+        Знакомый эмоциональный продукт превращается в компактную и масштабируемую бизнес-модель.
+      </p>
+    </div>
+    <SiteImage class="motion-item" src={assets.donut} alt="Фирменный пончик 39 donuts" />
+    <span class="advantages-feature-note">Вкус, который легко узнать</span>
+  </article>
+  <div class="advantages-cards">
+    {advantages.map((item) => (
+      <article class="motion-item">
+        <span class="advantage-number">{item.number}</span>
+        <div>
+          <h4>{item.title}</h4>
+          <p>{item.text}</p>
+        </div>
+      </article>
+    ))}
+  </div>
+</div>

@@ -1,0 +1,238 @@
+/* Network: base, states and responsive rules. */
+
+.network-intro h2 {
+  max-width: 900px;
+  margin-top: 14px;
+  font-family: var(--font-heading);
+  font-size: clamp(2.25rem, 5.4vw, 5.4rem);
+  font-weight: 500;
+  letter-spacing: -0.055em;
+  line-height: 0.98;
+}
+
+.network-intro > p {
+  max-width: 560px;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.65;
+}
+
+.network-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+  align-items: end;
+  gap: clamp(32px, 7vw, 110px);
+}
+
+.network-intro .brand-name {
+  color: #ff9a46;
+}
+
+.network-proof {
+  display: grid;
+  grid-template-columns: minmax(300px, 0.62fr) minmax(0, 1.38fr);
+  gap: 24px;
+  margin-top: 64px;
+}
+
+.country-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.country-list article {
+  display: flex;
+  min-height: 255px;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: clamp(20px, 3vw, 34px);
+  border: 1px solid color-mix(in srgb, var(--white) 20%, transparent);
+  border-radius: var(--radius);
+}
+
+.country-list strong {
+  font-family: var(--font-heading);
+  font-size: clamp(3rem, 6vw, 6rem);
+  font-weight: 500;
+  letter-spacing: -0.08em;
+  line-height: 0.9;
+}
+
+.country-list article > span {
+  margin-top: 6px;
+  color: color-mix(in srgb, var(--white) 72%, transparent);
+  font-size: 0.82rem;
+}
+
+.country-list article p {
+  margin-top: 26px;
+  font-size: 1.14rem;
+  font-weight: 700;
+}
+
+.shop-mosaic {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  grid-template-rows: repeat(2, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.shop-mosaic figure {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.shop-mosaic figure:first-child {
+  grid-row: span 2;
+}
+
+.shop-mosaic img {
+  width: 100%;
+  height: 100%;
+  min-height: 210px;
+  object-fit: cover;
+}
+
+.shop-mosaic figcaption {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--black) 70%, transparent);
+  backdrop-filter: blur(10px);
+  font-size: 0.7rem;
+  font-weight: 700;
+}
+
+@media (max-width: 960px) {
+  .network-intro {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 24px;
+  }
+
+  .network-proof {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 740px) {
+  .network-intro h2 {
+    font-size: clamp(2rem, 10.5vw, 3.25rem);
+  }
+
+  .network-proof {
+    margin-top: 38px;
+  }
+
+  .country-list article {
+    min-height: 190px;
+    padding: 20px;
+  }
+
+  .country-list strong {
+    font-size: clamp(3rem, 16vw, 4.8rem);
+  }
+
+  .shop-mosaic {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 260px 180px;
+  }
+
+  .shop-mosaic figure:first-child {
+    grid-row: auto;
+    grid-column: 1 / -1;
+  }
+
+  .shop-mosaic img {
+    min-height: 100%;
+  }
+}
+
+@media (max-width: 380px) {
+  .country-list {
+    grid-template-columns: 1fr;
+  }
+
+  .country-list article {
+    min-height: 165px;
+  }
+}
+
+.site .network-section {
+  color: var(--ink);
+  background: var(--white);
+}
+
+.site .network-section .eyebrow {
+  color: var(--orange-deep);
+}
+
+.site .network-intro > p {
+  color: var(--ink-muted);
+}
+
+.site .shop-mosaic figcaption {
+  color: var(--white);
+}
+
+.site .country-list article:first-child {
+  color: var(--white);
+  background: var(--purple);
+}
+
+.site .country-list article:first-child > span {
+  color: color-mix(in srgb, var(--white) 78%, transparent);
+}
+
+.site .country-list article:nth-child(2) {
+  color: var(--white);
+  background: var(--orange);
+}
+
+.site .country-list article:nth-child(2) > span {
+  color: color-mix(in srgb, var(--white) 82%, transparent);
+}
+
+.site .country-list strong {
+  overflow: hidden;
+}
+
+.site .network-count-value {
+  display: block;
+  opacity: 0;
+  transform: translateY(105%);
+  transition:
+    opacity 620ms ease,
+    transform 780ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.site .country-list article.is-visible .network-count-value {
+  opacity: 1;
+  transform: none;
+}
+
+.site .country-list article:nth-child(2) .network-count-value,
+.site .shop-mosaic .motion-item:nth-child(2) {
+  transition-delay: 110ms;
+}
+.site .shop-mosaic .motion-item:nth-child(3) {
+  transition-delay: 220ms;
+}
+
+@media (max-width: 740px) {
+  .site .shop-mosaic .motion-item {
+    transition-delay: 0ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .site .network-count-value {
+    clip-path: none;
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}

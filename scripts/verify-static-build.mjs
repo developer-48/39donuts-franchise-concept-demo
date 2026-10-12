@@ -5,10 +5,27 @@ import { resolve } from 'node:path'
 const html = readFileSync('dist/index.html', 'utf8')
 assert.match(html, /<html lang="ru">/)
 assert.equal((html.match(/<h1\b/g) ?? []).length, 1, 'The landing must have one main heading')
-for (const id of ['top', 'revenue', 'story', 'network', 'formats', 'reviews', 'application', 'faq', 'contacts']) {
+for (const id of [
+  'top',
+  'revenue',
+  'story',
+  'network',
+  'formats',
+  'reviews',
+  'application',
+  'faq',
+  'contacts',
+]) {
   assert.ok(html.includes(`id="${id}"`), `Missing static section: ${id}`)
 }
-for (const text of ['940 597', 'Три формата кофейни', 'Павильон-островок', '7 000 000 ₽', '7% при переводе', 'Анкета партнёра']) {
+for (const text of [
+  '940 597',
+  'Три формата кофейни',
+  'Павильон-островок',
+  '7 000 000 ₽',
+  '7% при переводе',
+  'Анкета партнёра',
+]) {
   assert.ok(html.includes(text), `Missing pre-rendered content: ${text}`)
 }
 
@@ -24,6 +41,9 @@ for (const match of html.matchAll(/\b(?:src|href)="(\/(?:assets|_astro|favicon)[
 }
 for (const name of ['e', 'f', 'g']) {
   const redirect = readFileSync(`dist/${name}/index.html`, 'utf8')
-  assert.ok(redirect.includes('window.location.search') && redirect.includes('window.location.hash'), `Legacy redirect loses query/hash: ${name}`)
+  assert.ok(
+    redirect.includes('window.location.search') && redirect.includes('window.location.hash'),
+    `Legacy redirect loses query/hash: ${name}`,
+  )
 }
 console.log('Static HTML, SEO content, resources, ARIA references and legacy redirects verified.')

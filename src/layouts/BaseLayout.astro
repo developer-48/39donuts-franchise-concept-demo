@@ -1,24 +1,47 @@
 ---
-import '../styles/index.css'
-import DonutScrollbar from '../features/navigation/DonutScrollbar.astro'
-import { seoContent } from '../data/seoContent.js'
-import { contact, faqGroups } from '../data/siteContent.js'
+import '../styles/global.css'
+import DonutScrollbar from '../components/layout/scrollbar/DonutScrollbar.astro'
+import { seoContent } from '../config/seo.js'
+import { contact } from '../config/site.js'
+import { faqGroups } from '../components/sections/faq/content.js'
 import { pageUrl, buildStructuredData, serializeJsonLd } from '../lib/seo.js'
-const { title = seoContent.title, description = seoContent.description, interactive = true, noindex = false } = Astro.props
+const {
+  title = seoContent.title,
+  description = seoContent.description,
+  interactive = true,
+  noindex = false,
+} = Astro.props
 const production = import.meta.env.PUBLIC_SITE_MODE === 'production'
 const indexable = production && !noindex
 const canonical = pageUrl(Astro.site.href, Astro.url.pathname)
-const structuredData = noindex ? null : buildStructuredData(Astro.site.href, { path: Astro.url.pathname, title, description, contact, faqGroups })
+const structuredData = noindex
+  ? null
+  : buildStructuredData(Astro.site.href, {
+      path: Astro.url.pathname,
+      title,
+      description,
+      contact,
+      faqGroups,
+    })
 ---
+
 <!doctype html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#fffaf3" />
-    <meta name="robots" content={indexable ? 'index, follow, max-image-preview:large' : 'noindex, nofollow'} />
+    <meta
+      name="robots"
+      content={indexable ? 'index, follow, max-image-preview:large' : 'noindex, nofollow'}
+    />
     {!noindex && <link rel="canonical" href={canonical} />}
-    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.ico?favicon.f364ab3d.ico`} sizes="256x256" type="image/x-icon" />
+    <link
+      rel="icon"
+      href={`${import.meta.env.BASE_URL}favicon.ico?favicon.f364ab3d.ico`}
+      sizes="256x256"
+      type="image/x-icon"
+    />
     <meta name="description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content="ru_RU" />
@@ -38,14 +61,28 @@ const structuredData = noindex ? null : buildStructuredData(Astro.site.href, { p
     <meta name="twitter:image" content={pageUrl(Astro.site.href, seoContent.image)} />
     <meta name="twitter:image:alt" content={seoContent.imageAlt} />
     <title>{title}</title>
-    {structuredData && <script type="application/ld+json" is:inline set:html={serializeJsonLd(structuredData)} />}
-    <noscript><style>.reveal,.motion-item,.motion-trigger,.network-count-value{opacity:1!important;transform:none!important}</style></noscript>
+    {structuredData && (
+      <script type="application/ld+json" is:inline set:html={serializeJsonLd(structuredData)} />
+    )}
+    <noscript>
+      <style>
+        .reveal,
+        .motion-item,
+        .motion-trigger,
+        .network-count-value {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
   </head>
   <body>
-    <div id="root"><slot /></div>
+    <div id="root">
+      <slot />
+    </div>
     {interactive && <DonutScrollbar />}
     {interactive && <script>
-      import '../scripts/site.js'
+      import '../scripts/main.js'
     </script>}
   </body>
 </html>

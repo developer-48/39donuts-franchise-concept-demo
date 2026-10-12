@@ -1,0 +1,90 @@
+---
+import Button from '../../ui/button/Button.astro'
+import { assets } from '../../../config/assets.js'
+import Icon from '../../ui/icon/Icon.astro'
+
+import { navItems } from './content.js'
+---
+
+<header class="site-header">
+  <div class="header-inner">
+    <a class="logo-link" href={import.meta.env.BASE_URL} aria-label="39 donuts — к началу страницы">
+      <img src={assets.logo} alt="39 donuts" width="129" height="24" />
+    </a>
+    <nav class="desktop-nav" aria-label="Основная навигация">
+      {navItems.map((item) => (
+        <a href={item.href} data-section-link>
+          {item.label}
+        </a>
+      ))}
+    </nav>
+    <div class="header-actions">
+      <Button class="button-small header-cta" type="button" data-open-application>
+        <span>Стать партнёром</span>
+        <Icon name="CtaArrow" class="cta-arrow-icon" />
+      </Button>
+      <button
+        class="menu-button"
+        type="button"
+        aria-expanded="false"
+        aria-controls="mobile-navigation"
+        aria-label="Открыть меню"
+      >
+        <span data-menu-open-icon>
+          <Icon name="Bars3Solid" />
+        </span>
+        <span data-menu-close-icon hidden>
+          <Icon name="XMarkSolid" />
+        </span>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu-shell mobile-menu-shell-current" aria-hidden="true" inert>
+  <button
+    class="mobile-menu-backdrop"
+    type="button"
+    tabindex="-1"
+    aria-label="Закрыть меню"
+    data-close-menu
+  ></button>
+  <div
+    class="mobile-menu mobile-menu-current"
+    id="mobile-navigation"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="mobile-navigation-title"
+  >
+    <div class="mobile-menu-topline">
+      <div class="mobile-menu-brand">
+        <img src={assets.logo} alt="" width="124" height="23" />
+        <span id="mobile-navigation-title">Разделы сайта</span>
+      </div>
+      <button type="button" aria-label="Закрыть меню" data-close-menu>
+        <Icon name="XMarkSolid" />
+      </button>
+    </div>
+    <nav aria-label="Мобильная навигация">
+      {navItems.map((item) => (
+        <a href={item.href} data-section-link>
+          <span class="mobile-menu-icon">
+            <img
+              src={`${import.meta.env.BASE_URL}assets/icons/${item.icon}.svg`}
+              alt=""
+              aria-hidden="true"
+            />
+          </span>
+          <span class="mobile-menu-link-copy">
+            <strong>{item.label}</strong>
+            <small>{item.description}</small>
+          </span>
+          <Icon name="ChevronRight" />
+        </a>
+      ))}
+    </nav>
+    <Button class="mobile-menu-cta" type="button" data-open-application>
+      <span>Стать партнёром</span>
+      <Icon name="CtaArrow" class="cta-arrow-icon" />
+    </Button>
+  </div>
+</div>

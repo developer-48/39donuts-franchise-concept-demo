@@ -1,0 +1,22 @@
+---
+import WizardField from '../fields/WizardField.astro'
+import WizardRadioGroup from '../fields/WizardRadioGroup.astro'
+import { formatOptions, investmentOptions } from '../content.js'
+---
+
+<div class="wizard-step-body" data-step-body="1" hidden>
+  <div class="form-grid two-columns form-group-grid">
+    <WizardRadioGroup label="Какой формат хотите открыть?" name="format" options={formatOptions} />
+    <WizardRadioGroup
+      label="Как планируете инвестировать?"
+      name="investment"
+      options={investmentOptions}
+    />
+  </div>
+  <WizardField
+    label="Регион / город / место"
+    name="region"
+    placeholder="Город, район или торговый центр"
+    required
+  />
+</div>

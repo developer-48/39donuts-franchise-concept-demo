@@ -1,0 +1,233 @@
+/* Step navigation: desktop cards, current/completed states and mobile progress bars. */
+
+.wizard-progress {
+  padding: 30px 24px;
+  color: var(--white);
+  background: var(--purple);
+}
+
+.wizard-progress > span {
+  display: inline-flex;
+  padding: 7px 10px;
+  border: 1px solid color-mix(in srgb, var(--white) 38%, transparent);
+  border-radius: 999px;
+  color: color-mix(in srgb, var(--white) 78%, transparent);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.wizard-progress ol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 30px;
+  list-style: none;
+}
+
+.wizard-progress li {
+  min-width: 0;
+}
+
+.wizard-progress-step {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: start;
+  gap: 12px;
+  padding: 14px 12px;
+  appearance: none;
+  border: 1px solid transparent;
+  border-radius: 16px;
+  color: color-mix(in srgb, var(--white) 56%, transparent);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+}
+
+.wizard-progress-step:disabled {
+  cursor: default;
+  opacity: 1;
+}
+
+.wizard-progress-step > span {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+}
+
+.wizard-progress-step > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.wizard-progress-step strong {
+  color: inherit;
+  font-size: 0.9rem;
+}
+
+.wizard-progress-step small {
+  font-size: 0.67rem;
+  line-height: 1.38;
+}
+
+.wizard-progress li.is-active .wizard-progress-step {
+  border-color: color-mix(in srgb, var(--white) 38%, transparent);
+  color: var(--white);
+  background: color-mix(in srgb, var(--white) 10%, transparent);
+}
+
+.wizard-progress li.is-active .wizard-progress-step > span {
+  border-color: var(--orange);
+  background: var(--orange);
+}
+
+.wizard-progress li.is-complete .wizard-progress-step {
+  color: color-mix(in srgb, var(--white) 86%, transparent);
+}
+
+.wizard-progress li.is-complete .wizard-progress-step > span {
+  color: var(--purple);
+  background: var(--white);
+}
+
+.wizard-progress-step:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--white) 72%, transparent);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) {
+  .wizard-progress li.is-complete .wizard-progress-step:hover {
+    border-color: color-mix(in srgb, var(--white) 34%, transparent);
+    color: var(--white);
+    background: color-mix(in srgb, var(--white) 10%, transparent);
+    transform: translateX(2px);
+  }
+}
+@media (min-width: 961px) {
+  .application-wizard-current .wizard-progress {
+    min-height: 0;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in srgb, var(--white) 70%, transparent)
+      color-mix(in srgb, var(--white) 14%, transparent);
+  }
+
+  .application-wizard-current .wizard-progress::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .application-wizard-current .wizard-progress::-webkit-scrollbar-track {
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--white) 14%, transparent);
+  }
+
+  .application-wizard-current .wizard-progress::-webkit-scrollbar-thumb {
+    border: 2px solid var(--purple);
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--white) 70%, transparent);
+  }
+}
+@media (max-width: 900px) {
+  .wizard-progress {
+    padding-inline: 18px;
+  }
+}
+@media (max-width: 740px) {
+  .application-wizard-current .wizard-progress {
+    display: grid;
+    flex: 0 0 auto;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    padding: 10px 18px 14px;
+    border: 0;
+    color: var(--ink);
+    background: var(--white);
+  }
+
+  .application-wizard-current .wizard-progress > span {
+    display: block;
+    padding: 0;
+    border: 0;
+    color: var(--ink-muted);
+    font-size: 0.62rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .application-wizard-current .wizard-progress ol {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 5px;
+    margin: 0;
+  }
+
+  .application-wizard-current .wizard-progress li {
+    display: block;
+    min-width: 0;
+    min-height: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--dark-text) 13%, transparent);
+    box-shadow: none;
+  }
+
+  .application-wizard-current .wizard-progress-step,
+  .application-wizard-current .wizard-progress li.is-active .wizard-progress-step,
+  .application-wizard-current .wizard-progress li.is-complete .wizard-progress-step {
+    position: relative;
+    display: block;
+    width: 100%;
+    min-height: 6px;
+    height: 6px;
+    padding: 0;
+    border: 0;
+    border-radius: 999px;
+    color: transparent;
+    background: color-mix(in srgb, var(--dark-text) 13%, transparent);
+    box-shadow: none;
+    transform: none;
+  }
+
+  .application-wizard-current .wizard-progress-step::after {
+    position: absolute;
+    inset: -12px 0;
+    content: '';
+  }
+
+  .application-wizard-current .wizard-progress li.is-complete .wizard-progress-step {
+    background: var(--purple);
+  }
+
+  .application-wizard-current .wizard-progress li.is-active .wizard-progress-step {
+    background: var(--orange);
+    box-shadow: 0 0 0 3px var(--orange-soft);
+  }
+
+  .application-wizard-current .wizard-progress-step > span,
+  .application-wizard-current .wizard-progress-step > div {
+    display: none;
+  }
+
+  .application-wizard-current .wizard-progress-step:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--purple) 30%, transparent);
+    outline-offset: 6px;
+  }
+}

@@ -1,0 +1,22 @@
+/* Brand: base, states and responsive rules. */
+
+.brand-name,
+.brand-area {
+  white-space: nowrap;
+  font-family: var(--font-brand) !important;
+  font-weight: 900 !important;
+  letter-spacing: normal !important;
+  text-transform: none !important;
+}
+
+.brand-name-number {
+  color: var(--purple);
+}
+
+.brand-name-word {
+  color: var(--orange);
+}
+
+.brand-area {
+  color: var(--purple) !important;
+}

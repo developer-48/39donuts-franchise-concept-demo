@@ -1,0 +1,243 @@
+/* Field layout and labels are shared by all four application steps. */
+.form-grid {
+  display: grid;
+  gap: 18px;
+}
+
+.two-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.form-group-grid {
+  align-items: start;
+}
+
+.form-field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.form-field > span:first-child,
+.radio-group legend {
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.form-field > span:first-child {
+  padding: 0;
+}
+
+.form-field b {
+  color: var(--orange-deep);
+}
+
+/* Text controls: shared appearance, with separate dimensions per control. */
+.application-wizard .form-field input,
+.application-wizard .form-field textarea {
+  width: 100%;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 43%, transparent);
+  border-radius: 14px;
+  color: var(--graphite);
+  background: var(--white);
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--dark-text) 4.5%, transparent);
+  transition:
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.application-wizard .form-field input {
+  min-height: 48px;
+  padding: 12px 15px;
+}
+
+.application-wizard .form-field textarea {
+  min-height: 104px;
+  padding: 14px 15px;
+  resize: vertical;
+}
+
+.application-wizard .form-field input:hover,
+.application-wizard .form-field textarea:hover {
+  border-color: color-mix(in srgb, var(--purple) 70%, transparent);
+}
+
+.application-wizard .form-field input:focus,
+.application-wizard .form-field textarea:focus {
+  border-color: var(--purple);
+  outline: none;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--purple) 16%, transparent),
+    0 7px 20px color-mix(in srgb, var(--dark-text) 7%, transparent);
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+  color: #8e8780;
+}
+
+/* Radio choices: the complete label is the click and focus target. */
+.application-wizard .radio-group {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 9px;
+  padding: 14px;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 43%, transparent);
+  border-radius: 16px;
+  background: #fff7ec;
+}
+
+.radio-group legend {
+  margin-left: -4px;
+  padding: 0 4px;
+}
+
+.application-wizard .radio-group label {
+  display: grid;
+  min-height: 50px;
+  grid-template-columns: 20px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 11px 13px;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 34%, transparent);
+  border-radius: 12px;
+  background: var(--white);
+  box-shadow: 0 5px 16px color-mix(in srgb, var(--dark-text) 5%, transparent);
+  cursor: pointer;
+  font-size: 0.75rem;
+  line-height: 1.45;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    transform 160ms ease;
+}
+
+.application-wizard .radio-group label.is-selected {
+  border-color: var(--purple);
+  background: var(--purple-soft);
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--purple) 12%, transparent),
+    0 8px 20px color-mix(in srgb, var(--dark-text) 8%, transparent);
+}
+
+.application-wizard .radio-group label:focus-within {
+  outline: 3px solid color-mix(in srgb, var(--purple) 22%, transparent);
+  outline-offset: 2px;
+}
+
+.application-wizard .radio-group input[type='radio'] {
+  display: grid;
+  width: 20px;
+  height: 20px;
+  place-content: center;
+  margin: 0;
+  appearance: none;
+  border: 2px solid color-mix(in srgb, var(--dark-text) 48%, transparent);
+  border-radius: 50%;
+  background: var(--white);
+  accent-color: var(--orange-deep);
+}
+
+.application-wizard .radio-group input[type='radio']::before {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  content: '';
+  background: var(--purple);
+  transform: scale(0);
+  transition: transform 140ms ease;
+}
+
+.application-wizard .radio-group input[type='radio']:checked {
+  border-color: var(--purple);
+}
+
+.application-wizard .radio-group input[type='radio']:checked::before {
+  transform: scale(1);
+}
+
+@media (hover: hover) {
+  .application-wizard .radio-group label:hover {
+    border-color: var(--purple);
+    transform: translateY(-1px);
+  }
+}
+
+/* Mobile controls keep labels readable and provide larger touch targets. */
+@media (max-width: 740px) {
+  .application-wizard .two-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .application-wizard-current .form-field {
+    gap: 7px;
+  }
+
+  .application-wizard-current .form-field > span:first-child,
+  .application-wizard-current .radio-group legend {
+    color: var(--ink);
+    font-size: 0.78rem;
+  }
+
+  .application-wizard-current .form-field input,
+  .application-wizard-current .form-field textarea {
+    border-color: color-mix(in srgb, var(--dark-text) 13%, transparent);
+    border-radius: 16px;
+    background: var(--white);
+    box-shadow: none;
+  }
+
+  .application-wizard-current .form-field input {
+    min-height: 54px;
+    padding-inline: 16px;
+  }
+
+  .application-wizard-current .form-field textarea {
+    min-height: 108px;
+  }
+
+  .application-wizard-current .radio-group {
+    gap: 8px;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: transparent;
+  }
+
+  .application-wizard-current .radio-group legend {
+    margin: 0 0 2px;
+    padding: 0;
+  }
+
+  .application-wizard-current .radio-group label {
+    min-height: 54px;
+    padding: 12px;
+    border-color: color-mix(in srgb, var(--dark-text) 13%, transparent);
+    border-radius: 16px;
+    box-shadow: none;
+  }
+
+  .application-wizard-current .radio-group label.is-selected {
+    border-color: var(--purple);
+    background: var(--purple-soft);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--purple) 8%, transparent);
+  }
+}
+
+/* Validation messages; controls retain their focus and selection feedback. */
+.field-error {
+  color: #8f1c12;
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .application-wizard .radio-group label,
+  .application-wizard .radio-group input[type='radio']::before {
+    animation: none;
+    transition: none;
+  }
+}

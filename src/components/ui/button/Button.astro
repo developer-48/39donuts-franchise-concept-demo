@@ -1,0 +1,14 @@
+---
+// Shared CTA. Section-specific classes still control placement and sizing.
+const { href, type = 'button', class: className = '', ...attributes } = Astro.props
+const Tag = href ? 'a' : 'button'
+---
+
+<Tag
+  class={`button ${className}`.trim()}
+  href={href}
+  type={href ? undefined : type}
+  {...attributes}
+>
+  <slot />
+</Tag>

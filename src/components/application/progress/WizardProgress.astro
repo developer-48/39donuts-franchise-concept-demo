@@ -1,0 +1,29 @@
+---
+import { applicationSteps } from '../content.js'
+---
+
+<aside class="wizard-progress" aria-label="Этапы анкеты">
+  <span aria-live="polite" data-step-status>
+    Шаг 1 из 4
+  </span>
+  <ol>
+    {applicationSteps.map((item, index) => (
+      <li class={index === 0 ? 'is-active' : ''}>
+        <button
+          class="wizard-progress-step"
+          type="button"
+          disabled={index !== 0}
+          aria-current={index === 0 ? 'step' : undefined}
+          aria-label={`Шаг ${index + 1}: ${item.title}. ${index === 0 ? 'Текущий шаг.' : 'Сначала заполните предыдущие шаги.'}`}
+          data-wizard-step={index}
+        >
+          <span>{String(index + 1).padStart(2, '0')}</span>
+          <div>
+            <strong>{item.title}</strong>
+            <small>{item.copy}</small>
+          </div>
+        </button>
+      </li>
+    ))}
+  </ol>
+</aside>

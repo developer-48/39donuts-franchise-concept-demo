@@ -1,0 +1,20 @@
+---
+import Button from '../../ui/button/Button.astro'
+import Icon from '../../ui/icon/Icon.astro'
+---
+
+<div class="demo-success wizard-success" role="status" aria-live="polite" hidden>
+  <span>
+    <Icon name="Check" />
+  </span>
+  <h3>Анкета готова</h3>
+  <p>Ответы собраны. Можно вернуться к анкете, изменить любой раздел и отправить её снова.</p>
+  <div class="wizard-success-actions">
+    <Button type="button" data-return-answers>
+      Вернуться к ответам
+    </Button>
+    <button class="wizard-back" type="button" data-reset-application>
+      Заполнить заново
+    </button>
+  </div>
+</div>

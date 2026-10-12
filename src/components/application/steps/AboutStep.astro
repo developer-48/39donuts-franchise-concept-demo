@@ -1,0 +1,14 @@
+---
+import WizardField from '../fields/WizardField.astro'
+import WizardRadioGroup from '../fields/WizardRadioGroup.astro'
+import { roleOptions } from '../content.js'
+---
+
+<div class="wizard-step-body" data-step-body="0">
+  <div class="form-grid two-columns">
+    <WizardField label="ФИО" name="fullName" placeholder="Иванов Иван Иванович" required />
+    <WizardField label="Возраст" name="age" placeholder="30" inputMode="numeric" />
+  </div>
+  <WizardField label="Опыт работы" name="experience" placeholder="Например, 3 года в общепите" />
+  <WizardRadioGroup label="Какую роль планируете занять?" name="role" options={roleOptions} />
+</div>

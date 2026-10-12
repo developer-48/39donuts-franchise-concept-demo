@@ -1,7 +1,0 @@
----
-const { label, name, options } = Astro.props
----
-<fieldset class="radio-group">
-  <legend>{label} *</legend>
-  {options.map((option) => <label><input type="radio" name={name} value={option} required aria-invalid="false" /><span>{option}</span></label>)}
-</fieldset>

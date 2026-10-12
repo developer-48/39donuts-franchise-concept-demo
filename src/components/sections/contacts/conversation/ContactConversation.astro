@@ -1,0 +1,57 @@
+---
+import BrandText from '../../../ui/brand/BrandText.astro'
+---
+
+<figure
+  class="contact-phone-preview"
+  aria-label="Пример переписки с командой 39 donuts внутри смартфона"
+>
+  <span class="contact-phone-side-button contact-phone-side-button-top" aria-hidden="true"></span>
+  <span
+    class="contact-phone-side-button contact-phone-side-button-bottom"
+    aria-hidden="true"
+  ></span>
+  <div class="contact-phone-screen">
+    <div class="contact-phone-island" aria-hidden="true"></div>
+    <div class="contact-phone-status" aria-hidden="true">
+      <span>9:39</span>
+      <span>● ᯤ ▰</span>
+    </div>
+
+    <div class="contact-conversation-heading">
+      <span class="contact-conversation-avatar" aria-hidden="true">
+        39
+      </span>
+      <div>
+        <strong>
+          <BrandText text="39 donuts" />
+        </strong>
+        <small>обычно отвечает быстро</small>
+      </div>
+      <span class="contact-conversation-online" aria-label="Команда в сети"></span>
+    </div>
+
+    <div class="contact-conversation-messages">
+      <div class="chat-message chat-message-brand">
+        <span>
+          <BrandText text="39 donuts" />
+        </span>
+        <p>Здравствуйте! Подскажем по форматам и следующему шагу.</p>
+      </div>
+      <div class="chat-message chat-message-user">
+        <p>Можно начать с моего города?</p>
+      </div>
+      <div class="chat-message chat-message-brand">
+        <span>
+          <BrandText text="39 donuts" />
+        </span>
+        <p>Да, давайте обсудим локацию.</p>
+      </div>
+    </div>
+
+    <div class="contact-phone-input" aria-hidden="true">
+      <span>Сообщение</span>
+      <strong>↑</strong>
+    </div>
+  </div>
+</figure>

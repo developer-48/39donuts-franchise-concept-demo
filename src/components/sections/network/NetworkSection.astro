@@ -1,0 +1,51 @@
+---
+import SiteImage from '../../ui/image/SiteImage.astro'
+import { network } from './content.js'
+import Advantages from './advantages/Advantages.astro'
+import { assets } from '../../../config/assets.js'
+import BrandText from '../../ui/brand/BrandText.astro'
+---
+
+<section class="section network-section reveal" id="network" aria-labelledby="network-title">
+  <div class="section-shell">
+    <div class="network-intro">
+      <div>
+        <span class="eyebrow">География роста</span>
+        <h2 id="network-title">Сколько нас</h2>
+      </div>
+      <p>
+        <BrandText text="За два года 39 donuts открыли больше 19 точек и продолжают расти. Текущий сайт отдельно показывает такую разбивку сети:" />
+      </p>
+    </div>
+
+    <div class="network-proof">
+      <div class="country-list">
+        {network.map((item) => (
+          <article class="motion-trigger">
+            <strong>
+              <span class="network-count-value">{item.count}</span>
+            </strong>
+            <span>{item.count === '1' ? 'точка' : 'точек'}</span>
+            <p>{item.country}</p>
+          </article>
+        ))}
+      </div>
+      <div class="shop-mosaic">
+        <figure class="motion-item">
+          <SiteImage src={assets.shopCounter} alt="Витрина с пончиками в кофейне" />
+          <figcaption>Россия · витрина</figcaption>
+        </figure>
+        <figure class="motion-item">
+          <SiteImage src={assets.shopInterior} alt="Интерьер кофейни с открытой витриной" />
+          <figcaption>Россия · интерьер</figcaption>
+        </figure>
+        <figure class="motion-item">
+          <SiteImage src={assets.shopCase} alt="Кофейня с витриной и фирменной вывеской" />
+          <figcaption>Казахстан · формат сети</figcaption>
+        </figure>
+      </div>
+    </div>
+
+    <Advantages />
+  </div>
+</section>

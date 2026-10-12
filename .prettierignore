@@ -1,0 +1,8 @@
+node_modules/
+dist/
+dist-preview/
+releases/
+.astro/
+output/
+public/
+package-lock.json

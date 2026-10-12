@@ -1,0 +1,48 @@
+---
+import { contact } from '../../../config/site.js'
+import ContactConversation from './conversation/ContactConversation.astro'
+import Icon from '../../ui/icon/Icon.astro'
+---
+
+<section class="section contact-section reveal" id="contacts" aria-labelledby="contacts-title">
+  <div class="section-shell contact-shell">
+    <div class="contact-copy">
+      <span class="eyebrow">Контакты</span>
+      <h2 id="contacts-title">Остались вопросы? Команда на связи</h2>
+      <div class="contact-links">
+        <a href={`mailto:${contact.email}`}>
+          <span class="contact-link-mark" aria-hidden="true">
+            @
+          </span>
+          <span class="contact-link-copy">
+            <small>Написать на почту</small>
+            <strong>{contact.email}</strong>
+          </span>
+          <Icon name="SolidArrowRight" />
+        </a>
+        <a href={`tel:${contact.phoneHref}`}>
+          <span class="contact-link-mark" aria-hidden="true">
+            ☎
+          </span>
+          <span class="contact-link-copy">
+            <small>Позвонить команде</small>
+            <strong>{contact.phone}</strong>
+          </span>
+          <Icon name="SolidArrowRight" />
+        </a>
+      </div>
+      <div class="messenger-links">
+        <a href={contact.instagram} target="_blank" rel="noreferrer">
+          Instagram <Icon name="ArrowUpRight" />
+        </a>
+        <a href={contact.telegram} target="_blank" rel="noreferrer">
+          Telegram <Icon name="ArrowUpRight" />
+        </a>
+        <a href={contact.whatsapp} target="_blank" rel="noreferrer">
+          WhatsApp <Icon name="ArrowUpRight" />
+        </a>
+      </div>
+    </div>
+    <ContactConversation />
+  </div>
+</section>

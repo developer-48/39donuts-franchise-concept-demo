@@ -1,0 +1,129 @@
+/* Persistent form action bar, back button and action icons. */
+
+.wizard-actions {
+  position: sticky;
+  z-index: 2;
+  bottom: 0;
+  display: flex;
+  min-height: 86px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 16px 34px;
+  border-top: 1px solid var(--border-line);
+  background: rgba(255, 250, 243, 0.95);
+  backdrop-filter: blur(16px);
+}
+
+.wizard-actions > p {
+  max-width: 360px;
+  color: var(--ink-muted);
+  font-size: 0.7rem;
+  line-height: 1.45;
+}
+
+.wizard-actions > div {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wizard-back {
+  display: inline-flex;
+  min-height: 48px;
+  align-items: center;
+  gap: 9px;
+  padding: 11px 16px;
+  border: 1px solid var(--border-line);
+  border-radius: 12px;
+  color: var(--purple);
+  background: var(--white);
+  cursor: pointer;
+  font-weight: 800;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.wizard-back:hover {
+  border-color: var(--purple);
+  background: var(--purple-soft);
+  transform: translateY(-1px);
+}
+
+.application-wizard-current .wizard-action-icon {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border-radius: 0;
+  color: currentColor;
+  background: transparent;
+  box-shadow: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease;
+}
+
+.application-wizard .button:hover .wizard-action-icon {
+  transform: translateX(2px);
+}
+
+.application-wizard-current .wizard-back:hover .wizard-action-icon {
+  transform: translateX(-2px);
+}
+@media (min-width: 961px) {
+  .application-wizard-current .wizard-actions {
+    flex: 0 0 auto;
+    position: relative;
+  }
+}
+@media (max-width: 740px) {
+  .application-wizard-current .wizard-actions {
+    position: relative;
+    z-index: 4;
+    bottom: auto;
+    min-height: auto;
+    flex: 0 0 auto;
+    padding: 12px 16px max(12px, env(safe-area-inset-bottom));
+    border: 0;
+    background: var(--white);
+    box-shadow: 0 -14px 32px color-mix(in srgb, var(--dark-text) 8%, transparent);
+    backdrop-filter: none;
+  }
+
+  .wizard-actions > p {
+    display: none;
+  }
+
+  .application-wizard-current .wizard-actions > div {
+    width: 100%;
+    justify-content: flex-end;
+    gap: 8px;
+  }
+
+  .application-wizard-current .wizard-back {
+    min-width: 94px;
+    min-height: 54px;
+    justify-content: center;
+    border-color: color-mix(in srgb, var(--purple) 20%, transparent);
+    border-radius: 16px;
+    background: var(--purple-soft);
+  }
+
+  .application-wizard-current .wizard-actions .button {
+    min-height: 54px;
+    flex: 1;
+    border-radius: 16px;
+  }
+
+  .application-wizard-current .wizard-actions .wizard-action-icon {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .application-wizard-current .wizard-action-icon {
+    animation: none;
+    transition: none;
+  }
+}

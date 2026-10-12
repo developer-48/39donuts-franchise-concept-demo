@@ -1,0 +1,11 @@
+---
+import BrandText from '../../ui/brand/BrandText.astro'
+const { label, name, placeholder } = Astro.props
+---
+
+<label class="form-field">
+  <span>
+    <BrandText text={label} />
+  </span>
+  <textarea name={name} placeholder={placeholder} rows="4"></textarea>
+</label>

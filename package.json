@@ -14,10 +14,12 @@
     "preview:production": "node scripts/astro-command.mjs preview production --host 127.0.0.1",
     "lint": "eslint .",
     "test": "node --test tests/*.test.js",
-    "check": "npm run lint && npm run test && npm run build && npm run verify:static && npm run verify:seo",
+    "check": "npm run format:check && npm run lint && npm run test && npm run build && npm run verify:static && npm run verify:seo",
     "verify:static": "node scripts/verify-static-build.mjs",
     "verify:seo": "node scripts/verify-seo-build.mjs dist production",
-    "release": "npm run check && node scripts/package-release.mjs"
+    "release": "npm run check && node scripts/package-release.mjs",
+    "format": "prettier --write src scripts tests astro.config.mjs eslint.config.js package.json .prettierrc.json .vscode",
+    "format:check": "prettier --check src scripts tests astro.config.mjs eslint.config.js package.json .prettierrc.json .vscode"
   },
   "dependencies": {
     "@fontsource/manrope": "5.2.6",
@@ -28,6 +30,8 @@
   "devDependencies": {
     "@eslint/js": "10.0.1",
     "eslint": "10.12.0",
-    "globals": "16.3.0"
+    "globals": "16.3.0",
+    "prettier": "3.9.10",
+    "prettier-plugin-astro": "1.1.1"
   }
 }

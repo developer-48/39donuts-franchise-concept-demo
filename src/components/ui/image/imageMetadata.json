@@ -1,0 +1,126 @@
+{
+  "assets/brand/logo.svg": {
+    "width": 129,
+    "height": 24
+  },
+  "assets/images/scrollbar/thumb-donuts.png": {
+    "width": 192,
+    "height": 320
+  },
+  "assets/icons/book.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/cake.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/clock.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/coffee.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/document.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/location.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/message.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/people.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/icons/shop.svg": {
+    "width": 24,
+    "height": 24
+  },
+  "assets/images/formats/cafe-separate.png": {
+    "width": 543,
+    "height": 561
+  },
+  "assets/images/formats/cafe-workshop.png": {
+    "width": 362,
+    "height": 374
+  },
+  "assets/images/formats/island.png": {
+    "width": 362,
+    "height": 374
+  },
+  "assets/images/hero/photo.png": {
+    "width": 350,
+    "height": 500
+  },
+  "assets/images/network/cafe.png": {
+    "width": 544,
+    "height": 253
+  },
+  "assets/images/network/counter.png": {
+    "width": 544,
+    "height": 253
+  },
+  "assets/images/network/interior.png": {
+    "width": 393,
+    "height": 253
+  },
+  "assets/images/partnership/application.png": {
+    "width": 1244,
+    "height": 1252
+  },
+  "assets/images/reviews/abu.png": {
+    "width": 724,
+    "height": 600
+  },
+  "assets/images/reviews/aldam.png": {
+    "width": 724,
+    "height": 600
+  },
+  "assets/images/reviews/murad.png": {
+    "width": 724,
+    "height": 600
+  },
+  "assets/images/reviews/rizvan.png": {
+    "width": 724,
+    "height": 600
+  },
+  "assets/images/shared/donut.png": {
+    "width": 439,
+    "height": 366
+  },
+  "assets/images/story/donut-ribbon.png": {
+    "width": 2208,
+    "height": 520
+  },
+  "assets/images/story/founder-meeting.png": {
+    "width": 202,
+    "height": 360
+  },
+  "assets/images/story/founder.png": {
+    "width": 248,
+    "height": 440
+  },
+  "assets/images/story/guests-at-counter.png": {
+    "width": 357,
+    "height": 313
+  },
+  "assets/images/story/night-kiosk.png": {
+    "width": 258,
+    "height": 343
+  },
+  "assets/images/story/team-meeting.png": {
+    "width": 222,
+    "height": 364
+  },
+  "assets/images/story/team.png": {
+    "width": 450,
+    "height": 250
+  }
+}
