@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js'
+import { hasPhotographicSurface } from '../architecture-materials.js'
 
 export const palette = {
   purple: '#7a44ca',
@@ -36,6 +37,17 @@ function surfaceTexture(pixels, size, color = false) {
 
 /** Local material maps keep the architectural study self-contained and deterministic. */
 export function architecturalMaterial(kind, color, options = {}) {
+  if (hasPhotographicSurface(kind)) {
+    // Avoid generating fallback maps that will immediately be replaced by prepared photographs.
+    const surface = material(color, { roughness: 0.9, ...options })
+    surface.name = `architecture/${kind}`
+    surface.userData = {
+      architectureSurface: kind,
+      architectureColor: color,
+      textureWorldSize: 1.2,
+    }
+    return surface
+  }
   const size = 256
   const colorPixels = new Uint8Array(size * size * 4)
   const heightPixels = new Uint8Array(colorPixels.length)
@@ -91,6 +103,8 @@ export function architecturalMaterial(kind, color, options = {}) {
   })
   surface.name = `architecture/${kind}`
   surface.userData.architectureSurface = kind
+  surface.userData.architectureColor = color
+  surface.userData.textureWorldSize = kind === 'oak' ? 1.2 : kind === 'stainless' ? 0.6 : 1.5
   return surface
 }
 

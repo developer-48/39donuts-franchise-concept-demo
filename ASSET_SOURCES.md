@@ -74,7 +74,7 @@
 
 В ветке `design/3d-motion-lab` папка `src/experiments/three-d/models/` содержит созданные для локального сравнения процедурные модели наполненных пончиков, коробки и концептуальных кофеен. Геометрия и карты выпечки, глазури, печенья, штукатурки, ткани и стали создаются локальным JavaScript. Вывески и упаковка используют существующий `public/assets/brand/logo.svg`. Three.js и GSAP подключены как npm-зависимости с их собственными лицензиями.
 
-Фотографическое окружение и карты дерева/бетона получены из Poly Haven под [CC0](https://polyhaven.com/license), сохранены без изменения и загружаются с локального сервера. Сторонние готовые 3D-модели не используются.
+Фотографическое окружение, PBR-карты и модель стула получены из Poly Haven под [CC0](https://polyhaven.com/license), сохранены без изменения и загружаются с локального сервера. Дополнительные оригинальные URL, размеры и SHA256 файлов записаны в `public/assets/three-d/architectural-assets.json`. Цвет отделки и нормали настраиваются материалами Three.js, исходные изображения не редактируются.
 
 | Локальный файл в `public/assets/three-d/` | Источник |
 | --- | --- |
@@ -85,3 +85,10 @@
 | `materials/brushed_concrete-rough.jpg` | [Brushed Concrete](https://polyhaven.com/a/brushed_concrete), [Roughness 1K](https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_rough_1k.jpg) |
 
 Конструкция уличного павильона сверялась с фотографией формата на сайте бренда и [закрытым уличным павильоном LBC](https://lbc.group/product/karkasnyj-pavilon-ulichnaya-torgovlya-kofe). Модели показывают различия форматов, не являются проектами конкретных объектов или утверждённой планировкой франшизы.
+
+Дополнительно в архитектурной сцене используются:
+
+- [Dining Chair 02 — James Ray Cock](https://polyhaven.com/a/dining_chair_02): оригинальный glTF 1K, BIN и три карты в `models/dining-chair/`; положение стульев взято из концептуальной планировки, высота приведена к 0,9 м.
+- [Boma — Greg Zaal, Jarod Guest](https://polyhaven.com/a/boma): HDRI кафе 1K `boma-1k.hdr`.
+- [White Plaster 02 — Rob Tuytel](https://polyhaven.com/a/white_plaster_02), [Fabric Leather 01](https://polyhaven.com/a/fabric_leather_01), [Terrazzo Tiles](https://polyhaven.com/a/terrazzo_tiles): карты diffuse, roughness и OpenGL normal 1K.
+- OpenGL normal 1K для прежних [Oak Veneer 01](https://polyhaven.com/a/oak_veneer_01) и [Brushed Concrete](https://polyhaven.com/a/brushed_concrete).

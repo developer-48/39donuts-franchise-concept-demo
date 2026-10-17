@@ -30,15 +30,20 @@ function surfaces() {
     purple: material(palette.purple, { roughness: 0.57 }),
     chrome: material('#dadfdf', { metalness: 0.98, roughness: 0.19 }),
     glass: new THREE.MeshPhysicalMaterial({
-      color: '#d2e4e3',
-      transparent: true,
-      opacity: 0.13,
+      color: '#f1f6f4',
+      transparent: false,
+      opacity: 1,
+      transmission: 0.94,
+      thickness: 0.012,
+      ior: 1.52,
+      attenuationColor: '#bdd2ca',
+      attenuationDistance: 2,
       metalness: 0,
-      roughness: 0.045,
-      clearcoat: 1,
-      clearcoatRoughness: 0.03,
+      roughness: 0.018,
+      specularIntensity: 1,
+      envMapIntensity: 1,
       depthWrite: false,
-      side: THREE.DoubleSide,
+      side: THREE.FrontSide,
     }),
     ovenGlass: material('#1d2628', { metalness: 0.35, roughness: 0.12 }),
     light: material('#fff1da', { emissive: '#ffd7a3', emissiveIntensity: 0.45 }),
@@ -47,7 +52,7 @@ function surfaces() {
   }
 }
 
-function box(parent, size, surface, position, bevel = 0) {
+function box(parent, size, surface, position, bevel = 0.002) {
   if (bevel) return roundedBox(parent, size, surface, position, bevel)
   return addMesh(parent, new THREE.BoxGeometry(...size), surface, position)
 }
@@ -72,12 +77,41 @@ function frame(parent, s, width, height, position, rotation = 0, options = {}) {
   const group = child(parent, options.name || 'thermally-broken-window', position, rotation)
   const thickness = options.thickness || 0.04
   ;[-1, 1].forEach((side) => {
-    box(group, [width, thickness, 0.065], s.aluminium, [0, (side * height) / 2, 0])
-    box(group, [thickness, height, 0.065], s.aluminium, [(side * width) / 2, 0, 0])
+    box(group, [width, thickness, 0.085], s.aluminium, [0, (side * height) / 2, 0])
+    box(group, [thickness, height, 0.085], s.aluminium, [(side * width) / 2, 0, 0])
+    // Separate glazing bead and rubber gasket give the profile a real recessed section.
+    box(
+      group,
+      [width - thickness, 0.01, 0.022],
+      s.black,
+      [0, (side * (height - thickness)) / 2, 0.02],
+      0.001,
+    )
+    box(
+      group,
+      [0.01, height - thickness, 0.022],
+      s.black,
+      [(side * (width - thickness)) / 2, 0, 0.02],
+      0.001,
+    )
+    box(
+      group,
+      [width - thickness, 0.007, 0.012],
+      s.aluminium,
+      [0, (side * (height - thickness * 0.7)) / 2, 0.034],
+      0.001,
+    )
+    box(
+      group,
+      [0.007, height - thickness, 0.012],
+      s.aluminium,
+      [(side * (width - thickness * 0.7)) / 2, 0, 0.034],
+      0.001,
+    )
   })
   if (options.glazed !== false)
-    glass(group, [width - thickness, height - thickness, 0.013], s.glass, [0, 0, 0])
-  if (options.mullion) box(group, [0.035, height - thickness, 0.067], s.aluminium, [0, 0, 0.006])
+    glass(group, [width - thickness, height - thickness, 0.013], s.glass, [0, 0, -0.012])
+  if (options.mullion) box(group, [0.035, height - thickness, 0.087], s.aluminium, [0, 0, 0.006])
   return group
 }
 
@@ -92,24 +126,13 @@ function floor(parent, s, width, depth, finish = s.terrazzo) {
   }
   // Finish layers receive furniture shadows but do not self-shadow a coplanar slab.
   box(parent, [width, 0.06, depth], surface, [0, 0.13, 0]).castShadow = false
-  const joints = []
-  for (let x = -width / 2 + 0.9; x < width / 2; x += 0.9) {
-    joints.push({ position: [x, FLOOR + 0.001, 0] })
-  }
-  const inlays = instanceParts(
-    parent,
-    new THREE.BoxGeometry(0.004, 0.001, depth),
-    s.concrete,
-    joints,
-  )
-  inlays.castShadow = false
-  inlays.receiveShadow = false
 }
 
-function logoPlate(parent, s, texture, width, position, rotation = 0) {
+function logoPlate(parent, s, texture, width, position, rotation = 0, height = width * 0.24) {
   const sign = child(parent, 'original-39-donuts-sign', position, rotation)
-  box(sign, [width, width * 0.24, 0.025], s.white, [0, 0, 0], 0.006)
-  addLogo(sign, texture, width * 0.84, [0, 0, 0.015])
+  box(sign, [width, height, 0.025], s.white, [0, 0, 0], 0.004)
+  const logoWidth = Math.min(width * 0.84, ((height - 0.08) * 129) / 24)
+  addLogo(sign, texture, logoWidth, [0, 0, 0.015])
   return sign
 }
 
@@ -132,14 +155,29 @@ function espressoMachine(parent, s, position, rotation = 0) {
   box(machine, [0.76, 0.36, 0.46], s.steel, [0, 0.23, 0], 0.012)
   box(machine, [0.69, 0.04, 0.51], s.aluminium, [0, 0.035, 0.03], 0.004)
   box(machine, [0.64, 0.13, 0.025], s.black, [0, 0.26, 0.243], 0.003)
+  box(machine, [0.64, 0.015, 0.18], s.chrome, [0, 0.062, 0.24], 0.003)
+  const grille = Array.from({ length: 17 }, (_, index) => ({
+    position: [-0.288 + index * 0.036, 0.072, 0.24],
+  }))
+  instanceParts(machine, new THREE.BoxGeometry(0.006, 0.002, 0.16), s.black, grille)
   ;[-0.19, 0.19].forEach((x) => {
     const dial = cylinder(machine, 0.035, 0.012, s.white, [x, 0.3, 0.265], 16)
     dial.rotation.x = Math.PI / 2
+    const needle = box(machine, [0.003, 0.024, 0.002], s.black, [x + 0.004, 0.308, 0.272], 0.0005)
+    needle.rotation.z = -0.4
     cylinder(machine, 0.04, 0.065, s.chrome, [x, 0.15, 0.23], 12)
     const handle = cylinder(machine, 0.014, 0.17, s.black, [x, 0.145, 0.32], 10)
     handle.rotation.x = Math.PI / 2
     cylinder(machine, 0.035, 0.052, s.white, [x, 0.065, 0.24], 16)
   })
+  const wandPath = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(0.34, 0.23, 0.22),
+    new THREE.Vector3(0.38, 0.15, 0.28),
+    new THREE.Vector3(0.43, 0.09, 0.31),
+    new THREE.Vector3(0.43, 0.045, 0.34),
+  ])
+  addMesh(machine, new THREE.TubeGeometry(wandPath, 14, 0.007, 7, false), s.chrome)
+  box(machine, [0.028, 0.032, 0.045], s.black, [0.34, 0.23, 0.225], 0.004)
   const cups = [-0.23, 0, 0.23].map((x) => ({ position: [x, 0.45, 0] }))
   instanceParts(machine, new THREE.CylinderGeometry(0.033, 0.029, 0.055, 12), s.white, cups)
   const grinder = child(machine, 'burr-coffee-grinder', [0.55, 0, 0])
@@ -224,6 +262,9 @@ function cafeTable(parent, s, position, square = false) {
 
 function chair(parent, s, position, rotation = 0) {
   const seat = child(parent, 'chrome-cafe-chair', position, rotation)
+  seat.userData.assetRole = 'dining-chair'
+  seat.userData.seatHeight = 0.45
+  seat.userData.facing = '+Z'
   box(seat, [0.38, 0.065, 0.37], s.fabric, [0, 0.45, 0], 0.014)
   box(seat, [0.39, 0.24, 0.04], s.oak, [0, 0.72, -0.17], 0.008)
   const legs = [-1, 1].flatMap((x) =>
@@ -373,6 +414,8 @@ function workshopCafe(s, logo) {
   box(group, [9.5, 3.05, 0.16], s.plaster, [0, FLOOR + 1.525, -3.42])
   box(group, [0.16, 3.05, 4.0], s.plaster, [-4.67, FLOOR + 1.525, -1.42])
   box(group, [0.16, 0.28, 2.8], s.plaster, [-4.67, FLOOR + 0.14, 2.02])
+  box(group, [9.18, 0.075, 0.018], s.walnut, [0, FLOOR + 0.0375, -3.326])
+  box(group, [0.018, 0.075, 6.76], s.walnut, [-4.576, FLOOR + 0.0375, 0])
   box(group, [9.18, 0.012, 2.48], s.white, [0, FLOOR + 0.007, -2.1]).castShadow = false
   const rearJoints = []
   for (let x = -4.1; x < 4.5; x += 0.7) rearJoints.push({ position: [x, FLOOR + 0.015, -2.1] })
@@ -412,6 +455,7 @@ function workshopCafe(s, logo) {
   const roof = child(group, 'cutaway-roof-edge')
   box(roof, [9.5, 0.12, 0.4], s.white, [0, 3.27, -3.3])
   box(roof, [0.24, 0.12, 3.65], s.white, [-4.65, 3.27, -1.5])
+  box(roof, [9.18, 0.022, 0.035], s.aluminium, [0, 3.192, -3.2])
   ;[-3.0, 0.1, 2.7].forEach((x) => pendant(group, s, [x, 3.2, 0.85], 0.64))
   return {
     group,
@@ -439,6 +483,8 @@ function ordinaryCafe(s, logo) {
   box(group, [6.4, 3, 0.15], s.plaster, [0, FLOOR + 1.5, -2.425])
   box(group, [0.15, 3, 4.8], s.plaster, [-3.125, FLOOR + 1.5, 0])
   box(group, [0.15, 0.24, 4.8], s.plaster, [3.125, FLOOR + 0.12, 0])
+  box(group, [6.07, 0.075, 0.018], s.walnut, [0, FLOOR + 0.0375, -2.34])
+  box(group, [0.018, 0.075, 4.67], s.walnut, [-3.04, FLOOR + 0.0375, 0])
   const slats = Array.from({ length: 26 }, (_, index) => ({
     position: [-0.54 + index * 0.134, 1.45, -2.322],
   }))
@@ -463,6 +509,7 @@ function ordinaryCafe(s, logo) {
   planter(group, s, [-2.69, FLOOR, 2.01], 0.43)
   const roof = child(group, 'cutaway-roof-edge')
   box(roof, [6.4, 0.1, 0.22], s.white, [0, 3.21, -2.39])
+  box(roof, [6.07, 0.022, 0.035], s.aluminium, [0, 3.142, -2.3])
   ;[0.77, 2.03].forEach((x) => pendant(group, s, [x, 3.15, 0.25], 0.65))
   return {
     group,
@@ -497,6 +544,12 @@ function streetPavilion(s, logo) {
   // The complete weatherproof shell has actual door and service-window apertures.
   box(group, [4.5, wallTop - base, 0.14], s.aluminium, [0, (wallTop + base) / 2, -2.18])
   box(group, [0.14, wallTop - base, 4.36], s.aluminium, [-2.18, (wallTop + base) / 2, 0])
+  const cornerPosts = [
+    { position: [-2.255, (wallTop + base) / 2, 2.175] },
+    { position: [2.255, (wallTop + base) / 2, 2.175] },
+    { position: [2.255, (wallTop + base) / 2, -2.175] },
+  ]
+  instanceParts(group, new THREE.BoxGeometry(0.035, wallTop - base, 0.05), s.black, cornerPosts)
   box(group, [0.14, wallTop - base, 0.7], s.aluminium, [2.18, (wallTop + base) / 2, -1.9])
   box(group, [0.14, wallTop - base, 0.5], s.aluminium, [2.18, (wallTop + base) / 2, 2])
   box(group, [0.14, 0.82, 3.16], s.oak, [2.18, base + 0.41, 0.03])
@@ -541,15 +594,27 @@ function streetPavilion(s, logo) {
   box(group, [0.9, 0.68, 0.035], s.black, [1.33, 2.23, -2.096])
   label(group, 'COFFEE & DONUTS', 0.76, [1.33, 2.37, -2.074], [0, 0, 0], '#f0ece0')
   const roof = child(group, 'complete-insulated-flat-roof')
-  box(roof, [4.74, 0.22, 4.74], s.aluminium, [0, 3.3, 0], 0.004)
-  box(roof, [4.8, 0.07, 4.8], s.black, [0, 3.445, 0], 0.004)
-  box(roof, [4.79, 0.035, 0.045], s.orange, [0, 3.45, 2.418])
-  box(roof, [0.045, 0.035, 4.79], s.orange, [2.418, 3.45, 0])
-  box(roof, [4.62, 0.42, 0.1], s.orange, [0, 3.18, 2.28])
-  logoPlate(roof, s, logo, 2.39, [0.3, 3.185, 2.34])
-  box(roof, [0.1, 0.42, 4.62], s.orange, [2.28, 3.18, 0])
-  logoPlate(roof, s, logo, 2.12, [2.34, 3.185, -0.1], Math.PI / 2)
-  const drain = cylinder(group, 0.032, 2.9, s.aluminium, [2.24, 1.76, -2.22], 12)
+  // A full-height fascia sits BELOW the roof. Both signs have real clearances;
+  // the complete rear/side infill closes the insulated envelope up to its ceiling.
+  box(roof, [4.5, 0.6, 0.14], s.aluminium, [0, 3.43, -2.18])
+  box(roof, [0.14, 0.6, 4.36], s.aluminium, [-2.18, 3.43, 0])
+  box(roof, [4.74, 0.18, 4.74], s.aluminium, [0, 3.82, 0], 0.004)
+  box(roof, [4.8, 0.035, 4.8], s.black, [0, 3.9275, 0], 0.003)
+  box(roof, [4.3, 0.018, 4.3], s.white, [0, 3.728, 0], 0.002)
+  box(roof, [4.79, 0.028, 0.045], s.orange, [0, 3.932, 2.418])
+  box(roof, [0.045, 0.028, 4.79], s.orange, [2.418, 3.932, 0])
+  box(roof, [4.62, 0.64, 0.1], s.orange, [0, 3.39, 2.28], 0.004)
+  box(roof, [4.5, 0.04, 0.14], s.black, [0, 3.72, 2.18])
+  logoPlate(roof, s, logo, 2.58, [0.3, 3.39, 2.346], 0, 0.49)
+  box(roof, [0.1, 0.64, 4.62], s.orange, [2.28, 3.39, 0], 0.004)
+  box(roof, [0.14, 0.04, 4.5], s.black, [2.18, 3.72, 0])
+  logoPlate(roof, s, logo, 2.3, [2.346, 3.39, -0.1], Math.PI / 2, 0.47)
+  const seams = Array.from({ length: 7 }, (_, index) => ({
+    position: [-1.98 + index * 0.66, 3.951, 0],
+  }))
+  instanceParts(roof, new THREE.BoxGeometry(0.009, 0.012, 4.68), s.aluminium, seams)
+  box(roof, [3.88, 0.009, 0.025], s.light, [0, 3.076, 2.095], 0.002)
+  const drain = cylinder(group, 0.032, 3.55, s.aluminium, [2.24, 2.12, -2.22], 12)
   drain.name = 'roof-rainwater-downpipe'
   planter(group, s, [-2.53, 0.145, 2.43], 0.51)
   planter(group, s, [2.59, 0.145, 2.43], 0.51)
@@ -562,7 +627,7 @@ function streetPavilion(s, logo) {
       detail: 'Закрытый квадратный павильон с утеплённым контуром, крышей, дверью и окном выдачи.',
       footprint: { width: 4.5, depth: 4.5 },
       zoneCaption: 'Закрытый уличный павильон с утеплённым контуром и окном выдачи',
-      zones: [{ text: 'Уличный павильон', position: [0, 3.58, 0.5] }],
+      zones: [{ text: 'Уличный павильон', position: [0, 4.06, 0.5] }],
       conceptual: true,
       enclosed: true,
     },

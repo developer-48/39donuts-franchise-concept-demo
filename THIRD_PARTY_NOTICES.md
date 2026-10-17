@@ -10,7 +10,7 @@ The experimental `/lab/` pages use GSAP 3.15.0 and ScrollTrigger under the GSAP 
 
 ## Poly Haven — local 3D lab
 
-The optional experimental scenes use the Studio Small 09 HDRI (Sergej Majboroda), Oak Veneer 01 and Brushed Concrete image maps from [Poly Haven](https://polyhaven.com/). These assets are dedicated to the public domain under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/); see [Poly Haven's asset license](https://polyhaven.com/license). Original files are stored in `public/assets/three-d/`; individual source URLs are recorded in `ASSET_SOURCES.md`. No Poly Haven API or remote service is used at runtime.
+The optional experimental scenes use the Studio Small 09 HDRI (Sergej Majboroda), Boma HDRI (Greg Zaal and Jarod Guest), Dining Chair 02 model (James Ray Cock), White Plaster 02 (Rob Tuytel), Fabric Leather 01, Terrazzo Tiles, Oak Veneer 01 and Brushed Concrete image maps from [Poly Haven](https://polyhaven.com/). These assets are dedicated to the public domain under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/); see [Poly Haven's asset license](https://polyhaven.com/license). Original files are stored in `public/assets/three-d/`; individual source URLs are recorded in `ASSET_SOURCES.md` and `public/assets/three-d/architectural-assets.json`. No Poly Haven API or remote service is used at runtime.
 
 ## Nunito
 

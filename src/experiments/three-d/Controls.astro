@@ -2,8 +2,9 @@
 import { presets, sceneDefinitions } from './configuration.js'
 import './controls.css'
 
-const { preset: requestedPreset = 'two' } = Astro.props
-const preset = presets.find(({ id }) => id === requestedPreset) ?? presets[2]
+const { preset: requestedPreset = 'formats' } = Astro.props
+const preset =
+  presets.find(({ id }) => id === requestedPreset) ?? presets.find(({ id }) => id === 'formats')
 const sceneCount = preset.scenes.length
 const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
 ---

@@ -24,6 +24,7 @@ export const sceneIds = sceneDefinitions.map(({ id }) => id)
 
 export const presets = [
   { id: 'baseline', label: 'Оригинал', scenes: [] },
+  { id: 'formats', label: 'Только форматы', scenes: ['formats'] },
   { id: 'one', label: 'Одна сцена', scenes: ['hero'] },
   { id: 'two', label: 'Две сцены', scenes: ['hero', 'formats'] },
   { id: 'three', label: 'Три сцены', scenes: ['hero', 'formats', 'box'] },

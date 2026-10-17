@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { getStudio } from './studio.js'
+import { createArchitectureRenderer } from './architecture-renderer.js'
 
 /** Each visible block owns a renderer. No permanent render loop is used. */
 export function createStage(host, options) {
@@ -50,6 +51,7 @@ function configureStage(
     ground,
     perspective = false,
     footerHeight = 0,
+    architecture = false,
     onError,
   },
   rollback,
@@ -80,13 +82,13 @@ function configureStage(
   rollback.push(() => disposeScene(scene))
   const focus = new THREE.Vector3(...target)
   const camera = perspective
-    ? new THREE.PerspectiveCamera(32, 1, 0.1, 150)
+    ? new THREE.PerspectiveCamera(architecture ? 42 : 32, 1, 0.1, 150)
     : new THREE.OrthographicCamera(-width / 2, width / 2, width / 2, -width / 2, 0.1, 100)
   const framing = { width, minHeight, target: [...target], direction: [...direction] }
 
   const generator = new THREE.PMREMGenerator(renderer)
   rollback.push(() => generator.dispose())
-  const studio = getStudio()
+  const studio = getStudio(architecture ? 'architecture' : 'product')
   let environmentTarget
   if (studio) {
     environmentTarget = generator.fromEquirectangular(studio)
@@ -98,12 +100,12 @@ function configureStage(
   }
   rollback.push(() => environmentTarget.dispose())
   scene.environment = environmentTarget.texture
-  scene.environmentIntensity = 0.85
+  scene.environmentIntensity = architecture ? 0.58 : 0.85
   scene.environmentRotation.y = 0.45
   generator.dispose()
 
-  scene.add(new THREE.HemisphereLight('#fff9ed', '#554539', 0.35))
-  const key = new THREE.DirectionalLight('#fff2df', 1.3)
+  scene.add(new THREE.HemisphereLight('#fff9ed', '#554539', architecture ? 0.12 : 0.35))
+  const key = new THREE.DirectionalLight('#fff2df', architecture ? 1.8 : 1.3)
   key.position.set(-4.5, 8, 6)
   key.castShadow = true
   key.shadow.mapSize.setScalar(coarse ? 1024 : 2048)
@@ -133,6 +135,12 @@ function configureStage(
   floor.receiveShadow = true
   scene.add(floor)
 
+  const pipeline = architecture ? createArchitectureRenderer(renderer, scene, camera, coarse) : null
+  if (pipeline) {
+    rollback.push(() => pipeline.destroy())
+    renderer.info.autoReset = false
+  }
+
   let visible = false
   let destroyed = false
   let frame = 0
@@ -140,7 +148,9 @@ function configureStage(
 
   function draw() {
     if (destroyed) return
-    renderer.render(scene, camera)
+    renderer.info.reset()
+    if (pipeline) pipeline.render()
+    else renderer.render(scene, camera)
     drawCount += 1
     host.dataset.renders = String(drawCount)
     host.dataset.drawCalls = String(renderer.info.render.calls)
@@ -181,6 +191,7 @@ function configureStage(
     }
     camera.lookAt(focus)
     camera.updateProjectionMatrix()
+    pipeline?.setSize(bounds.width, canvasHeight)
     invalidate()
   }
 
@@ -201,6 +212,12 @@ function configureStage(
     renderer,
     invalidate,
     draw,
+    async prepare(signal) {
+      if (destroyed || signal?.aborted) throw new Error('Scene preparation cancelled')
+      if (pipeline) await pipeline.prepare(signal)
+      else await renderer.compileAsync(scene, camera)
+      if (destroyed || signal?.aborted) throw new Error('Scene preparation cancelled')
+    },
     setView(next) {
       Object.assign(framing, next)
       resize()
@@ -220,6 +237,7 @@ function configureStage(
       observer.disconnect()
       renderer.domElement.removeEventListener('webglcontextlost', lost)
       disposeScene(scene)
+      pipeline?.destroy()
       environmentTarget.dispose()
       renderer.dispose()
       renderer.forceContextLoss()

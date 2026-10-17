@@ -28,6 +28,7 @@ function initLab() {
     const entry = entries.get(id)
     if (!entry) return
     entries.delete(id)
+    entry.controller.abort()
     entry.observer.disconnect()
     entry.instance?.destroy()
     entry.host.remove()
@@ -45,17 +46,30 @@ function initLab() {
       const { createScene, prepareSceneAssets } = await modulePromise
       await prepareSceneAssets(entry.id)
       if (entries.get(entry.id) !== entry) return
-      entry.instance = createScene(entry.id, entry.host, {
+      const instance = await createScene(entry.id, entry.host, {
+        signal: entry.controller.signal,
         reducedMotion: reducedMotion.matches,
         paused: blocked(),
         onError: () => {
+          if (entries.get(entry.id) !== entry) return
           entry.failed = true
+          entry.controller.abort()
           delete entry.target.dataset.threeReady
           entry.instance?.destroy()
           entry.instance = null
           report(entry, 'fallback')
         },
       })
+      if (entries.get(entry.id) !== entry || entry.failed) {
+        instance.destroy()
+        return
+      }
+      entry.instance = instance
+      entry.instance.setPaused(blocked())
+      if (entry.id === 'formats') {
+        const selected = document.querySelector('[data-format-index][aria-selected="true"]')
+        entry.instance.setFormat(Number(selected?.dataset.formatIndex ?? 0))
+      }
       entry.instance.setVisible(entry.visible)
       entry.target.dataset.threeReady = entry.id
       report(entry, blocked() ? 'paused' : 'ready')
@@ -90,6 +104,7 @@ function initLab() {
       instance: null,
       pending: false,
       failed: false,
+      controller: new AbortController(),
     }
     entry.observer = new IntersectionObserver(
       ([event]) => {

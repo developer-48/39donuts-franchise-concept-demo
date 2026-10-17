@@ -10,7 +10,9 @@ const statusLabels = {
 
 export function initControls({ onChange = () => {}, onReplay = () => {} } = {}) {
   const panel = document.querySelector('[data-motion-lab]')
-  const preset = presets.find(({ id }) => id === panel?.dataset.preset) ?? presets[2]
+  const preset =
+    presets.find(({ id }) => id === panel?.dataset.preset) ??
+    presets.find(({ id }) => id === 'formats')
   const state = {
     scenes: readSceneSelection(window.location.search, preset.scenes),
     paused: false,

@@ -6,6 +6,7 @@ import { createDonut } from './models/donut.js'
 import { createCafe } from './models/cafe.js'
 import { createDonutBox } from './models/box.js'
 import { prepareStudio } from './studio.js'
+import { prepareFurniture, applyFurniture } from './furniture.js'
 import {
   prepareArchitectureMaterials,
   applyArchitectureMaterials,
@@ -14,7 +15,11 @@ import {
 gsap.registerPlugin(ScrollTrigger)
 
 export async function prepareSceneAssets(id) {
-  await Promise.all([prepareStudio(), id === 'formats' && prepareArchitectureMaterials()])
+  await Promise.all([
+    prepareStudio(id === 'formats' ? 'architecture' : 'product'),
+    id === 'formats' && prepareArchitectureMaterials(),
+    id === 'formats' && prepareFurniture(),
+  ])
 }
 
 const settings = {
@@ -42,6 +47,7 @@ const settings = {
     ground: -0.02,
     perspective: true,
     footerHeight: 70,
+    architecture: true,
   },
   box: {
     width: 11.6,
@@ -54,22 +60,37 @@ const settings = {
 }
 const formatNames = ['cafe-workshop', 'cafe-separate', 'island']
 const formatViews = [
-  { width: 14.3, minHeight: 9.4, target: [0, 1.2, 0], direction: [11, 13, 17] },
-  { width: 10.5, minHeight: 7.1, target: [0, 1.2, 0], direction: [10, 8.8, 15] },
-  { width: 10.2, minHeight: 7.1, target: [0, 1.55, 0], direction: [10, 5.2, 15] },
+  { width: 13.4, minHeight: 9.1, target: [0, 1.45, 0], direction: [10, 9.5, 17] },
+  { width: 9.6, minHeight: 6.6, target: [0, 1.35, 0], direction: [9, 7.8, 15] },
+  { width: 9.2, minHeight: 6.8, target: [0, 1.65, 0], direction: [8, 4.7, 15] },
 ]
 
-export function createScene(id, host, { reducedMotion = false, paused = false, onError }) {
+export async function createScene(
+  id,
+  host,
+  { reducedMotion = false, paused = false, onError, signal },
+) {
   const stage = createStage(host, { ...settings[id], onError })
+  let instance
+  const abort = () => (instance ? instance.destroy() : stage.destroy())
+  signal?.addEventListener('abort', abort, { once: true })
   try {
-    return configureScene(id, host, { reducedMotion, paused }, stage)
+    if (signal?.aborted) throw new Error('Scene removed before construction')
+    instance = await configureScene(id, host, { reducedMotion, paused, signal }, stage)
+    await stage.prepare(signal)
+    if (signal?.aborted || !host.isConnected) throw new Error('Scene removed during preparation')
+    stage.draw()
+    return instance
   } catch (error) {
-    stage.destroy()
+    if (instance) instance.destroy()
+    else stage.destroy()
     throw error
+  } finally {
+    signal?.removeEventListener('abort', abort)
   }
 }
 
-function configureScene(id, host, { reducedMotion, paused }, stage) {
+async function configureScene(id, host, { reducedMotion, paused, signal }, stage) {
   const rig = new THREE.Group()
   const hover = new THREE.Group()
   rig.add(hover)
@@ -101,14 +122,17 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
     caption = document.createElement('div')
     caption.className = 'three-d-format-caption'
     host.append(caption)
-    formatNames.forEach((kind, index) => {
+    for (const [index, kind] of formatNames.entries()) {
       const { group, meta } = createCafe(kind)
       applyArchitectureMaterials(group)
+      applyFurniture(group)
       descriptions.set(index, meta)
       group.visible = index === currentFormat
       models.set(index, group)
       hover.add(group)
-    })
+      await new Promise((resolve) => setTimeout(resolve, 0))
+      if (signal?.aborted || !host.isConnected) throw new Error('Scene removed during construction')
+    }
     rig.rotation.y = 0
     settleFormat(currentFormat)
   } else {
@@ -309,12 +333,6 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
       caption?.remove()
       stage.destroy()
     },
-  }
-  try {
-    stage.draw()
-  } catch (error) {
-    instance.destroy()
-    throw error
   }
   return instance
 }
