@@ -39,9 +39,9 @@
 
 .three-d-product {
   z-index: 1;
-  right: -17%;
-  bottom: -7%;
-  width: 117%;
+  right: -8%;
+  bottom: 0;
+  width: 110%;
   height: 68%;
   cursor: grab;
 }
@@ -49,23 +49,36 @@
 .three-d-formats {
   z-index: 2;
   inset: 0;
-  background: radial-gradient(ellipse at 50% 40%, #fffdf8, #f3eadb);
+  background: radial-gradient(ellipse at 50% 40%, #faf9f6, #e9e7e3);
   cursor: grab;
 }
 
-.three-d-formats::after {
+.three-d-format-caption {
   position: absolute;
   right: 16px;
-  bottom: 18px;
+  bottom: 20px;
   left: 16px;
   color: #776d63;
-  content: '3D-эскиз формата';
   font-size: 11px;
   font-weight: 700;
-  letter-spacing: 0.08em;
   text-align: center;
-  text-transform: uppercase;
   pointer-events: none;
+}
+
+.three-d-format-caption strong,
+.three-d-format-caption span {
+  display: block;
+}
+
+.three-d-format-caption strong {
+  color: #393632;
+  font-size: 14px;
+}
+
+.three-d-format-caption span {
+  margin-top: 5px;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .site [data-three-ready='formats'] > .asset-note {
@@ -88,13 +101,31 @@
 @media (max-width: 1100px) {
   .three-d-product {
     right: -2%;
-    bottom: -24%;
+    bottom: -10%;
     width: 68%;
     height: 107%;
   }
 }
 
 @media (max-width: 740px) {
+  .site .format-visual[data-three-enabled='formats'] {
+    aspect-ratio: 6 / 5;
+    min-height: 240px;
+  }
+
+  .three-d-format-caption {
+    right: 10px;
+    bottom: 12px;
+    left: 10px;
+  }
+
+  .three-d-format-caption strong {
+    font-size: 12px;
+  }
+
+  .three-d-format-caption span {
+    font-size: 10px;
+  }
   .three-d-hero {
     right: -8%;
     bottom: -19%;
@@ -103,9 +134,9 @@
   }
 
   .three-d-product {
-    right: -18%;
-    bottom: -12%;
-    width: 112%;
+    right: -8%;
+    bottom: 0;
+    width: 110%;
     height: 67%;
   }
 

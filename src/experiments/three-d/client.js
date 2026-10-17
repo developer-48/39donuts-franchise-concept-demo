@@ -42,7 +42,8 @@ function initLab() {
     report(entry, 'loading')
     try {
       modulePromise ??= import('./scenes.js')
-      const { createScene } = await modulePromise
+      const { createScene, prepareSceneAssets } = await modulePromise
+      await prepareSceneAssets(entry.id)
       if (entries.get(entry.id) !== entry) return
       entry.instance = createScene(entry.id, entry.host, {
         reducedMotion: reducedMotion.matches,
@@ -59,6 +60,7 @@ function initLab() {
       entry.target.dataset.threeReady = entry.id
       report(entry, blocked() ? 'paused' : 'ready')
     } catch (error) {
+      if (entries.get(entry.id) !== entry) return
       entry.failed = true
       entry.instance?.destroy()
       entry.instance = null

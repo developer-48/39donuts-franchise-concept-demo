@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
+import { getStudio } from './studio.js'
 
 /** Each visible block owns a renderer. No permanent render loop is used. */
 export function createStage(host, options) {
@@ -41,7 +42,16 @@ function disposeScene(scene) {
 
 function configureStage(
   host,
-  { width, minHeight = 0, target, direction, ground, onError },
+  {
+    width,
+    minHeight = 0,
+    target,
+    direction,
+    ground,
+    perspective = false,
+    footerHeight = 0,
+    onError,
+  },
   rollback,
 ) {
   const coarse = window.matchMedia('(pointer: coarse)').matches
@@ -59,42 +69,44 @@ function configureStage(
   renderer.setClearColor(0x000000, 0)
   renderer.outputColorSpace = THREE.SRGBColorSpace
   renderer.toneMapping = THREE.ACESFilmicToneMapping
-  renderer.toneMappingExposure = 1.12
+  renderer.toneMappingExposure = 0.94
   renderer.shadowMap.enabled = true
-  renderer.shadowMap.type = THREE.PCFShadowMap
+  renderer.shadowMap.type = THREE.VSMShadowMap
   renderer.domElement.setAttribute('aria-hidden', 'true')
+  if (footerHeight) renderer.domElement.style.height = `calc(100% - ${footerHeight}px)`
   host.append(renderer.domElement)
 
   const scene = new THREE.Scene()
   rollback.push(() => disposeScene(scene))
   const focus = new THREE.Vector3(...target)
-  const camera = new THREE.OrthographicCamera(
-    -width / 2,
-    width / 2,
-    width / 2,
-    -width / 2,
-    0.1,
-    100,
-  )
-  camera.position.copy(focus).add(new THREE.Vector3(...direction))
-  camera.lookAt(focus)
+  const camera = perspective
+    ? new THREE.PerspectiveCamera(32, 1, 0.1, 150)
+    : new THREE.OrthographicCamera(-width / 2, width / 2, width / 2, -width / 2, 0.1, 100)
+  const framing = { width, minHeight, target: [...target], direction: [...direction] }
 
-  const environment = new RoomEnvironment()
-  rollback.push(() => environment.dispose())
   const generator = new THREE.PMREMGenerator(renderer)
   rollback.push(() => generator.dispose())
-  const environmentTarget = generator.fromScene(environment, 0.035)
+  const studio = getStudio()
+  let environmentTarget
+  if (studio) {
+    environmentTarget = generator.fromEquirectangular(studio)
+  } else {
+    const environment = new RoomEnvironment()
+    rollback.push(() => environment.dispose())
+    environmentTarget = generator.fromScene(environment, 0.05)
+    environment.dispose()
+  }
   rollback.push(() => environmentTarget.dispose())
   scene.environment = environmentTarget.texture
-  scene.environmentIntensity = 0.65
-  environment.dispose()
+  scene.environmentIntensity = 0.85
+  scene.environmentRotation.y = 0.45
   generator.dispose()
 
-  scene.add(new THREE.HemisphereLight('#fff5e5', '#846652', 1.45))
-  const key = new THREE.DirectionalLight('#fff5e8', 3.0)
+  scene.add(new THREE.HemisphereLight('#fff9ed', '#554539', 0.35))
+  const key = new THREE.DirectionalLight('#fff2df', 1.3)
   key.position.set(-4.5, 8, 6)
   key.castShadow = true
-  key.shadow.mapSize.setScalar(coarse ? 512 : 1024)
+  key.shadow.mapSize.setScalar(coarse ? 1024 : 2048)
   key.shadow.camera.left = -7
   key.shadow.camera.right = 7
   key.shadow.camera.top = 8
@@ -102,18 +114,19 @@ function configureStage(
   key.shadow.camera.updateProjectionMatrix()
   key.shadow.normalBias = 0.035
   key.shadow.bias = -0.00015
-  key.shadow.radius = 3
+  key.shadow.radius = 5
+  key.shadow.blurSamples = 8
   scene.add(key)
-  const fill = new THREE.DirectionalLight('#e5deff', 0.85)
+  const fill = new THREE.DirectionalLight('#eef0f6', 0.18)
   fill.position.set(5, 2, -4)
   scene.add(fill)
-  const rim = new THREE.DirectionalLight('#fff7ea', 1.8)
+  const rim = new THREE.DirectionalLight('#fff7ea', 0.45)
   rim.position.set(2, 5, -6)
   scene.add(rim)
 
   const floor = new THREE.Mesh(
     new THREE.PlaneGeometry(26, 26),
-    new THREE.ShadowMaterial({ opacity: 0.16 }),
+    new THREE.ShadowMaterial({ opacity: 0.09 }),
   )
   floor.rotation.x = -Math.PI / 2
   floor.position.y = ground
@@ -149,13 +162,24 @@ function configureStage(
   function resize() {
     const bounds = host.getBoundingClientRect()
     if (bounds.width <= 0 || bounds.height <= 0) return
-    renderer.setSize(bounds.width, bounds.height, false)
-    const aspect = bounds.width / bounds.height
-    const height = Math.max(width / aspect, minHeight)
-    camera.left = -(height * aspect) / 2
-    camera.right = (height * aspect) / 2
-    camera.top = height / 2
-    camera.bottom = -height / 2
+    const canvasHeight = Math.max(1, bounds.height - footerHeight)
+    renderer.setSize(bounds.width, canvasHeight, false)
+    const aspect = bounds.width / canvasHeight
+    const height = Math.max(framing.width / aspect, framing.minHeight)
+    focus.set(...framing.target)
+    const axis = new THREE.Vector3(...framing.direction)
+    if (perspective) {
+      camera.aspect = aspect
+      const distance = height / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2))
+      camera.position.copy(focus).add(axis.normalize().multiplyScalar(distance))
+    } else {
+      camera.left = -(height * aspect) / 2
+      camera.right = (height * aspect) / 2
+      camera.top = height / 2
+      camera.bottom = -height / 2
+      camera.position.copy(focus).add(axis)
+    }
+    camera.lookAt(focus)
     camera.updateProjectionMatrix()
     invalidate()
   }
@@ -177,6 +201,10 @@ function configureStage(
     renderer,
     invalidate,
     draw,
+    setView(next) {
+      Object.assign(framing, next)
+      resize()
+    },
     setVisible(value) {
       visible = value
       if (value) invalidate()

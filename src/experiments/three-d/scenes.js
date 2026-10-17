@@ -5,16 +5,59 @@ import { createStage } from './stage.js'
 import { createDonut } from './models/donut.js'
 import { createCafe } from './models/cafe.js'
 import { createDonutBox } from './models/box.js'
+import { prepareStudio } from './studio.js'
+import {
+  prepareArchitectureMaterials,
+  applyArchitectureMaterials,
+} from './architecture-materials.js'
 
 gsap.registerPlugin(ScrollTrigger)
 
+export async function prepareSceneAssets(id) {
+  await Promise.all([prepareStudio(), id === 'formats' && prepareArchitectureMaterials()])
+}
+
 const settings = {
-  hero: { width: 4.55, target: [0, 0.1, 0], direction: [0.6, 4.2, 6.5], ground: -0.33 },
-  product: { width: 4.5, target: [0, 0.48, 0], direction: [0.3, 3.8, 7], ground: -0.33 },
-  formats: { width: 10.7, target: [0, 1.5, 0], direction: [8, 7.5, 10], ground: -0.02 },
-  box: { width: 11.6, minHeight: 7.2, target: [0, 2, -0.6], direction: [4, 7, 11], ground: 0.01 },
+  hero: {
+    width: 4.5,
+    minHeight: 3.2,
+    target: [0, 0.2, 0],
+    direction: [4, 3.1, 5],
+    ground: -0.33,
+    perspective: true,
+  },
+  product: {
+    width: 4.9,
+    minHeight: 4.2,
+    target: [0, 0.65, 0],
+    direction: [4, 3.4, 6],
+    ground: -0.33,
+    perspective: true,
+  },
+  formats: {
+    width: 14.3,
+    minHeight: 9.4,
+    target: [0, 1.2, 0],
+    direction: [11, 13, 17],
+    ground: -0.02,
+    perspective: true,
+    footerHeight: 70,
+  },
+  box: {
+    width: 11.6,
+    minHeight: 8.8,
+    target: [0, 2.15, -0.6],
+    direction: [4, 7, 11],
+    ground: 0.01,
+    perspective: true,
+  },
 }
 const formatNames = ['cafe-workshop', 'cafe-separate', 'island']
+const formatViews = [
+  { width: 14.3, minHeight: 9.4, target: [0, 1.2, 0], direction: [11, 13, 17] },
+  { width: 10.5, minHeight: 7.1, target: [0, 1.2, 0], direction: [10, 8.8, 15] },
+  { width: 10.2, minHeight: 7.1, target: [0, 1.55, 0], direction: [10, 5.2, 15] },
+]
 
 export function createScene(id, host, { reducedMotion = false, paused = false, onError }) {
   const stage = createStage(host, { ...settings[id], onError })
@@ -43,6 +86,8 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
     document.querySelector('[data-format-index][aria-selected="true"]')?.dataset.formatIndex ?? 0,
   )
   const models = new Map()
+  const descriptions = new Map()
+  let caption
   const state = { open: 0, spread: 0, progress: 0 }
   let donut
   let box
@@ -50,16 +95,22 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
   if (id === 'hero' || id === 'product') {
     donut = createDonut({ flavor: 'chocolate', detail: 'high', seed: id === 'hero' ? 12 : 39 })
     hover.add(donut.group)
-    rig.rotation.z = id === 'hero' ? -0.22 : -0.12
-    rig.rotation.y = id === 'hero' ? -0.22 : 0.1
+    rig.rotation.z = id === 'hero' ? -0.09 : -0.04
+    rig.rotation.y = id === 'hero' ? -0.12 : 0.04
   } else if (id === 'formats') {
+    caption = document.createElement('div')
+    caption.className = 'three-d-format-caption'
+    host.append(caption)
     formatNames.forEach((kind, index) => {
-      const { group } = createCafe(kind)
+      const { group, meta } = createCafe(kind)
+      applyArchitectureMaterials(group)
+      descriptions.set(index, meta)
       group.visible = index === currentFormat
       models.set(index, group)
       hover.add(group)
     })
-    rig.rotation.y = -0.08
+    rig.rotation.y = 0
+    settleFormat(currentFormat)
   } else {
     box = createDonutBox()
     hover.add(box.group)
@@ -80,6 +131,16 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
       model.position.y = 0
       model.scale.setScalar(1)
     }
+    stage.renderer.domElement.style.opacity = '1'
+    stage.setView(formatViews[index])
+    const description = descriptions.get(index)
+    if (caption && description) {
+      const title = document.createElement('strong')
+      title.textContent = description.label
+      const detail = document.createElement('span')
+      detail.textContent = description.detail
+      caption.replaceChildren(title, detail)
+    }
   }
 
   function resume() {
@@ -96,39 +157,30 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
     started = true
     timeline = gsap.timeline({ onUpdate: render })
     if (id === 'hero') {
-      timeline.fromTo(rig.position, { y: -0.25 }, { y: 0, duration: 1.7, ease: 'power3.out' }, 0)
       timeline.fromTo(
         rig.rotation,
-        { y: -1.0, z: -0.32 },
-        { y: -0.22, z: -0.22, duration: 2.1, ease: 'power3.out' },
+        { y: -0.4, z: -0.12 },
+        { y: -0.12, z: -0.09, duration: 2.4, ease: 'power2.out' },
         0,
       )
     } else if (id === 'product') {
       timeline
-        .to(state, { spread: 0.88, duration: 1.0, ease: 'power2.inOut', onUpdate: applyProduct })
+        .to(state, { spread: 0.7, duration: 1.4, ease: 'power2.inOut', onUpdate: applyProduct })
         .to(
           state,
-          { spread: 0, duration: 1.0, ease: 'power2.inOut', onUpdate: applyProduct },
+          { spread: 0, duration: 1.4, ease: 'power2.inOut', onUpdate: applyProduct },
           '+=0.4',
         )
     } else if (id === 'formats') {
-      const model = models.get(currentFormat)
-      timeline.fromTo(model.position, { y: -0.45 }, { y: 0, duration: 1.2, ease: 'power3.out' }, 0)
-      timeline.fromTo(
-        rig.rotation,
-        { y: -0.45 },
-        { y: -0.08, duration: 1.5, ease: 'power3.out' },
-        0,
-      )
+      timeline.fromTo(rig.rotation, { y: -0.14 }, { y: 0, duration: 1.7, ease: 'power2.out' }, 0)
     } else {
       state.open = 0
       box.setOpen(0)
       timeline.to(
         state,
-        { open: 1, duration: 2.2, ease: 'power2.inOut', onUpdate: () => box.setOpen(state.open) },
+        { open: 1, duration: 2.8, ease: 'power2.inOut', onUpdate: () => box.setOpen(state.open) },
         0.2,
       )
-      timeline.fromTo(rig.rotation, { y: -0.12 }, { y: 0.09, duration: 2.5, ease: 'power2.out' }, 0)
     }
   }
 
@@ -142,7 +194,7 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
         scrollTween?.kill()
         scrollTween = gsap.to(state, {
           progress: trigger.progress,
-          spread: Math.sin(trigger.progress * Math.PI) * 0.86,
+          spread: Math.sin(trigger.progress * Math.PI) * 0.68,
           duration: 0.55,
           ease: 'power2.out',
           onUpdate: applyProduct,
@@ -160,8 +212,8 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
       const y = (event.clientY - bounds.top) / bounds.height - 0.5
       pointerTween?.kill()
       pointerTween = gsap.to(hover.rotation, {
-        x: y * 0.12,
-        y: x * 0.24,
+        x: y * 0.045,
+        y: x * 0.1,
         duration: 0.8,
         ease: 'power2.out',
         onUpdate: render,
@@ -230,9 +282,6 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
     setFormat(index) {
       if (id !== 'formats' || currentFormat === index || !models.has(index)) return
       timeline?.kill()
-      settleFormat(currentFormat)
-      const previous = models.get(currentFormat)
-      const next = models.get(index)
       currentFormat = index
       if (!animate || paused || !visible) {
         settleFormat(index)
@@ -241,16 +290,14 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
       }
       timeline = gsap.timeline({ onUpdate: render })
       timeline
-        .to(previous.scale, { x: 0.94, y: 0.94, z: 0.94, duration: 0.22, ease: 'power2.in' })
-        .to(previous.position, { y: -0.3, duration: 0.22, ease: 'power2.in' }, 0)
+        .to(stage.renderer.domElement, { opacity: 0, duration: 0.22, ease: 'power1.in' })
         .call(() => {
-          for (const model of models.values()) model.visible = false
-          next.visible = true
-          next.scale.setScalar(0.94)
-          next.position.y = -0.3
+          settleFormat(index)
+          stage.renderer.domElement.style.opacity = '0'
+          rig.rotation.y = -0.1
         })
-        .to(next.scale, { x: 1, y: 1, z: 1, duration: 0.65, ease: 'power3.out' })
-        .to(next.position, { y: 0, duration: 0.65, ease: 'power3.out' }, '<')
+        .to(stage.renderer.domElement, { opacity: 1, duration: 0.65, ease: 'power1.out' })
+        .to(rig.rotation, { y: 0, duration: 0.85, ease: 'power2.out' }, '<')
     },
     destroy() {
       destroyed = true
@@ -259,6 +306,7 @@ function configureScene(id, host, { reducedMotion, paused }, stage) {
       pointerTween?.kill()
       scrollTween?.kill()
       scrollTrigger?.kill()
+      caption?.remove()
       stage.destroy()
     },
   }

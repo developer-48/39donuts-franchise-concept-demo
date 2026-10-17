@@ -8,6 +8,10 @@ The experimental `/lab/` pages use Three.js 0.186.1 under the MIT license. The c
 
 The experimental `/lab/` pages use GSAP 3.15.0 and ScrollTrigger under the GSAP Standard License: https://gsap.com/standard-license. The installed package records the applicable license in `node_modules/gsap/package.json`.
 
+## Poly Haven — local 3D lab
+
+The optional experimental scenes use the Studio Small 09 HDRI (Sergej Majboroda), Oak Veneer 01 and Brushed Concrete image maps from [Poly Haven](https://polyhaven.com/). These assets are dedicated to the public domain under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/); see [Poly Haven's asset license](https://polyhaven.com/license). Original files are stored in `public/assets/three-d/`; individual source URLs are recorded in `ASSET_SOURCES.md`. No Poly Haven API or remote service is used at runtime.
+
 ## Nunito
 
 The textual brand treatments for `39 donuts` and `39 м²` use Nunito 900, distributed through `@fontsource/nunito`.
