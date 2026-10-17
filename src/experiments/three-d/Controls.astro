@@ -6,7 +6,7 @@ const { preset: requestedPreset = 'formats' } = Astro.props
 const preset =
   presets.find(({ id }) => id === requestedPreset) ?? presets.find(({ id }) => id === 'formats')
 const sceneCount = preset.scenes.length
-const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
+const countLabel = sceneCount === 0 ? 'Без 3D' : 'Форматы'
 ---
 
 <details class="motion-lab" data-motion-lab data-preset={preset.id}>
@@ -32,7 +32,7 @@ const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
         <span aria-hidden="true"></span>Локально
       </span>
     </div>
-    <p class="motion-lab-intro">Выберите готовую версию или соберите свою комбинацию сцен.</p>
+    <p class="motion-lab-intro">Сравните исходный блок с 3D-моделями кофеен.</p>
     <nav class="motion-lab-presets" aria-label="Варианты сайта">
       {presets.map((item) => (
         <a
@@ -47,7 +47,7 @@ const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
       ))}
     </nav>
     <fieldset class="motion-lab-scenes">
-      <legend>Анимации на странице</legend>
+      <legend>Анимация форматов</legend>
       {sceneDefinitions.map((scene) => (
         <div class="motion-lab-scene" data-lab-scene={scene.id}>
           <label class="motion-lab-scene-label">
@@ -99,12 +99,10 @@ const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
         >
           <path d="M4.5 8.5A8 8 0 1 1 4 15M4.5 3.5v5h5" />
         </svg>
-        Повторить в кадре
+        Повторить анимацию
       </button>
     </div>
-    <p class="motion-lab-note">
-      Переключатели меняют сцены сразу. Ссылка сохраняет вашу комбинацию.
-    </p>
+    <p class="motion-lab-note">Переключатель меняет вид блока сразу. Ссылка сохраняет ваш выбор.</p>
     <p class="motion-lab-sr-only" aria-live="polite" data-lab-announcement></p>
   </div>
 </details>

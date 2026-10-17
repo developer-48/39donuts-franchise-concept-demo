@@ -2,12 +2,7 @@ import { initControls } from './controls.js'
 import { sceneIds } from './configuration.js'
 import './scenes.css'
 
-const targets = {
-  hero: '.hero-media',
-  product: '.advantages-feature',
-  formats: '.format-visual',
-  box: '.story-counter',
-}
+const targets = { formats: '.format-visual' }
 
 function initLab() {
   if (!document.querySelector('[data-motion-lab]')) return

@@ -1,0 +1,24 @@
+---
+const destination = `${import.meta.env.BASE_URL}lab/formats/`
+---
+
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta http-equiv="refresh" content={`0;url=${destination}#formats`} />
+    <title>39 donuts — форматы кофеен</title>
+    <script is:inline define:vars={{ destination }}>
+      const target = new URL(destination, window.location.origin)
+      const search = new URLSearchParams(window.location.search)
+      search.delete('scenes')
+      target.search = search.toString()
+      target.hash = window.location.hash || '#formats'
+      window.location.replace(target.href)
+    </script>
+  </head>
+  <body>
+    <a href={`${destination}#formats`}>Перейти к форматам кофеен</a>
+  </body>
+</html>

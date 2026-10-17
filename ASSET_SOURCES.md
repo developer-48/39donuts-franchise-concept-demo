@@ -72,13 +72,12 @@
 
 ## Экспериментальные объёмные модели
 
-В ветке `design/3d-motion-lab` папка `src/experiments/three-d/models/` содержит созданные для локального сравнения процедурные модели наполненных пончиков, коробки и концептуальных кофеен. Геометрия и карты выпечки, глазури, печенья, штукатурки, ткани и стали создаются локальным JavaScript. Вывески и упаковка используют существующий `public/assets/brand/logo.svg`. Three.js и GSAP подключены как npm-зависимости с их собственными лицензиями.
+В ветке `design/3d-motion-lab` папка `src/experiments/three-d/models/` содержит созданные для локального сравнения модели трёх концептуальных форматов кофеен. Геометрия помещений, оборудования и резервные карты материалов создаются локальным JavaScript. Вывески используют существующий `public/assets/brand/logo.svg`. Three.js и GSAP подключены как npm-зависимости с их собственными лицензиями.
 
 Фотографическое окружение, PBR-карты и модель стула получены из Poly Haven под [CC0](https://polyhaven.com/license), сохранены без изменения и загружаются с локального сервера. Дополнительные оригинальные URL, размеры и SHA256 файлов записаны в `public/assets/three-d/architectural-assets.json`. Цвет отделки и нормали настраиваются материалами Three.js, исходные изображения не редактируются.
 
 | Локальный файл в `public/assets/three-d/` | Источник |
 | --- | --- |
-| `studio-small-09-1k.hdr` | [Studio Small 09 — Sergej Majboroda](https://polyhaven.com/a/studio_small_09), [HDR 1K](https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/1k/studio_small_09_1k.hdr) |
 | `materials/oak_veneer_01-diffuse.jpg` | [Oak Veneer 01](https://polyhaven.com/a/oak_veneer_01), [Diffuse 1K](https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_diff_1k.jpg) |
 | `materials/oak_veneer_01-rough.jpg` | [Oak Veneer 01](https://polyhaven.com/a/oak_veneer_01), [Roughness 1K](https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_rough_1k.jpg) |
 | `materials/brushed_concrete-diffuse.jpg` | [Brushed Concrete](https://polyhaven.com/a/brushed_concrete), [Diffuse 1K](https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_diff_1k.jpg) |

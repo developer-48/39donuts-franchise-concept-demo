@@ -88,7 +88,7 @@ function configureStage(
 
   const generator = new THREE.PMREMGenerator(renderer)
   rollback.push(() => generator.dispose())
-  const studio = getStudio(architecture ? 'architecture' : 'product')
+  const studio = getStudio()
   let environmentTarget
   if (studio) {
     environmentTarget = generator.fromEquirectangular(studio)

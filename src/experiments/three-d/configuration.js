@@ -1,22 +1,9 @@
 export const sceneDefinitions = [
-  { id: 'hero', label: 'Первый экран', description: 'Предметная съёмка пончика', anchor: 'top' },
-  {
-    id: 'product',
-    label: 'Почему пончики?',
-    description: 'Разбор продукта на слои',
-    anchor: 'network',
-  },
   {
     id: 'formats',
     label: 'Форматы кофеен',
-    description: 'Архитектурные миниатюры',
+    description: 'Архитектурные модели',
     anchor: 'formats',
-  },
-  {
-    id: 'box',
-    label: '940 597 пончиков',
-    description: 'Открытие фирменной коробки',
-    anchor: 'story',
   },
 ]
 
@@ -24,12 +11,10 @@ export const sceneIds = sceneDefinitions.map(({ id }) => id)
 
 export const presets = [
   { id: 'baseline', label: 'Оригинал', scenes: [] },
-  { id: 'formats', label: 'Только форматы', scenes: ['formats'] },
-  { id: 'one', label: 'Одна сцена', scenes: ['hero'] },
-  { id: 'two', label: 'Две сцены', scenes: ['hero', 'formats'] },
-  { id: 'three', label: 'Три сцены', scenes: ['hero', 'formats', 'box'] },
-  { id: 'all', label: 'Все четыре', scenes: [...sceneIds] },
+  { id: 'formats', label: '3D в форматах', scenes: ['formats'] },
 ]
+
+export const retiredPresets = ['one', 'two', 'three', 'all']
 
 export function normalizeScenes(value) {
   const selected = Array.isArray(value) ? value : String(value ?? '').split(',')

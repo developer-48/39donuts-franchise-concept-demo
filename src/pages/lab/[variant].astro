@@ -1,15 +1,23 @@
 ---
 import Landing from '../index.astro'
 import Controls from '../../experiments/three-d/Controls.astro'
-import { presets } from '../../experiments/three-d/configuration.js'
+import { presets, retiredPresets } from '../../experiments/three-d/configuration.js'
+import RetiredPreview from '../../experiments/three-d/RetiredPreview.astro'
 
 export function getStaticPaths() {
-  return presets.map((preset) => ({ params: { variant: preset.id }, props: { preset } }))
+  return [
+    ...presets.map((preset) => ({ params: { variant: preset.id }, props: { preset } })),
+    ...retiredPresets.map((variant) => ({ params: { variant }, props: { preset: null } })),
+  ]
 }
 
 const { preset } = Astro.props
 ---
 
-<Landing noindex title={`39 donuts — ${preset.label.toLowerCase()} · 3D-примерочная`}>
-  <Controls slot="experiment-controls" preset={preset.id} />
-</Landing>
+{preset ? (
+  <Landing noindex title={`39 donuts — ${preset.label.toLowerCase()} · 3D-примерочная`}>
+    <Controls slot="experiment-controls" preset={preset.id} />
+  </Landing>
+) : (
+  <RetiredPreview />
+)}

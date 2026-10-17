@@ -52,7 +52,7 @@ export function initControls({ onChange = () => {}, onReplay = () => {} } = {}) 
       if (link.dataset.labPreset === activePreset?.id) link.setAttribute('aria-current', 'page')
       else link.removeAttribute('aria-current')
     })
-    count.textContent = state.scenes.length === 0 ? 'Без 3D' : `${state.scenes.length} из 4`
+    count.textContent = state.scenes.length === 0 ? 'Без 3D' : 'Форматы'
     pauseButton.setAttribute('aria-pressed', String(state.paused))
     pauseLabel.textContent = state.paused ? 'Продолжить' : 'На паузу'
     pauseButton.disabled = state.scenes.length === 0
@@ -75,9 +75,7 @@ export function initControls({ onChange = () => {}, onReplay = () => {} } = {}) 
         render()
         syncUrl()
         announcement.textContent =
-          state.scenes.length === 0
-            ? 'Все 3D-сцены выключены.'
-            : `Включено сцен: ${state.scenes.length}.`
+          state.scenes.length === 0 ? '3D в форматах выключено.' : '3D в форматах включено.'
         onChange(snapshot())
       },
       { signal: events.signal },
