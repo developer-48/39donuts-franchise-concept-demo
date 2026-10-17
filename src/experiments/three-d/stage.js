@@ -3,6 +3,37 @@ import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js'
 import { getStudio } from './studio.js'
 import { createArchitectureRenderer } from './architecture-renderer.js'
 
+/** Upload maps while the photograph is still shown, yielding between otherwise blocking uploads. */
+export async function prepareTextureUploads(scene, renderer, signal, isDestroyed = () => false) {
+  const check = () => {
+    if (isDestroyed() || signal?.aborted) throw new Error('Scene preparation cancelled')
+  }
+  check()
+  const textures = new Set()
+  scene.traverse((object) => {
+    const materials = Array.isArray(object.material) ? object.material : [object.material]
+    for (const material of materials) {
+      if (!material) continue
+      for (const value of Object.values(material)) {
+        if (value?.isTexture && !value.isRenderTargetTexture) textures.add(value)
+      }
+    }
+  })
+  for (const texture of textures) {
+    check()
+    const image = texture.image
+    if (
+      typeof HTMLImageElement !== 'undefined' &&
+      image instanceof HTMLImageElement &&
+      (!image.complete || !image.naturalWidth)
+    )
+      continue
+    renderer.initTexture(texture)
+    await new Promise((resolve) => setTimeout(resolve, 0))
+  }
+  check()
+}
+
 /** Each visible block owns a renderer. No permanent render loop is used. */
 export function createStage(host, options) {
   const rollback = []
@@ -145,6 +176,9 @@ function configureStage(
   let destroyed = false
   let frame = 0
   let drawCount = 0
+  let canvasWidth = 0
+  let canvasHeight = 0
+  const axis = new THREE.Vector3()
 
   function draw() {
     if (destroyed) return
@@ -172,12 +206,17 @@ function configureStage(
   function resize() {
     const bounds = host.getBoundingClientRect()
     if (bounds.width <= 0 || bounds.height <= 0) return
-    const canvasHeight = Math.max(1, bounds.height - footerHeight)
-    renderer.setSize(bounds.width, canvasHeight, false)
-    const aspect = bounds.width / canvasHeight
+    const heightWithoutFooter = Math.max(1, bounds.height - footerHeight)
+    if (canvasWidth !== bounds.width || canvasHeight !== heightWithoutFooter) {
+      canvasWidth = bounds.width
+      canvasHeight = heightWithoutFooter
+      renderer.setSize(canvasWidth, canvasHeight, false)
+      pipeline?.setSize(canvasWidth, canvasHeight)
+    }
+    const aspect = bounds.width / heightWithoutFooter
     const height = Math.max(framing.width / aspect, framing.minHeight)
     focus.set(...framing.target)
-    const axis = new THREE.Vector3(...framing.direction)
+    axis.set(...framing.direction)
     if (perspective) {
       camera.aspect = aspect
       const distance = height / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov) / 2))
@@ -191,7 +230,6 @@ function configureStage(
     }
     camera.lookAt(focus)
     camera.updateProjectionMatrix()
-    pipeline?.setSize(bounds.width, canvasHeight)
     invalidate()
   }
 
@@ -216,6 +254,7 @@ function configureStage(
       if (destroyed || signal?.aborted) throw new Error('Scene preparation cancelled')
       if (pipeline) await pipeline.prepare(signal)
       else await renderer.compileAsync(scene, camera)
+      await prepareTextureUploads(scene, renderer, signal, () => destroyed)
       if (destroyed || signal?.aborted) throw new Error('Scene preparation cancelled')
     },
     setView(next) {

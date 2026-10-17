@@ -53,7 +53,8 @@ function metreUvs(geometry) {
   geometry.userData.metreUvs = true
 }
 
-export function applyArchitectureMaterials(group) {
+/** Reuse clones only within one scene; scene disposal leaves the loaded sources intact. */
+export function applyArchitectureMaterials(group, copies = new Map()) {
   const visited = new Set()
   group.traverse((object) => {
     for (const material of [object.material].flat().filter(Boolean)) {
@@ -70,12 +71,17 @@ export function applyArchitectureMaterials(group) {
         ['normal', 'normalMap'],
       ]) {
         if (!maps[source]) continue
-        const texture = maps[source].clone()
-        texture.wrapS = texture.wrapT = THREE.RepeatWrapping
-        texture.repeat.setScalar(1 / size)
-        texture.anisotropy = 4
-        texture.needsUpdate = true
-        material[slot]?.dispose()
+        const sourceTexture = maps[source]
+        let texture = copies.get(sourceTexture)
+        if (!texture) {
+          texture = sourceTexture.clone()
+          texture.wrapS = texture.wrapT = THREE.RepeatWrapping
+          texture.repeat.setScalar(1 / size)
+          texture.anisotropy = 4
+          texture.needsUpdate = true
+          copies.set(sourceTexture, texture)
+        }
+        if (material[slot] !== texture) material[slot]?.dispose()
         material[slot] = texture
       }
       if (maps.normal) {

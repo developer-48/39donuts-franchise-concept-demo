@@ -8,6 +8,7 @@ import {
   prepareArchitectureMaterials,
   applyArchitectureMaterials,
 } from './architecture-materials.js'
+import { batchStaticMeshes, disposeRetiredGeometries } from './static-meshes.js'
 
 export async function prepareSceneAssets() {
   await Promise.all([prepareStudio(), prepareArchitectureMaterials(), prepareFurniture()])
@@ -72,6 +73,7 @@ async function configureScene(id, host, { reducedMotion, paused, signal }, stage
   )
   const models = new Map()
   const descriptions = new Map()
+  const assetCopies = new Map()
   let caption
 
   caption = document.createElement('div')
@@ -79,14 +81,20 @@ async function configureScene(id, host, { reducedMotion, paused, signal }, stage
   host.append(caption)
   for (const [index, kind] of formatNames.entries()) {
     const { group, meta } = createCafe(kind)
-    applyArchitectureMaterials(group)
-    applyFurniture(group)
-    descriptions.set(index, meta)
     group.visible = index === currentFormat
-    models.set(index, group)
     hover.add(group)
+    applyArchitectureMaterials(group, assetCopies)
+    applyFurniture(group, assetCopies)
+    descriptions.set(index, meta)
+    models.set(index, group)
     await new Promise((resolve) => setTimeout(resolve, 0))
     if (signal?.aborted || !host.isConnected) throw new Error('Scene removed during construction')
+  }
+  const retiredGeometries = new Set()
+  try {
+    for (const model of models.values()) batchStaticMeshes(model, retiredGeometries)
+  } finally {
+    disposeRetiredGeometries(stage.scene, retiredGeometries)
   }
   rig.rotation.y = 0
   settleFormat(currentFormat)

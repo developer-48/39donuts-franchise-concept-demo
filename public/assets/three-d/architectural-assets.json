@@ -20,40 +20,55 @@
     "asset": "dining_chair_02",
     "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_nor_gl_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "348703512ca1215f8389e9108419c2d1a46537663db25f423c3ef900d20cfe61",
-    "bytes": 119612
+    "sha256": "1ce910068f01c92320e7881f5eb8f870364dd686c3fa13205fbcdd9bce79beab",
+    "bytes": 115375,
+    "sourceSha256": "348703512ca1215f8389e9108419c2d1a46537663db25f423c3ef900d20cfe61",
+    "sourceBytes": 119612,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "models/dining-chair/textures/dining_chair_02_diff_1k.jpg",
     "asset": "dining_chair_02",
     "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_diff_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "343990f764790da1149485a422dee2bc6797945a6af06a37d02d7a7de041acf5",
-    "bytes": 91518
+    "sha256": "b413e6e215c85575c6a3c32d3d6dde6dd208095190bfb37734aeb4488c55f056",
+    "bytes": 86578,
+    "sourceSha256": "343990f764790da1149485a422dee2bc6797945a6af06a37d02d7a7de041acf5",
+    "sourceBytes": 91518,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "models/dining-chair/textures/dining_chair_02_arm_1k.jpg",
     "asset": "dining_chair_02",
     "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/1k/dining_chair_02/dining_chair_02_arm_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "0a81c0c886baa1e65d94fb6fb90ab4751bee319888ecf1c428ae62042d8a5b15",
-    "bytes": 162630
+    "sha256": "ef45e9f6b4027a551105498fea6531368a8136460a44b282324c25c0d8f09de2",
+    "bytes": 156344,
+    "sourceSha256": "0a81c0c886baa1e65d94fb6fb90ab4751bee319888ecf1c428ae62042d8a5b15",
+    "sourceBytes": 162630,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "materials/oak_veneer_01-normal.jpg",
     "asset": "oak_veneer_01",
     "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_nor_gl_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "1297acf7b4476d5ccd83cc8b27be96aa6110f7a9c3a40be0bd767bf81b17db01",
-    "bytes": 484844
+    "sha256": "126bfc42b1285181f2fb32cafcf2fbf8c58e79081ebb6993c96f2bafd595df30",
+    "bytes": 453504,
+    "sourceSha256": "1297acf7b4476d5ccd83cc8b27be96aa6110f7a9c3a40be0bd767bf81b17db01",
+    "sourceBytes": 484844,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "materials/brushed_concrete-normal.jpg",
     "asset": "brushed_concrete",
     "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_nor_gl_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "f4953a881f34627cefcc22f780d392314635e31bb41f75cf3888a5af55c21820",
-    "bytes": 849228
+    "sha256": "ba0d805906995806dd9a15116ecb8529964c3d86cc97d09cf2d97c3928baa4a8",
+    "bytes": 793556,
+    "sourceSha256": "f4953a881f34627cefcc22f780d392314635e31bb41f75cf3888a5af55c21820",
+    "sourceBytes": 849228,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "materials/white_plaster_02-diffuse.jpg",
@@ -108,24 +123,33 @@
     "asset": "terrazzo_tiles",
     "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/terrazzo_tiles/terrazzo_tiles_diff_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "462e3e719cda0472a33152523cf5ca2fc660e1c5869348be1609ba3dca12a2ef",
-    "bytes": 1166107
+    "sha256": "0126dea18782ded2d1955f72109d3defb4542eeb7741e226281279a8140fa5d1",
+    "bytes": 1005242,
+    "sourceSha256": "462e3e719cda0472a33152523cf5ca2fc660e1c5869348be1609ba3dca12a2ef",
+    "sourceBytes": 1166107,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "materials/terrazzo_tiles-rough.jpg",
     "asset": "terrazzo_tiles",
     "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/terrazzo_tiles/terrazzo_tiles_rough_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "cf0cb8525674adeb7da551ed1846c8c4edfd0377a35c6fe94d5f1cb2142c6152",
-    "bytes": 459022
+    "sha256": "4b0e80125995a70a984433df0ed3505102e99bc17ec187a5761e06de5ba042fc",
+    "bytes": 445560,
+    "sourceSha256": "cf0cb8525674adeb7da551ed1846c8c4edfd0377a35c6fe94d5f1cb2142c6152",
+    "sourceBytes": 459022,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "materials/terrazzo_tiles-normal.jpg",
     "asset": "terrazzo_tiles",
     "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/terrazzo_tiles/terrazzo_tiles_nor_gl_1k.jpg",
     "license": "CC0-1.0",
-    "sha256": "56bbe2d960b47ddb2dc538be2953a1ad07083b017cdada1cdc7958421a6cfcd9",
-    "bytes": 77954
+    "sha256": "6bbf96f7a8afaae7bfb98578a1ad1992b4d5361251aa39ac74a4598e14110826",
+    "bytes": 63091,
+    "sourceSha256": "56bbe2d960b47ddb2dc538be2953a1ad07083b017cdada1cdc7958421a6cfcd9",
+    "sourceBytes": 77954,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved"
   },
   {
     "file": "boma-1k.hdr",
@@ -134,5 +158,49 @@
     "license": "CC0-1.0",
     "sha256": "902ce1f3c85fa53d198e1719330146d8725fb26b881fb29a33264416d4333b36",
     "bytes": 1775456
+  },
+  {
+    "file": "materials/oak_veneer_01-rough.jpg",
+    "asset": "oak_veneer_01",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_rough_1k.jpg",
+    "license": "CC0-1.0",
+    "sourceSha256": "ca2af5649b628ef05f196793d68cdca874c12ceb6e9ae566976546d9dd5a2604",
+    "sourceBytes": 865194,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved",
+    "sha256": "59de5ce0c5858469582eaf26f6c03614875d0e1c2226f219a217187355bb03bd",
+    "bytes": 775156
+  },
+  {
+    "file": "materials/brushed_concrete-diffuse.jpg",
+    "asset": "brushed_concrete",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_diff_1k.jpg",
+    "license": "CC0-1.0",
+    "sourceSha256": "4054ed6eb65cd063356ffb4a88706b7d7b78c5435051c48bf0ee64290f04bc8c",
+    "sourceBytes": 847278,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved",
+    "sha256": "64b7cb4c48b416b52265af8eefc965ad6dd763586c9cc083580bfb03ed2073c4",
+    "bytes": 776453
+  },
+  {
+    "file": "materials/brushed_concrete-rough.jpg",
+    "asset": "brushed_concrete",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/brushed_concrete/brushed_concrete_rough_1k.jpg",
+    "license": "CC0-1.0",
+    "sourceSha256": "24da5e4c3d17b7db1b4764b3cd1fd5c5680c27ef2c86e0d6a312f74d2d0599bd",
+    "sourceBytes": 701983,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved",
+    "sha256": "b1e5e1462e00b4e34ceeb51cff70d1fa447ca7fb02a9817bda8852fba7969332",
+    "bytes": 644786
+  },
+  {
+    "file": "materials/oak_veneer_01-diffuse.jpg",
+    "asset": "oak_veneer_01",
+    "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/oak_veneer_01/oak_veneer_01_diff_1k.jpg",
+    "license": "CC0-1.0",
+    "sourceSha256": "c14681f72f59f17bff568cae7a837641443b607b899f0c279cd64a5638f877a7",
+    "sourceBytes": 641756,
+    "optimization": "Lossless JPEG Huffman optimization; baseline scan, coefficients, dimensions and metadata preserved",
+    "sha256": "e6d9eb179b527bf34de41e29eff570a428fe93208f9a9c3c69b175150ec171ae",
+    "bytes": 618354
   }
 ]

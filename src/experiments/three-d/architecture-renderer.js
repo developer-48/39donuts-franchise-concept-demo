@@ -7,26 +7,64 @@ import { FXAAShader } from 'three/addons/shaders/FXAAShader.js'
 import * as THREE from 'three'
 
 /** Contact shading grounds furniture and reveals wall thickness without a permanent render loop. */
-class ArchitecturalAO extends GTAOPass {
-  render(...args) {
-    const glazing = []
-    this.scene.traverseVisible((object) => {
-      const materials = [object.material].flat().filter(Boolean)
-      if (materials.some((material) => material.transparent || material.transmission > 0)) {
-        glazing.push(object)
+export class ArchitecturalAO extends GTAOPass {
+  glazing = []
+  pointsAndLines = []
+  hiddenGlazing = []
+
+  refreshObjects() {
+    this.glazing = []
+    this.pointsAndLines = []
+    this.scene.traverse((object) => {
+      const materials = Array.isArray(object.material) ? object.material : [object.material]
+      if (materials.some((material) => material?.transparent || material?.transmission > 0)) {
+        this.glazing.push(object)
       }
+      if (object.isPoints || object.isLine || object.isLine2) this.pointsAndLines.push(object)
     })
-    // Colour has already been drawn by RenderPass. Glass must not become an opaque AO wall.
-    glazing.forEach((object) => {
-      object.visible = false
-    })
-    try {
-      super.render(...args)
-    } finally {
-      glazing.forEach((object) => {
-        object.visible = true
-      })
+    this.hiddenGlazing = []
+  }
+
+  _overrideVisibility() {
+    // Model membership and materials are static after construction; only their visibility changes.
+    for (const object of this.pointsAndLines) {
+      if (object.visible) {
+        object.visible = false
+        this._visibilityCache.push(object)
+      }
     }
+  }
+
+  render(renderer, ...args) {
+    for (const object of this.glazing) {
+      let ancestor = object
+      while (ancestor?.visible) ancestor = ancestor.parent
+      if (ancestor) continue
+      this.hiddenGlazing.push(object)
+      object.visible = false
+    }
+    // Colour has already been drawn by RenderPass. Glass must not become an opaque AO wall.
+    // Its VSM map is also complete. The normal/depth pass never samples shadows and must not
+    // repeat the shadow geometry and blur passes with temporarily hidden glazing.
+    const { autoUpdate, needsUpdate } = renderer.shadowMap
+    renderer.shadowMap.autoUpdate = false
+    renderer.shadowMap.needsUpdate = false
+    try {
+      super.render(renderer, ...args)
+    } finally {
+      renderer.shadowMap.autoUpdate = autoUpdate
+      renderer.shadowMap.needsUpdate = needsUpdate
+      for (const object of this.hiddenGlazing) object.visible = true
+      this.hiddenGlazing.length = 0
+      this._restoreVisibility()
+    }
+  }
+
+  dispose() {
+    super.dispose()
+    // Three.js r186's GTAOPass.dispose does not release these two owned materials.
+    this.gtaoMaterial.dispose()
+    this.blendMaterial.dispose()
   }
 }
 
@@ -76,6 +114,7 @@ export function createArchitectureRenderer(renderer, scene, camera, coarse) {
             if (destroyed || signal?.aborted) throw new Error('Architecture preparation cancelled')
           }
           check()
+          ao.refreshObjects()
           // Match RenderPass's linear offscreen target, otherwise compileAsync warms the wrong variant.
           renderer.setRenderTarget(composer.readBuffer)
           await renderer.compileAsync(scene, camera)
