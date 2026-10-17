@@ -6,5 +6,6 @@ export default defineConfig({
   output: 'static',
   outDir: process.env.PUBLIC_SITE_MODE === 'preview' ? './dist-preview' : './dist',
   trailingSlash: 'always',
+  devToolbar: { enabled: false },
   vite: { build: { cssMinify: true } },
 })

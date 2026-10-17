@@ -1,5 +1,13 @@
 # Third-party notices
 
+## Three.js — local 3D lab
+
+The experimental `/lab/` pages use Three.js 0.186.1 under the MIT license. The complete license and copyright notice are included at `node_modules/three/LICENSE`.
+
+## GSAP — local 3D lab
+
+The experimental `/lab/` pages use GSAP 3.15.0 and ScrollTrigger under the GSAP Standard License: https://gsap.com/standard-license. The installed package records the applicable license in `node_modules/gsap/package.json`.
+
 ## Nunito
 
 The textual brand treatments for `39 donuts` and `39 м²` use Nunito 900, distributed through `@fontsource/nunito`.

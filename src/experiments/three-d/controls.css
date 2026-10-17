@@ -1,0 +1,481 @@
+/* Local comparison controls. The closed panel leaves the landing composition clear. */
+.motion-lab {
+  position: fixed;
+  z-index: 90;
+  left: max(12px, env(safe-area-inset-left));
+  bottom: max(12px, env(safe-area-inset-bottom));
+  width: min(380px, calc(100vw - 24px));
+  max-height: 70svh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--purple) var(--purple-soft);
+  border: 1px solid color-mix(in srgb, var(--purple) 20%, var(--white));
+  border-radius: 20px;
+  color: var(--dark-text);
+  background: var(--warm-white);
+  box-shadow: 0 12px 40px color-mix(in srgb, var(--dark-text) 15%, transparent);
+  font-family: var(--font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  isolation: isolate;
+}
+
+.motion-lab:not([open]) {
+  width: max-content;
+  max-width: calc(100vw - 24px);
+}
+
+.motion-lab-summary {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  cursor: pointer;
+  list-style: none;
+  background: var(--warm-white);
+  user-select: none;
+}
+
+.motion-lab-summary::-webkit-details-marker {
+  display: none;
+}
+
+.motion-lab-summary-title {
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.motion-lab-mark {
+  position: relative;
+  display: block;
+  flex: 0 0 25px;
+  height: 27px;
+}
+
+.motion-lab-mark i {
+  position: absolute;
+  top: 5px;
+  left: 4px;
+  width: 17px;
+  height: 17px;
+  border: 2px solid var(--purple);
+  border-radius: 5px;
+  transform: rotate(30deg) skewY(-10deg);
+}
+
+.motion-lab-mark i:nth-child(2) {
+  top: 8px;
+  border-color: var(--orange);
+}
+
+.motion-lab-mark i:nth-child(3) {
+  top: 11px;
+  border-color: var(--purple);
+}
+
+.motion-lab-count {
+  min-width: 52px;
+  margin-left: auto;
+  padding: 5px 8px;
+  border-radius: 8px;
+  background: var(--purple-soft);
+  color: var(--purple);
+  text-align: center;
+  font-size: 11px;
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.motion-lab-disclosure {
+  position: relative;
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+  margin-left: 3px;
+}
+
+.motion-lab-disclosure::before,
+.motion-lab-disclosure::after {
+  position: absolute;
+  top: 7px;
+  left: 2px;
+  width: 11px;
+  height: 1.5px;
+  border-radius: 2px;
+  background: var(--purple);
+  content: '';
+}
+
+.motion-lab-disclosure::after {
+  transform: rotate(90deg);
+  transition: transform 180ms ease;
+}
+
+.motion-lab[open] .motion-lab-disclosure::after {
+  transform: rotate(0);
+}
+
+.motion-lab[open] .motion-lab-summary {
+  border-bottom: 1px solid color-mix(in srgb, var(--purple) 12%, transparent);
+}
+
+.motion-lab-body {
+  padding: 18px 16px 16px;
+}
+
+.motion-lab-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.motion-lab-eyebrow {
+  margin-bottom: 4px;
+  color: var(--orange-deep);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.motion-lab-heading h2 {
+  font-family: var(--font-body);
+  font-size: 17px;
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.03em;
+}
+
+.motion-lab-local {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding-top: 3px;
+  color: var(--muted-text);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.motion-lab-local > span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.motion-lab-intro {
+  margin: 10px 0 14px;
+  color: var(--muted-text);
+  font-size: 12px;
+}
+
+.motion-lab-presets {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 5px;
+  margin-bottom: 20px;
+}
+
+.motion-lab-preset {
+  display: flex;
+  min-height: 65px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 7px 3px;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 12%, transparent);
+  border-radius: 12px;
+  background: var(--white);
+  transition:
+    background 160ms ease,
+    color 160ms ease,
+    border-color 160ms ease;
+}
+
+.motion-lab-preset > span {
+  color: var(--orange);
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.motion-lab-preset > small {
+  font-size: 9px;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.25;
+}
+
+.motion-lab-preset[aria-current] {
+  border-color: var(--purple);
+  background: var(--purple);
+  color: var(--white);
+}
+
+.motion-lab-preset[aria-current] > span {
+  color: var(--white);
+}
+
+.motion-lab-scenes {
+  display: grid;
+  gap: 7px;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.motion-lab-scenes > legend {
+  width: 100%;
+  margin-bottom: 9px;
+  padding: 0;
+  color: var(--muted-text);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.motion-lab-scene {
+  display: flex;
+  align-items: stretch;
+  border: 1px solid color-mix(in srgb, var(--dark-text) 10%, transparent);
+  border-radius: 13px;
+  background: var(--white);
+  transition: border-color 160ms ease;
+}
+
+.motion-lab-scene.is-selected {
+  border-color: color-mix(in srgb, var(--purple) 35%, transparent);
+}
+
+.motion-lab-scene-label {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  min-height: 72px;
+  padding: 10px 0 10px 11px;
+  cursor: pointer;
+}
+
+.motion-lab-scene-label > input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.motion-lab-check {
+  position: relative;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid color-mix(in srgb, var(--dark-text) 28%, transparent);
+  border-radius: 6px;
+  background: var(--white);
+  transition:
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.motion-lab-scene-label > input:checked + .motion-lab-check {
+  border-color: var(--purple);
+  background: var(--purple);
+}
+
+.motion-lab-scene-label > input:checked + .motion-lab-check::after {
+  position: absolute;
+  top: 3px;
+  left: 6px;
+  width: 5px;
+  height: 9px;
+  border: solid var(--white);
+  border-width: 0 1.5px 1.5px 0;
+  transform: rotate(45deg);
+  content: '';
+}
+
+.motion-lab-scene-label > input:focus-visible + .motion-lab-check {
+  outline: 3px solid color-mix(in srgb, var(--purple) 40%, transparent);
+  outline-offset: 3px;
+}
+
+.motion-lab-scene-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.motion-lab-scene-copy > strong {
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.motion-lab-scene-copy > small {
+  color: var(--muted-text);
+  font-size: 10px;
+}
+
+.motion-lab-status {
+  color: var(--muted-text);
+  font-size: 9px;
+}
+
+.motion-lab-status[data-state='ready'] {
+  color: #427119;
+}
+
+.motion-lab-status[data-state='loading'],
+.motion-lab-status[data-state='paused'] {
+  color: var(--purple);
+}
+
+.motion-lab-jump {
+  display: grid;
+  flex: 0 0 44px;
+  min-height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  color: var(--purple);
+}
+
+.motion-lab-jump > span:first-child {
+  display: grid;
+  gap: 3px;
+  width: 17px;
+  padding: 3px 0;
+}
+
+.motion-lab-jump i {
+  display: block;
+  height: 2px;
+  border-radius: 2px;
+  background: currentColor;
+}
+
+.motion-lab-jump i:nth-child(2) {
+  width: 12px;
+}
+
+.motion-lab-actions {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  gap: 7px;
+  margin-top: 15px;
+}
+
+.motion-lab-actions button {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 8px 7px;
+  border: 1px solid transparent;
+  border-radius: 11px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 800;
+  transition: background 160ms ease;
+}
+
+.motion-lab-pause {
+  background: var(--purple-soft);
+  color: var(--purple);
+}
+
+.motion-lab-replay {
+  background: var(--purple);
+  color: var(--white);
+}
+
+.motion-lab-replay svg {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 17px;
+}
+
+.motion-lab-playback-icon {
+  width: 11px;
+  height: 11px;
+  border-right: 3px solid currentColor;
+  border-left: 3px solid currentColor;
+}
+
+.motion-lab-pause[aria-pressed='true'] .motion-lab-playback-icon {
+  width: 0;
+  height: 0;
+  border: 6px solid transparent;
+  border-right: 0;
+  border-left: 9px solid currentColor;
+}
+
+.motion-lab-actions button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.motion-lab-note {
+  margin-top: 11px;
+  color: var(--muted-text);
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.motion-lab-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+@media (hover: hover) {
+  .motion-lab-preset:not([aria-current]):hover,
+  .motion-lab-jump:hover {
+    background: var(--purple-soft);
+  }
+
+  .motion-lab-replay:not(:disabled):hover {
+    background: var(--purple-hover);
+  }
+
+  .motion-lab-pause:not(:disabled):hover {
+    background: color-mix(in srgb, var(--purple) 15%, var(--white));
+  }
+}
+
+@media (max-width: 380px) {
+  .motion-lab-summary {
+    gap: 8px;
+    padding-inline: 12px;
+  }
+
+  .motion-lab-body {
+    padding-inline: 12px;
+  }
+
+  .motion-lab-summary-title {
+    font-size: 13px;
+  }
+
+  .motion-lab-heading h2 {
+    font-size: 15px;
+  }
+
+  .motion-lab-preset > small {
+    font-size: 8px;
+  }
+}

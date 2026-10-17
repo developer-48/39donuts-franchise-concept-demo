@@ -25,7 +25,9 @@
     "@fontsource/manrope": "5.2.6",
     "@fontsource/nunito": "5.3.0",
     "@fontsource/unbounded": "5.2.6",
-    "astro": "7.3.8"
+    "astro": "7.3.8",
+    "gsap": "3.15.0",
+    "three": "0.186.1"
   },
   "devDependencies": {
     "@eslint/js": "10.0.1",

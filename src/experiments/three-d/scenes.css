@@ -1,0 +1,139 @@
+/* Experimental scenes are mounted only by /lab/. Original photos stay as fallbacks. */
+.three-d-host {
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 380ms ease;
+  touch-action: pan-y;
+}
+
+[data-three-ready] > .three-d-host {
+  visibility: visible;
+  opacity: 1;
+}
+
+.three-d-host canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+}
+
+.three-d-hero {
+  z-index: 2;
+  right: -10%;
+  bottom: -19%;
+  width: 76%;
+  height: 93%;
+  max-width: 460px;
+  cursor: grab;
+}
+
+.site [data-three-ready='hero'] > .hero-donut,
+.site [data-three-ready='product'] > img,
+.site [data-three-ready='formats'] > img,
+.site [data-three-ready='box'] > .story-counter-ribbon {
+  visibility: hidden;
+  opacity: 0;
+}
+
+.three-d-product {
+  z-index: 1;
+  right: -17%;
+  bottom: -7%;
+  width: 117%;
+  height: 68%;
+  cursor: grab;
+}
+
+.three-d-formats {
+  z-index: 2;
+  inset: 0;
+  background: radial-gradient(ellipse at 50% 40%, #fffdf8, #f3eadb);
+  cursor: grab;
+}
+
+.three-d-formats::after {
+  position: absolute;
+  right: 16px;
+  bottom: 18px;
+  left: 16px;
+  color: #776d63;
+  content: '3D-эскиз формата';
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-align: center;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+.site [data-three-ready='formats'] > .asset-note {
+  visibility: hidden;
+}
+
+.three-d-box {
+  z-index: 0;
+  top: 0;
+  right: 0;
+  width: 53%;
+  height: 100%;
+  cursor: grab;
+}
+
+.site .story-counter[data-three-ready='box']::after {
+  background: linear-gradient(90deg, #fe7f16 0%, #fe7f16f2 34%, #fe7f1638 58%, #fe7f1600 80%);
+}
+
+@media (max-width: 1100px) {
+  .three-d-product {
+    right: -2%;
+    bottom: -24%;
+    width: 68%;
+    height: 107%;
+  }
+}
+
+@media (max-width: 740px) {
+  .three-d-hero {
+    right: -8%;
+    bottom: -19%;
+    width: 69%;
+    height: 89%;
+  }
+
+  .three-d-product {
+    right: -18%;
+    bottom: -12%;
+    width: 112%;
+    height: 67%;
+  }
+
+  .three-d-box {
+    top: auto;
+    right: -3%;
+    bottom: -10px;
+    width: 106%;
+    height: 260px;
+  }
+
+  .site .story-counter[data-three-enabled='box'] {
+    min-height: 440px;
+    justify-content: flex-start;
+    padding-top: 90px;
+  }
+
+  .site .story-counter[data-three-enabled='box'] .story-counter-copy {
+    max-width: 100%;
+  }
+
+  .site .story-counter[data-three-ready='box']::after {
+    background: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .three-d-host {
+    transition: none;
+  }
+}

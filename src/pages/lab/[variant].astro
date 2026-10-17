@@ -1,0 +1,15 @@
+---
+import Landing from '../index.astro'
+import Controls from '../../experiments/three-d/Controls.astro'
+import { presets } from '../../experiments/three-d/configuration.js'
+
+export function getStaticPaths() {
+  return presets.map((preset) => ({ params: { variant: preset.id }, props: { preset } }))
+}
+
+const { preset } = Astro.props
+---
+
+<Landing noindex title={`39 donuts — ${preset.label.toLowerCase()} · 3D-примерочная`}>
+  <Controls slot="experiment-controls" preset={preset.id} />
+</Landing>

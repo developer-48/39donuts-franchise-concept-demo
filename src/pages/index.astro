@@ -14,14 +14,16 @@ import ContactSection from '../components/sections/contacts/ContactSection.astro
 import SiteFooter from '../components/layout/footer/SiteFooter.astro'
 // Shared layout CSS is loaded first; section rules follow it in the cascade.
 import '../styles/landing.css'
+const { noindex = false, title } = Astro.props
 ---
 
-<BaseLayout>
+<BaseLayout noindex={noindex} title={title}>
   <div class="site">
     <a class="skip-link" href="#main-content">
       Перейти к содержанию
     </a>
     <Header />
+    <slot name="experiment-controls" />
     <main id="main-content">
       <HeroSection />
       <RevenueSection />

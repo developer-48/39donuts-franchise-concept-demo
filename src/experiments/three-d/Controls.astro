@@ -1,0 +1,113 @@
+---
+import { presets, sceneDefinitions } from './configuration.js'
+import './controls.css'
+
+const { preset: requestedPreset = 'two' } = Astro.props
+const preset = presets.find(({ id }) => id === requestedPreset) ?? presets[2]
+const sceneCount = preset.scenes.length
+const countLabel = sceneCount === 0 ? 'Без 3D' : `${sceneCount} из 4`
+---
+
+<details class="motion-lab" data-motion-lab data-preset={preset.id}>
+  <summary class="motion-lab-summary">
+    <span class="motion-lab-mark" aria-hidden="true">
+      <i></i>
+      <i></i>
+      <i></i>
+    </span>
+    <span class="motion-lab-summary-title">3D-примерочная</span>
+    <span class="motion-lab-count" data-lab-count>
+      {countLabel}
+    </span>
+    <span class="motion-lab-disclosure" aria-hidden="true"></span>
+  </summary>
+  <div class="motion-lab-body">
+    <div class="motion-lab-heading">
+      <div>
+        <p class="motion-lab-eyebrow">Найдём свой баланс</p>
+        <h2>Сравните впечатления</h2>
+      </div>
+      <span class="motion-lab-local">
+        <span aria-hidden="true"></span>Локально
+      </span>
+    </div>
+    <p class="motion-lab-intro">Выберите готовую версию или соберите свою комбинацию сцен.</p>
+    <nav class="motion-lab-presets" aria-label="Варианты сайта">
+      {presets.map((item) => (
+        <a
+          class="motion-lab-preset"
+          href={`${import.meta.env.BASE_URL}lab/${item.id}/`}
+          data-lab-preset={item.id}
+          aria-current={item.id === preset.id ? 'page' : undefined}
+        >
+          <span>{item.scenes.length === 0 ? '—' : item.scenes.length}</span>
+          <small>{item.label}</small>
+        </a>
+      ))}
+    </nav>
+    <fieldset class="motion-lab-scenes">
+      <legend>Анимации на странице</legend>
+      {sceneDefinitions.map((scene) => (
+        <div class="motion-lab-scene" data-lab-scene={scene.id}>
+          <label class="motion-lab-scene-label">
+            <input
+              type="checkbox"
+              name="motion-scenes"
+              value={scene.id}
+              checked={preset.scenes.includes(scene.id)}
+              data-lab-toggle
+            />
+            <span class="motion-lab-check" aria-hidden="true"></span>
+            <span class="motion-lab-scene-copy">
+              <strong>{scene.label}</strong>
+              <small>{scene.description}</small>
+              <span class="motion-lab-status" data-lab-status={scene.id}>
+                {preset.scenes.includes(scene.id) ? 'Ожидает экрана' : 'Выключено'}
+              </span>
+            </span>
+          </label>
+          <a
+            class="motion-lab-jump"
+            href={`#${scene.anchor}`}
+            aria-label={`Перейти к блоку «${scene.label}»`}
+          >
+            <span aria-hidden="true">
+              <i></i>
+              <i></i>
+              <i></i>
+            </span>
+            <span class="motion-lab-sr-only">К блоку</span>
+          </a>
+        </div>
+      ))}
+    </fieldset>
+    <div class="motion-lab-actions">
+      <button type="button" class="motion-lab-pause" data-lab-pause aria-pressed="false">
+        <span class="motion-lab-playback-icon" aria-hidden="true"></span>
+        <span data-lab-pause-label>На паузу</span>
+      </button>
+      <button type="button" class="motion-lab-replay" data-lab-replay>
+        <svg
+          aria-hidden="true"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.7"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4.5 8.5A8 8 0 1 1 4 15M4.5 3.5v5h5" />
+        </svg>
+        Повторить в кадре
+      </button>
+    </div>
+    <p class="motion-lab-note">
+      Переключатели меняют сцены сразу. Ссылка сохраняет вашу комбинацию.
+    </p>
+    <p class="motion-lab-sr-only" aria-live="polite" data-lab-announcement></p>
+  </div>
+</details>
+
+<script>
+  import './client.js'
+</script>
