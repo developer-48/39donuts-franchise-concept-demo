@@ -1,4 +1,5 @@
 import { bindTabs, selectTab } from '../../../lib/tabs.js'
+import { FORMAT_CHANGE_EVENT } from './events.js'
 
 export function initFormats() {
   const section = document.querySelector('#formats')
@@ -24,5 +25,6 @@ export function initFormats() {
       image.alt = active ? image.dataset.formatAlt : ''
     })
     section.querySelector('[data-format-asset-note]').hidden = index !== 2
+    section.dispatchEvent(new CustomEvent(FORMAT_CHANGE_EVENT, { detail: { index } }))
   })
 }

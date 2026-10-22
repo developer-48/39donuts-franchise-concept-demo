@@ -1,5 +1,7 @@
 # Как редактировать сайт
 
+Полная инструкция и текущая карта проекта — [PROJECT_GUIDE.md](PROJECT_GUIDE.md); файлы 3D — [3D.md](3D.md). Порядок секций задаёт `src/components/landing/LandingPage.astro`.
+
 Правки делаются в `src/` и `public/`. Папки `dist/` и `dist-preview/` — результат сборки: следующая сборка перезапишет ручные изменения в них.
 
 ## Карта блоков
@@ -141,7 +143,7 @@ export const faqGroups = [
 Для разработки:
 
 ```sh
-npm run dev -- --port 4321
+npm run dev -- --port 4324
 ```
 
 Перед выпуском:
@@ -149,6 +151,7 @@ npm run dev -- --port 4321
 ```sh
 npm run format
 npm run check
+npm run check:preview
 ```
 
 `format` приводит исходники к одному стилю, `check` проверяет форматирование, JavaScript, тесты и готовую production-сборку. Для архива запускайте `npm run release` — он повторяет проверки и создаёт выпуск с контрольной суммой.

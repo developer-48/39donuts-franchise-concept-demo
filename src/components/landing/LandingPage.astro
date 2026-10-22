@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import Header from '../layout/header/Header.astro'
+import FormatsSection from '../sections/formats/FormatsSection.astro'
+import FaqSection from '../sections/faq/FaqSection.astro'
+import ApplicationWizardDialog from '../application/ApplicationWizardDialog.astro'
+import HeroSection from '../sections/hero/HeroSection.astro'
+import RevenueSection from '../sections/revenue/RevenueSection.astro'
+import StorySection from '../sections/story/StorySection.astro'
+import NetworkSection from '../sections/network/NetworkSection.astro'
+import ReviewsSection from '../sections/reviews/ReviewsSection.astro'
+import PartnershipSection from '../sections/partnership/PartnershipSection.astro'
+import ContactSection from '../sections/contacts/ContactSection.astro'
+import SiteFooter from '../layout/footer/SiteFooter.astro'
+// Shared layout CSS is loaded first; section rules follow it in the cascade.
+import '../../styles/landing.css'
+const { noindex = false, title } = Astro.props
+---
+
+<BaseLayout noindex={noindex} title={title}>
+  <div class="site">
+    <a class="skip-link" href="#main-content">
+      Перейти к содержанию
+    </a>
+    <Header />
+    <slot name="experiment-controls" />
+    <main id="main-content">
+      <HeroSection />
+      <RevenueSection />
+      <StorySection />
+      <NetworkSection />
+      <FormatsSection />
+      <ReviewsSection />
+      <PartnershipSection />
+      <FaqSection />
+      <ContactSection />
+    </main>
+    <SiteFooter />
+    <ApplicationWizardDialog />
+  </div>
+</BaseLayout>

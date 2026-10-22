@@ -1,5 +1,6 @@
 import { initControls } from './controls.js'
 import { sceneIds } from './configuration.js'
+import { FORMAT_CHANGE_EVENT } from '../../components/sections/formats/events.js'
 import './scenes.css'
 
 const targets = { formats: '.format-visual' }
@@ -146,14 +147,8 @@ function initLab() {
     for (const id of [...entries.keys()]) remove(id)
     sync()
   })
-  document.querySelector('.format-tabs')?.addEventListener('click', () => {
-    const selected = document.querySelector('[data-format-index][aria-selected="true"]')
-    entries.get('formats')?.instance?.setFormat(Number(selected?.dataset.formatIndex ?? 0))
-  })
-  document.querySelector('.format-tabs')?.addEventListener('keydown', (event) => {
-    if (!['ArrowLeft', 'ArrowRight', 'Home', 'End'].includes(event.key)) return
-    const selected = document.querySelector('[data-format-index][aria-selected="true"]')
-    entries.get('formats')?.instance?.setFormat(Number(selected?.dataset.formatIndex ?? 0))
+  document.querySelector('#formats')?.addEventListener(FORMAT_CHANGE_EVENT, ({ detail }) => {
+    entries.get('formats')?.instance?.setFormat(detail.index)
   })
   window.addEventListener('pagehide', (event) => {
     if (event.persisted) {

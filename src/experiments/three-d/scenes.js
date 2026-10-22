@@ -1,7 +1,7 @@
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 import { createStage } from './stage.js'
-import { createCafe } from './models/cafe.js'
+import { createCafe } from './models/cafe/index.js'
 import { prepareStudio } from './studio.js'
 import { prepareFurniture, applyFurniture } from './furniture.js'
 import {
