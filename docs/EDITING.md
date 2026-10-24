@@ -1,6 +1,6 @@
 # Как редактировать сайт
 
-Полная инструкция и текущая карта проекта — [PROJECT_GUIDE.md](PROJECT_GUIDE.md); файлы 3D — [3D.md](3D.md). Порядок секций задаёт `src/components/landing/LandingPage.astro`.
+Краткая инструкция и текущая карта основного лендинга — [PROJECT_GUIDE.md](PROJECT_GUIDE.md). Порядок секций задаёт `src/components/landing/LandingPage.astro`.
 
 Правки делаются в `src/` и `public/`. Папки `dist/` и `dist-preview/` — результат сборки: следующая сборка перезапишет ручные изменения в них.
 
