@@ -1,0 +1,9 @@
+{
+  "framework": "Astro",
+  "version": "7.3.8",
+  "sourceBranch": "astro-js-production",
+  "sourceCommit": "1ba6cb564301af2cfcef28d5d16ea4f2349b63d8",
+  "includesExperimental3D": false,
+  "publication": "GitHub Pages demonstration",
+  "date": "2026-10-26"
+}

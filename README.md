@@ -1,10 +1,11 @@
-# 39 donuts franchise concept — published demo
+# 39 donuts — published Astro build
 
-Independent, unofficial presentation of the final 39 donuts franchise website concept. This repository contains the generated static Vite output.
+This branch contains the generated static Astro website.
 
-- [Open the interactive website](https://developer-48.github.io/39donuts-franchise-concept-demo/)
-- [Browse the organized source code](https://github.com/developer-48/39donuts-franchise-concept-demo/tree/source) and [project audit](https://github.com/developer-48/39donuts-franchise-concept-demo/blob/source/docs/AUDIT.md)
-- [Open the presentation layout](https://developer-48.github.io/39donuts-franchise-concept-demo/showcase/)
-- [Download the presentation as PNG](https://developer-48.github.io/39donuts-franchise-concept-demo/showcase/39donuts-showcase.png)
+- [Website](https://developer-48.github.io/39donuts-franchise-concept-demo/)
+- [Astro source](https://github.com/developer-48/39donuts-franchise-concept-demo/tree/astro-js-production)
+- [Historical React reference](https://github.com/developer-48/39donuts-franchise-concept-demo/tree/source)
 
-The application form runs entirely in the browser and does not submit or store entered data.
+Source commit: `1ba6cb564301af2cfcef28d5d16ea4f2349b63d8`.
+Build command: `npm ci && npm run build:pages`.
+The demonstration is noindex and does not submit applications. The official 39donuts.ru site is managed separately. Experimental 3D is not included.

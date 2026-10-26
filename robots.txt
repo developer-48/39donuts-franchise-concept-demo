@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Preview pages carry noindex. Allow crawling so robots can read that directive.
