@@ -1,5 +1,12 @@
 import { seoContent } from '../config/seo.js'
 
+export function canonicalPath(pathname, base = '/') {
+  const prefix = base.endsWith('/') ? base : `${base}/`
+  if (prefix === '/') return pathname
+  if (pathname === prefix.slice(0, -1)) return '/'
+  return pathname.startsWith(prefix) ? `/${pathname.slice(prefix.length)}` : pathname
+}
+
 export function resolveSiteUrl(value = seoContent.siteUrl) {
   const url = new URL(value)
   if (

@@ -18,8 +18,9 @@
     "verify:static": "node scripts/verify-static-build.mjs",
     "verify:seo": "node scripts/verify-seo-build.mjs dist production",
     "release": "npm run check && node scripts/package-release.mjs",
-    "format": "prettier --write src scripts tests astro.config.mjs eslint.config.js package.json .prettierrc.json .vscode",
-    "format:check": "prettier --check src scripts tests astro.config.mjs eslint.config.js package.json .prettierrc.json .vscode"
+    "format": "prettier --write src scripts tests astro.config.mjs astro.pages.config.mjs eslint.config.js package.json .prettierrc.json .vscode",
+    "format:check": "prettier --check src scripts tests astro.config.mjs astro.pages.config.mjs eslint.config.js package.json .prettierrc.json .vscode",
+    "build:pages": "node scripts/build-pages.mjs && node scripts/verify-pages-build.mjs"
   },
   "dependencies": {
     "@fontsource/manrope": "5.2.6",

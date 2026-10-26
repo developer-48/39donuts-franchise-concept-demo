@@ -2,6 +2,15 @@
 
 Лендинг собирается в готовый HTML. JavaScript отвечает за меню, переключение форматов, FAQ, анкету и анимации. Исходники страницы написаны на Astro и JavaScript; React и TypeScript для них не используются.
 
+## Ветки и опубликованная версия
+
+- `astro-js-production` — исходники основной версии на Astro, без экспериментального 3D.
+- `main` — только готовая Astro-сборка для [GitHub Pages](https://developer-48.github.io/39donuts-franchise-concept-demo/).
+- `source` — сохранённый исторический React/Vite-эталон.
+- `design/3d-motion-lab` — отдельный эксперимент с 3D; в эту публикацию не входит.
+
+Для GitHub Pages выполняется `npm run build:pages`: результат в `dist-pages/` учитывает подпапку репозитория и закрыт от индексации. Для официального домена остаётся `npm run build` с полноценной production SEO-конфигурацией. Это две сборки одних исходников, а не разные визуальные версии.
+
 ## С чего начать
 
 | Что нужно изменить                       | Где смотреть                                                     |
@@ -46,6 +55,7 @@ npm run preview -- --port 4321
 | `npm run build:preview`      | Сборка для сверки в `dist-preview/`, закрытая от индексации                        |
 | `npm run preview`            | Локальный сервер для `dist-preview/`                                               |
 | `npm run build`              | Production-сборка в `dist/` для `https://39donuts.ru/`                             |
+| `npm run build:pages`        | Проверенная Astro-сборка для GitHub Pages в `dist-pages/`                         |
 | `npm run preview:production` | Локальный просмотр `dist/` после production-сборки                                 |
 | `npm run check`              | Проверка форматирования, ESLint, тесты, production-сборка и проверки готового HTML |
 | `npm run release`            | Все проверки и архив `releases/39donuts-production.tar.gz` с SHA256                |
@@ -103,7 +113,7 @@ Production-сборка содержит метаданные, canonical, Open G
 
 ## Сохранённые версии
 
-Текущий проект: `/Users/yusup/Documents/Codex/2026-09-21/39donuts-astro`, ветка `astro-js-production`.
+Текущий production-проект: `/Users/yusup/Documents/Codex/2026-10-26/39donuts-astro-production`, ветка `astro-js-production`.
 
 Исходная React-версия сохранена отдельно: `/Users/yusup/Documents/Codex/2026-09-21/39donuts-redesign`, ветка `source`, коммит `942475f63ebfc1019af6d3b5392989ea46cbe80e`. Утверждённая Astro-версия до реорганизации доступна в истории Git на коммите `cb4ad06`.
 

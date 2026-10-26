@@ -10,10 +10,10 @@ import { privacyHtml } from '../content/privacy.js'
   interactive={false}
 >
   <header class="legal-header">
-    <a href="/" aria-label="39 donuts — на главную">
+    <a href={import.meta.env.BASE_URL} aria-label="39 donuts — на главную">
       <img src={assets.logo} width="193.5" height="36" alt="39 donuts" />
     </a>
-    <a href="/">На главную</a>
+    <a href={import.meta.env.BASE_URL}>На главную</a>
   </header>
   <main class="legal-document" set:html={privacyHtml} />
 </BaseLayout>

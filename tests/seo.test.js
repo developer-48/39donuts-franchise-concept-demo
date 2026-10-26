@@ -2,12 +2,23 @@ import test from 'node:test'
 import assert from 'node:assert/strict'
 import {
   resolveSiteUrl,
+  canonicalPath,
   pageUrl,
   serializeJsonLd,
   buildStructuredData,
   sitemapXml,
   robotsTxt,
 } from '../src/lib/seo.js'
+
+test('preview subdirectory does not leak into official canonical URLs', () => {
+  const base = '/39donuts-franchise-concept-demo/'
+  assert.equal(canonicalPath('/', '/'), '/')
+  assert.equal(canonicalPath('/privacy-policy/', '/'), '/privacy-policy/')
+  assert.equal(canonicalPath(base, base), '/')
+  assert.equal(canonicalPath(base.slice(0, -1), base), '/')
+  assert.equal(canonicalPath(`${base}privacy-policy/`, base), '/privacy-policy/')
+  assert.equal(canonicalPath('/another-path/', base), '/another-path/')
+})
 
 test('canonical URLs keep one secure origin and reject query/hash configuration', () => {
   assert.equal(pageUrl(resolveSiteUrl(), '/privacy-policy/'), 'https://39donuts.ru/privacy-policy/')

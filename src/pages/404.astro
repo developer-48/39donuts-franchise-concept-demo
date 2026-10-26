@@ -11,13 +11,13 @@ import { assets } from '../config/assets.js'
   noindex
 >
   <main class="not-found">
-    <a href="/" aria-label="39 donuts — на главную">
+    <a href={import.meta.env.BASE_URL} aria-label="39 donuts — на главную">
       <img src={assets.logo} width="258" height="48" alt="39 donuts" />
     </a>
     <p class="error-code">404</p>
     <h1>Страница не найдена</h1>
     <p>Возможно, адрес изменился. Всё о франшизе — на главной странице.</p>
-    <Button href="/">На главную</Button>
+    <Button href={import.meta.env.BASE_URL}>На главную</Button>
   </main>
 </BaseLayout>
 <style>

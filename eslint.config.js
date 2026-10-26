@@ -6,6 +6,7 @@ export default [
     ignores: [
       'dist/**',
       'dist-preview/**',
+      'dist-pages/**',
       'releases/**',
       'node_modules/**',
       '.astro/**',

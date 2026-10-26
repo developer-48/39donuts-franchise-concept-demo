@@ -4,7 +4,7 @@ import DonutScrollbar from '../components/layout/scrollbar/DonutScrollbar.astro'
 import { seoContent } from '../config/seo.js'
 import { contact } from '../config/site.js'
 import { faqGroups } from '../components/sections/faq/content.js'
-import { pageUrl, buildStructuredData, serializeJsonLd } from '../lib/seo.js'
+import { canonicalPath, pageUrl, buildStructuredData, serializeJsonLd } from '../lib/seo.js'
 const {
   title = seoContent.title,
   description = seoContent.description,
@@ -13,11 +13,12 @@ const {
 } = Astro.props
 const production = import.meta.env.PUBLIC_SITE_MODE === 'production'
 const indexable = production && !noindex
-const canonical = pageUrl(Astro.site.href, Astro.url.pathname)
+const path = canonicalPath(Astro.url.pathname, import.meta.env.BASE_URL)
+const canonical = pageUrl(Astro.site.href, path)
 const structuredData = noindex
   ? null
   : buildStructuredData(Astro.site.href, {
-      path: Astro.url.pathname,
+      path,
       title,
       description,
       contact,
